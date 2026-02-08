@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Church Services & Worship Times | Glory of Christ Church Wakiso-Kayunga</title>
+    <meta name="description" content="Join Glory of Christ Church for Sunday worship, Tuesday prayers, Wednesday Bible study, and Friday overnight prayers. Service times, annual schedule, and ministry programs in Wakiso-Kayunga, Uganda.">
+    <meta name="keywords" content="church services Uganda, worship times Wakiso, Sunday service, prayer meetings, Bible study, overnight prayers, Christian church Uganda, Glory of Christ Church">
+    <meta name="author" content="Glory of Christ Church">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Church Services & Worship Times | Glory of Christ Church">
+    <meta property="og:description" content="Join us for powerful worship, prayer, and Bible teaching in Wakiso-Kayunga, Uganda.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gloryofchristchurch.org/services.html">
+    <meta property="og:image" content="https://gloryofchristchurch.org/images/services-og-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://gloryofchristchurch.org/services.html">
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Church",
+        "name": "Glory of Christ Church",
+        "description": "A Christian church in Wakiso-Kayunga, Uganda offering worship services, prayer meetings, and Bible study.",
+        "url": "https://gloryofchristchurch.org",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Nayasa Road",
+            "addressLocality": "Wakiso-Kayunga",
+            "addressRegion": "Wakiso",
+            "addressCountry": "Uganda"
+        },
+        "serviceType": [
+            "Sunday Worship Service",
+            "Tuesday Prayer Service", 
+            "Wednesday Bible Study",
+            "Friday Overnight Prayers"
+        ],
+        "openingHours": [
+            "Su 09:00-12:00",
+            "Tu 17:00-18:00", 
+            "We 17:00-18:00",
+            "Fr 21:00-06:00"
+        ],
+        "image": "https://gloryofchristchurch.org/images/church-building.jpg"
+    }
+    </script>
+    
+    <!-- Page-specific Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Services - Glory of Christ Church",
+        "description": "Complete information about church services, worship times, and annual schedule at Glory of Christ Church in Wakiso-Kayunga, Uganda.",
+        "mainEntity": {
+            "@type": "Church",
+            "name": "Glory of Christ Church",
+            "service": [
+                {
+                    "@type": "ChurchService",
+                    "name": "Sunday Main Service",
+                    "startTime": "09:00",
+                    "endTime": "12:00",
+                    "dayOfWeek": "Sunday"
+                },
+                {
+                    "@type": "ChurchService",
+                    "name": "Tuesday Prayer Service",
+                    "startTime": "17:00",
+                    "endTime": "18:00",
+                    "dayOfWeek": "Tuesday"
+                },
+                {
+                    "@type": "ChurchService",
+                    "name": "Wednesday Bible Study",
+                    "startTime": "17:00",
+                    "endTime": "18:00",
+                    "dayOfWeek": "Wednesday"
+                },
+                {
+                    "@type": "ChurchService", 
+                    "name": "Friday Overnight Prayers",
+                    "startTime": "21:00",
+                    "endTime": "06:00",
+                    "dayOfWeek": "Friday"
+                }
+            ]
+        }
+    }
+    </script>
+    
+    <title>Services - Glory of Christ Church</title>
+    
+    <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Optional: Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Optional: Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="sidebar.css"> -->
+    <link rel="stylesheet" href="css/sidebar.css">
+    <style>
+        /* ====================================
+           SERVICES PAGE SPECIFIC STYLES
+           ==================================== */
+        
+        /* Services Hero Section */
+        .services-hero {
+            background: linear-gradient(rgba(9, 74, 140, 0.9), rgba(10, 45, 92, 0.9)), 
+                        url('https://images.unsplash.com/photo-1518834103325-6725c4b54c14?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 8rem 2rem 6rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .services-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+        }
+        
+        .services-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .services-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-family: 'Georgia', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .services-hero p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+        
+        .service-cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            color: #0a2d5c;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ffaa00 0%, #ffd700 100%);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Services Container */
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Services Section */
+        .services-section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            color: #094a8c;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Georgia', serif;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* Service Card */
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(9, 74, 140, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e8f1ff;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(9, 74, 140, 0.15);
+        }
+        
+        .service-card-header {
+            background: linear-gradient(135deg, #094a8c 0%, #0a2d5c 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .service-card-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .service-time {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #ffd700;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        
+        .service-card-body {
+            padding: 2rem;
+        }
+        
+        .service-card-body p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-features {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .service-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #666;
+        }
+        
+        .service-features li i {
+            color: #094a8c;
+            font-size: 1.1rem;
+        }
+        
+        .service-card-footer {
+            padding: 1.5rem 2rem;
+            background: #f8fbff;
+            border-top: 1px solid #e8f1ff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .service-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #094a8c;
+            font-weight: 600;
+        }
+        
+        /* Friday Overnight Service Card */
+        .overnight-service {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #0a2d5c 0%, #094a8c 100%);
+            color: white;
+        }
+        
+        .overnight-service .service-card-header {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .overnight-service .service-icon {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        
+        .overnight-service .service-card-body {
+            background: transparent;
+        }
+        
+        .overnight-service .service-card-body p,
+        .overnight-service .service-features li {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .overnight-service .service-features li i {
+            color: #ffd700;
+        }
+        
+        .overnight-service .service-features li {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .overnight-service .service-card-footer {
+            background: rgba(255, 255, 255, 0.05);
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .overnight-service .service-location {
+            color: #ffd700;
+        }
+        
+        /* Schedule Section */
+        .schedule-section {
+            background: linear-gradient(135deg, #f8fbff 0%, #e8f1ff 100%);
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            margin: 4rem 0;
+        }
+        
+        .schedule-table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(9, 74, 140, 0.1);
+            margin-top: 2rem;
+        }
+        
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .schedule-table thead {
+            background: linear-gradient(135deg, #094a8c 0%, #0a2d5c 100%);
+        }
+        
+        .schedule-table th {
+            color: white;
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .schedule-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #e8f1ff;
+            color: #555;
+        }
+        
+        .schedule-table tr:hover {
+            background-color: #f8fbff;
+        }
+        
+        .service-tag {
+            background: #e8f1ff;
+            color: #094a8c;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        /* What to Expect Section */
+        .expect-section {
+            background: white;
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            margin: 4rem 0;
+            box-shadow: 0 5px 20px rgba(9, 74, 140, 0.1);
+            border: 1px solid #e8f1ff;
+        }
+        
+        .expect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .expect-item {
+            text-align: center;
+            padding: 2rem;
+            background: #f8fbff;
+            border-radius: 10px;
+            border: 1px solid #e8f1ff;
+            transition: all 0.3s ease;
+        }
+        
+        .expect-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(9, 74, 140, 0.1);
+        }
+        
+        .expect-item i {
+            font-size: 2.5rem;
+            color: #094a8c;
+            margin-bottom: 1.5rem;
+            background: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            border: 3px solid #e8f1ff;
+        }
+        
+        .expect-item h4 {
+            color: #094a8c;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .expect-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Ministries Section */
+        .ministries-section {
+            margin: 4rem 0;
+        }
+        
+        .ministries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .ministry-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(9, 74, 140, 0.1);
+            border: 1px solid #e8f1ff;
+            transition: all 0.3s ease;
+        }
+        
+        .ministry-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(9, 74, 140, 0.15);
+        }
+        
+        .ministry-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .ministry-card h3 {
+            color: #094a8c;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .ministry-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .ministry-link {
+            color: #094a8c;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .ministry-link:hover {
+            color: #ffd700;
+            gap: 0.8rem;
+        }
+        
+        /* Visiting Section */
+        .visiting-section {
+            background: linear-gradient(135deg, #f8fbff 0%, #e8f1ff 100%);
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            margin: 4rem 0;
+            text-align: center;
+        }
+        
+        .visiting-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .visiting-content h3 {
+            color: #094a8c;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .visiting-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .visiting-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .visiting-feature {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e8f1ff;
+        }
+        
+        .visiting-feature i {
+            font-size: 2rem;
+            color: #094a8c;
+            margin-bottom: 1rem;
+        }
+        
+        .visiting-feature h4 {
+            color: #094a8c;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Call to Action Section */
+        .cta-section {
+            background: linear-gradient(135deg, #094a8c 0%, #0a2d5c 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            margin: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+        }
+        
+        .cta-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 2;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* ====================================
+           RESPONSIVE DESIGN
+           ==================================== */
+        
+        @media (max-width: 992px) {
+            .services-hero {
+                padding: 6rem 1.5rem 4rem;
+                min-height: 50vh;
+            }
+            
+            .services-hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .services-container {
+                padding: 0 1.5rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .overnight-service {
+                grid-column: span 1;
+            }
+            
+            .expect-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .services-hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .services-hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .service-cta-buttons,
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .schedule-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .schedule-table th,
+            .schedule-table td {
+                padding: 0.8rem;
+            }
+            
+            .visiting-features {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .services-hero {
+                padding: 5rem 1rem 3rem;
+            }
+            
+            .services-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .services-hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+            }
+            
+            .service-card-header {
+                padding: 1.5rem;
+            }
+            
+            .service-card-body {
+                padding: 1.5rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+        }
+        /* ===== DESKTOP: HIDE SIDEBAR COMPLETELY ===== */
+@media (min-width: 992px) {
+  .mobile-nav,
+  .sidebar-overlay {
+    display: none !important;
+  }
+}
+
+.desktop-nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.desktop-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+/* Hide header when sidebar is open
+body.sidebar-open .site-header {
+  opacity: 0;
+  pointer-events: none;
+} */
+
+@media (max-width: 991px) {
+  .desktop-nav {
+    display: none !important;
+  }
+}
+.menu-toggle {
+    display: none;
+}
+@media (max-width: 991px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .desktop-nav {
+        display: none;
+    }
+}
+.menu-toggle {
+    display: none;
+}
+
+@media (min-width: 992px) {
+  .mobile-nav,
+  .sidebar-overlay,
+  .menu-toggle {
+    display: none !important;
+  }
+}
+  /* Active link styling */
+    nav a.active {
+      color: #ffd700;
+      background: rgba(255, 215, 0, 0.1);
+    }
+    /* Container for floating button and options */
+.floating-donate-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+}
+
+/* Main floating button */
+.floating-donate-btn {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.floating-donate-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+    background: linear-gradient(135deg, #ff8e8e, #ff6b6b);
+}
+
+.floating-donate-btn i {
+    font-size: 1.2rem;
+}
+
+/* Donate options menu (hidden by default) */
+.donate-options {
+    display: none;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.donate-options a {
+    background: #ff6b6b;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.donate-options a:hover {
+    background: #ff8e8e;
+}
+
+/* Mobile adjustment */
+@media (max-width: 768px) {
+    .floating-donate-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    .donate-options a {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+/* Navigation links */
+.nav-link {
+    color: #fff;              /* normal color */
+    text-decoration: none;
+    padding: 8px 15px;
+    display: inline-block;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    background-color: #f4f4f4;
+    color: #007bff;
+}
+
+/* Active page */
+.nav-link.active {
+    background-color: #0a0c0e;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+/* ===== MOBILE SIDEBAR ===== */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 260px;
+  height: 100vh;
+  background: #111;
+  color: #fff;
+  z-index: 1001;
+  padding: 20px;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+}
+
+    /* Smaller mobile */
+    @media (max-width: 480px) {
+        .main-nav {
+            width: 85%;
+            padding: 3rem 1.5rem 1.5rem;
+        }
+        
+        .main-nav nav a {
+            padding: 0.8rem 1.2rem;
+            font-size: 0.95rem;
+        }
+    }
+   .menu-toggle {
+    display: block ;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    z-index: 1000;
+}
+
+/* Keep sidebar always functional */
+.sidebar {
+  display: flex; /* normal sidebar display */
+  flex-direction: column;
+}
+.mobile-nav.active {
+  left: 0;
+}
+/* Close button */
+.menu-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+/* Links */
+.mobile-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mobile-nav li {
+  margin-bottom: 16px;
+}
+
+.mobile-nav a {
+    display: block;
+    padding: 12px 20px;
+    margin: 5px 10px;
+     background-color: #222;
+     border-radius: 8px; 
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+    /* Smaller mobile */
+    @media (max-width: 480px) {
+        .main-nav {
+            width: 85%;
+            padding: 3rem 1.5rem 1.5rem;
+        }
+        
+        .main-nav nav a {
+            padding: 0.8rem 1.2rem;
+            font-size: 0.95rem;
+        }
+    }
+
+    /* last */
+    /* ===== MOBILE SIDEBAR ===== */
+.mobile-nav {
+  position: fixed;
+  background-color: #0a0c0e;
+  top: 0;
+  left: -280px;
+  width: 260px;
+  height: 100vh;
+  background: #111;
+  color: #fff;
+  z-index: 1001;
+  padding: 20px;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+}
+
+.mobile-nav.active {
+  left: 0;
+}
+
+/* Close button */
+.menu-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+/* Links */
+.mobile-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mobile-nav li {
+  margin-bottom: 16px;
+}
+
+.mobile-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Overlay */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+    </style>
+    
+
+</head>
+<body>
+<!-- ====================================
+   HEADER - Same as your other pages
+   ==================================== -->
+<header class="site-header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="elvis.jpg" alt="Glory of Christ Church Logo" class="logo-img">
+            <div class="logo-text">
+                <div class="church-name">Glory of Christ Church</div>
+                <div class="church-tagline">Wakiso-Kayunga, Uganda</div>
+            </div>
+        </a>
+        
+        <!-- Mobile Menu Toggle -->
+        <button class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+      <!-- Mobile Sidebar Navigation (ONLY ONE) -->
+    <div class="mobile-nav" id="mobileNav">
+      <button class="menu-close" id="menuClose">×</button>
+      <ul>
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="info.html"><i class="fas fa-info-circle"></i> Info</a></li>
+        <li><a href="services.html"><i class="fas fa-hands-helping"></i> Services</a></li>
+        <li><a href="kids.html"><i class="fas fa-child"></i> Kids</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+        <li style="margin-top:20px;">
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- Overlay (ONLY ONE) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+      <ul>
+        <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="info.html" class="nav-link"><i class="fas fa-info-circle"></i> Info</a></li>
+        <li><a href="services.html" class="nav-link"><i class="fas fa-hands-helping"></i> Services</a></li>
+        <li><a href="kids.html" class="nav-link"><i class="fas fa-child"></i> Kids</a></li>
+        <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+            <!-- Donate Button in Navigation - REMOVED from services page -->
+        </nav>
+    </div>
+    <link rel="stylesheet" href="sidebar.css">
+
+</header>
+
+<!-- ====================================
+   SERVICES HERO SECTION
+   ==================================== -->
+<section class="services-hero">
+    <div class="services-hero-content">
+        <h1>Church Services & Worship Times</h1>
+        <p>Join us for powerful worship, prayer, and Bible teaching. Experience God's presence and grow in your faith through our regular services and special gatherings.</p>
+        <div class="service-cta-buttons">
+            <a href="#schedule" class="btn btn-primary">
+                <i class="fas fa-calendar-alt"></i>
+                View Service Schedule
+            </a>
+            <a href="https://maps.app.goo.gl/ECqcYutDMQvpGNqbA" class="btn btn-secondary">
+                <i class="fas fa-map-marker-alt"></i>
+                Plan Your Visit
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ====================================
+   MAIN SERVICES CONTENT
+   ==================================== -->
+<main class="services-container">
+    
+    <!-- Main Services Section -->
+    <section class="services-section">
+        <h2 class="section-title">Our Regular Services</h2>
+        <p class="section-subtitle">Join us for worship, prayer, and spiritual growth throughout the week</p>
+        
+        <div class="services-grid">
+            <!-- Sunday Main Service -->
+            <article class="service-card">
+                <div class="service-card-header">
+                    <div class="service-icon">
+                        <i class="fas fa-church"></i>
+                    </div>
+                    <h3>Sunday Main Service</h3>
+                    <div class="service-time">
+                        <i class="fas fa-clock"></i>
+                        Sundays at 9:00 AM
+                    </div>
+                </div>
+                <div class="service-card-body">
+                    <p>Our main weekly worship service with powerful praise, worship, and the teaching of God's Word. Experience God's presence and connect with our church family.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-music"></i> Anointed praise and worship</li>
+                        <li><i class="fas fa-bible"></i> Bible-based preaching</li>
+                        <li><i class="fas fa-pray"></i> Prayer and altar call</li>
+                        <li><i class="fas fa-child"></i> Children's ministry available</li>
+                        <li><i class="fas fa-coffee"></i> Fellowship after service</li>
+                    </ul>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-location">
+                        <i class="fas fa-map-marker-alt"></i> Main Sanctuary
+                    </span>
+                </div>
+            </article>
+            
+            <!-- Tuesday Prayer Service -->
+            <article class="service-card">
+                <div class="service-card-header">
+                    <div class="service-icon">
+                        <i class="fas fa-pray"></i>
+                    </div>
+                    <h3>Tuesday Prayer Service</h3>
+                    <div class="service-time">
+                        <i class="fas fa-clock"></i>
+                        Tuesdays at 5:00 PM
+                    </div>
+                </div>
+                <div class="service-card-body">
+                    <p>A dedicated time for corporate prayer where we intercede for the church, community, and nations. Experience the power of prayer and see God move.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-hands-praying"></i> Corporate intercession</li>
+                        <li><i class="fas fa-heart"></i> Personal prayer needs</li>
+                        <li><i class="fas fa-globe"></i> National concerns</li>
+                        <li><i class="fas fa-fire"></i> Spiritual warfare</li>
+                        <li><i class="fas fa-star"></i> Miracles and breakthroughs</li>
+                    </ul>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-location">
+                        <i class="fas fa-map-marker-alt"></i> Main Sanctuary
+                    </span>
+                </div>
+            </article>
+            
+            <!-- Wednesday Bible Study -->
+            <article class="service-card">
+                <div class="service-card-header">
+                    <div class="service-icon">
+                        <i class="fas fa-bible"></i>
+                    </div>
+                    <h3>Wednesday Bible Study</h3>
+                    <div class="service-time">
+                        <i class="fas fa-clock"></i>
+                        Wednesdays at 5:00 PM
+                    </div>
+                </div>
+                <div class="service-card-body">
+                    <p>Deep dive into God's Word with practical teaching and interactive discussion. Grow in your understanding of Scripture and Christian living.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-book-open"></i> Verse-by-verse teaching</li>
+                        <li><i class="fas fa-question-circle"></i> Q&A and discussion</li>
+                        <li><i class="fas fa-lightbulb"></i> Practical application</li>
+                        <li><i class="fas fa-user-graduate"></i> Discipleship training</li>
+                        <li><i class="fas fa-comments"></i> Small group interaction</li>
+                    </ul>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-location">
+                        <i class="fas fa-map-marker-alt"></i> Main Sanctuary
+                    </span>
+                </div>
+            </article>
+            
+            <!-- Friday Overnight Prayers -->
+            <article class="service-card overnight-service">
+                <div class="service-card-header">
+                    <div class="service-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <h3>Friday Overnight Prayers</h3>
+                    <div class="service-time">
+                        <i class="fas fa-clock"></i>
+                        Fridays at 9:00 PM
+                    </div>
+                </div>
+                <div class="service-card-body">
+                    <p>A powerful all-night prayer vigil where we seek God's face for breakthroughs, miracles, and spiritual refreshing. Experience God's presence through the night.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-praying-hands"></i> All-night prayer vigil</li>
+                        <li><i class="fas fa-fire"></i> Spiritual refreshing</li>
+                        <li><i class="fas fa-star"></i> Miracles and healings</li>
+                        <li><i class="fas fa-users"></i> Corporate worship</li>
+                        <li><i class="fas fa-sun"></i> Breakthrough at dawn</li>
+                    </ul>
+                </div>
+                <div class="service-card-footer">
+                    <span class="service-location">
+                        <i class="fas fa-map-marker-alt"></i> Main Sanctuary
+                    </span>
+                </div>
+            </article>
+        </div>
+    </section>
+    
+    <!-- Weekly Schedule -->
+    <section id="schedule" class="schedule-section">
+        <h2 class="section-title">Complete Annual Schedule</h2>
+        <p class="section-subtitle">Join us throughout the year for worship, prayer, and fellowship</p>
+        
+        <div class="schedule-table-container">
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Venue</th>
+                        <th>Month</th>
+                        <th>Date</th>
+                        <th>Dept</th>
+                        <th>Incharge</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Youth's week</td>
+                        <td>Church</td>
+                        <td>FEB</td>
+                        <td>9th</td>
+                        <td>Youths</td>
+                        <td>Pr. Muwanguzi S.</td>
+                        <td><span class="service-tag">Praise, Worship & Word</span></td>
+                    </tr>
+                    <tr>
+                        <td>Women's week</td>
+                        <td>Church</td>
+                        <td>FEB</td>
+                        <td>17th</td>
+                        <td>Women</td>
+                        <td>Sis Nabulime.</td>
+                        <td><span class="service-tag">counselling and Word</span></td>
+                    </tr>
+                    <tr>
+                        <td>Men's Week</td>
+                        <td>Church</td>
+                        <td>FEB</td>
+                        <td>23rd</td>
+                        <td>Men</td>
+                        <td>Mr Bagonza E.</td>
+                        <td><span class="service-tag">counselling and word</span></td>
+                    </tr>
+                    <tr>
+                        <td>Worship experience</td>
+                        <td>Church</td>
+                        <td>MAY</td>
+                        <td>25th</td>
+                        <td>Praise and Worship</td>
+                        <td>Worshipper Namusoke P.</td>
+                        <td><span class="service-tag">praise worship and word</span></td>
+                    </tr>
+                    <tr>
+                        <td>General Overnight</td>
+                        <td>Church</td>
+                        <td>JUN</td>
+                        <td>20th</td>
+                        <td>Pastoral</td>
+                        <td>Pr Harriet B.</td>
+                        <td><span class="service-tag">All night praise worship and word</span></td>
+                    </tr>
+                    <tr>
+                        <td>Youth's conference</td>
+                        <td>Church</td>
+                        <td>AUG</td>
+                        <td>10th</td>
+                        <td>Youths</td>
+                        <td>Pr. Muwanguzi S.</td>
+                        <td><span class="service-tag">praise worship and word</span></td>
+                    </tr>
+                    <tr>
+                        <td>Music Gala</td>
+                        <td>Church</td>
+                        <td>SEPT</td>
+                        <td>7th</td>
+                        <td>Healing streams</td>
+                        <td>Sis Promise N.</td>
+
+                        <td><span class="service-tag">Praise worship</span></td>
+                    </tr>
+                     <tr>
+                        <td>General Overnight</td>
+                        <td>Church</td>
+                        <td>SEPT</td>
+                        <td>19th</td>
+                        <td>Pastoral</td>
+                        <td>Pr. Harriet B.</td>
+
+                        <td><span class="service-tag">All night praise worship and word</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>Married conference</td>
+                        <td>Church</td>
+                        <td>SEPT</td>
+                        <td>29th</td>
+                        <td>Marrieds</td>
+                        <td>Pr. Christine K.</td>
+                        
+                        <td><span class="service-tag">Marriage counselling word</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Women's conference</td>
+                        <td>Church</td>
+                        <td>OCT</td>
+                        <td>19th</td>
+                        <td>Women</td>
+                        <td>Sis Nabulime</td>
+
+                        <td><span class="service-tag">counselling guidance and sharing</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>Thanks Giving</td>
+                        <td>Church</td>
+                        <td>NOV</td>
+                        <td>9th</td>
+                        <td>Pastoral</td>
+                        <td>Pr. Harriet B.</td>
+
+                        <td><span class="service-tag">Thanking the LORD</span></td>
+                    </tr>
+                    <tr>
+                        <td>Family Day</td>
+                        <td>Church</td>
+                        <td>NOV</td>
+                        <td>30th</td>
+                        <td>Pastoral</td>
+                        <td>Pr. Harriet B.</td>
+
+                        <td><span class="service-tag">Gathering with families</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>Bible Quiz</td>
+                        <td>Church</td>
+                        <td>DEC</td>
+                        <td>1st</td>
+                        <td>Lineages</td>
+                        <td>Pr. Harriet B.</td>
+
+                        <td><span class="service-tag">Lineage competitions</span></td>
+                    </tr>
+
+
+
+
+                    
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+    <!-- What to Expect Section -->
+    <section id="visit" class="expect-section">
+        <h2 class="section-title">What to Expect When You Visit</h2>
+        <p class="section-subtitle">We want you to feel welcome and comfortable when you join us</p>
+        
+        <div class="expect-grid">
+            <div class="expect-item">
+                <i class="fas fa-smile"></i>
+                <h4>Warm Welcome</h4>
+                <p>Our greeters will welcome you with a smile and help you find your way around our church facilities.</p>
+            </div>
+            
+            <div class="expect-item">
+                <i class="fas fa-music"></i>
+                <h4>Spirit-filled Worship</h4>
+                <p>Experience powerful praise and worship that ushers you into God's presence and prepares your heart for the Word.</p>
+            </div>
+            
+            <div class="expect-item">
+                <i class="fas fa-bible"></i>
+                <h4>Biblical Preaching</h4>
+                <p>Hear relevant, practical messages from God's Word that apply to everyday life and spiritual growth.</p>
+            </div>
+            
+            <div class="expect-item">
+                <i class="fas fa-child"></i>
+                <h4>Children's Ministry</h4>
+                <p>Safe, age-appropriate programs for children during all services so the whole family can worship.</p>
+                <p></p>
+            </div>
+            
+            <div class="expect-item">
+                <i class="fas fa-coffee"></i>
+                <h4>Fellowship</h4>
+                <p>Connect with others over refreshments after service and build meaningful relationships.</p>
+            </div>
+            
+            <div class="expect-item">
+                <i class="fas fa-pray"></i>
+                <h4>Prayer Ministry</h4>
+                <p>Receive prayer for your needs at the altar or from our prayer team members.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Special Ministries -->
+    <section class="ministries-section">
+        <h2 class="section-title">Special Ministries & Programs</h2>
+        <p class="section-subtitle">We have ministries for every age and stage of spiritual journey</p>
+        
+        <div class="ministries-grid">
+            <div class="ministry-card">
+                <div class="ministry-icon" style="background-color: #094a8c;">
+                    <i class="fas fa-child"></i>
+                </div>
+                <h3>Children's Ministry</h3>
+                <p>Age-appropriate Bible teaching, worship, and activities for children during all service times.</p>
+                <a href="info.html" class="ministry-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="ministry-card">
+                <div class="ministry-icon" style="background-color: #ffd700;">
+                    <i class="fas fa-music"></i>
+                </div>
+                <h3>Music Ministry</h3>
+                <p>Join our choir, praise team, or band. Opportunities for singers and instrumentalists of all skill levels.</p>
+                <a href="info.html" class="ministry-link">Join Us <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="ministry-card">
+                <div class="ministry-icon" style="background-color: #e74c3c;">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h3>Outreach Ministry</h3>
+                <p>Local mission projects, evangelism, and community service opportunities throughout Wakiso.</p>
+                <a href="info.html" class="ministry-link">Serve With Us <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="ministry-card">
+                <div class="ministry-icon" style="background-color: #2ecc71;">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3>Discipleship Classes</h3>
+                <p>New believers classes, baptism preparation, and discipleship training for spiritual growth.</p>
+                <a href="info.html" class="ministry-link">Get Connected <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Visiting Information -->
+    <section class="visiting-section">
+        <div class="visiting-content">
+            <h3>Planning Your First Visit?</h3>
+            <p>We're excited to welcome you to Glory of Christ Church! Whether you're visiting for the first time or looking for a church home, we want your experience to be meaningful and comfortable.</p>
+            
+            <div class="visiting-features">
+                <div class="visiting-feature">
+                    <i class="fas fa-clock"></i>
+                    <h4>Arrival Time</h4>
+                    <p>Arrive early to find parking and get settled.</p>
+                </div>
+                
+                <div class="visiting-feature">
+                    <i class="fas fa-tshirt"></i>
+                    <h4>Dress</h4>
+                    <p>Come as you are! We welcome everything from casual to traditional attire.</p>
+                </div>
+                
+                <div class="visiting-feature">
+                    <i class="fas fa-parking"></i>
+                    <h4>Parking</h4>
+                    <p>Ample parking available. Look for our visitor parking spots near the main route.</p>
+                </div>
+                
+                <div class="visiting-feature">
+                    <i class="fas fa-info-circle"></i>
+                    <h4>Information Desk</h4>
+                    <p>Stop by our ushers for information and assistance.</p>
+                </div>
+            </div>
+
+            <a href="https://maps.app.goo.gl/ECqcYutDMQvpGNqbA" target="_blank" class="btn btn-primary" style="padding: 0.8rem 1.5rem;">
+                <i class="fas fa-map-marker-alt"></i>
+                Get Directions
+            </a>
+        </div>
+    </section>
+    
+    <!-- Call to Action Section (replaces donation section) -->
+    <section class="cta-section">
+        <h2>Join Us This Week</h2>
+        <p>Whether you're new to church or looking for a place to grow in your faith, we invite you to worship with us. Experience God's presence and connect with a community that cares.</p>
+        
+        <div class="cta-buttons">
+            <a href="#schedule" class="btn btn-primary">
+                <i class="fas fa-calendar-check"></i>
+                View Service Times
+            </a>
+            <a href="contact.html" class="btn btn-secondary">
+                <i class="fas fa-directions"></i>
+                Get Directions
+            </a>
+        </div>
+    </section>
+</main>
+
+<!-- ====================================
+   FOOTER - Same as your other pages
+   ==================================== -->
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Glory of Christ Church</h3>
+            <p>A place of worship, fellowship, and transformation. Where God's glory is revealed and lives are changed.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li><a href="index.html" style="color: white; text-decoration: none;">Home</a></li>
+                <li><a href="info.html" style="color: white; text-decoration: none;">Church Info</a></li>
+                <li><a href="services.html" style="color: white; text-decoration: none;">Services</a></li>
+                <li><a href="kids.html" style="color: #f0f0f0; text-decoration: none ;"></i>Kids</a></li>
+                <li><a href="contact.html" style="color: white; text-decoration: none;">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Service Times</h3>
+            <p>Sunday Worship: 9:00 AM</p>
+            <p>Tuesday Prayers: 3:00 PM</p>
+            <p>Wednesday Bible Study: 5:00 PM</p>
+            <p>Friday Overnight: 9:00 PM</p>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Us</h3>
+            <p>📍 Wakiso-Kayunga Nayasa Road, Uganda</p>
+            <p>📞 +256 700 592 303</p>
+            <p>✉️ wakisogloryofchristchurch@gmail.com</p>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Glory of Christ Church. All Rights Reserved.</p>
+        <p>"Where we worship in spirit and in truth" - John 4:24</p>
+        <p style="text-align:center; font-size:14px; color:#555;">
+    &copy; 2026 <strong>Lvis Technologies</strong>. All rights reserved.
+</p>
+    </div>
+</footer>
+
+<!-- Mobile Overlay for Menu -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- ====================================
+   JAVASCRIPT
+   ==================================== -->
+<script>
+    // Mobile menu functionality
+  // Mobile menu functionality
+const menuToggle = document.getElementById('menuToggle'); // Your hamburger button
+const mobileNav = document.getElementById('mobileNav');   // Updated ID
+const menuClose = document.getElementById('menuClose');   // Close button
+
+if (menuToggle && mobileNav) {
+    // Open mobile menu
+    menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mobileNav.classList.add('active');
+    });
+
+    // Close menu when clicking the close button
+    if (menuClose) {
+        menuClose.addEventListener('click', function() {
+            mobileNav.classList.remove('active');
+        });
+    }
+
+    // Close menu when clicking a link
+    mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() {
+            mobileNav.classList.remove('active');
+        });
+    });
+
+    // Close menu with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            mobileNav.classList.remove('active');
+        }
+    });
+}
+
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            
+            if (href.startsWith('#') && href.length > 1) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                
+                if (target) {
+                    const headerHeight = document.querySelector('.site-header')?.offsetHeight || 0;
+                    const top = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+                    
+                    window.scrollTo({
+                        top: top,
+                        behavior: 'smooth'
+                    });
+                    
+                    history.pushState(null, null, href);
+                }
+            }
+        });
+    });
+
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Highlight active link
+    const currentPage = 'services.html';
+    document.querySelectorAll('.nav-link').forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+</script>
+   <!-- Floating Donate Button -->
+<div class="floating-donate-container">
+    <a href="#" class="floating-donate-btn">
+        <i class="fas fa-heart"></i> Donate
+    </a>
+    <div class="donate-options">
+        <a href="tel:*165#" class="mtn-donate">MTN Mobile Money</a>
+        <a href="tel:*185#" class="airtel-donate">Airtel Money</a>
+    </div>
+</div>
+
+<script>
+    const donateBtn = document.querySelector('.floating-donate-btn');
+    const donateOptions = document.querySelector('.donate-options');
+
+    donateBtn.addEventListener('click', function(e){
+        e.preventDefault(); // prevent default link behavior
+        donateOptions.style.display = donateOptions.style.display === 'flex' ? 'none' : 'flex';
+    });
+</script>
+<!-- 
+  // Highlight the current nav link -->
+<script src="script.js"></script>
+
+</body>
