@@ -1,13 +1,14 @@
 // ============================================================
 //  GCC Church PWA — Service Worker
-//  Handles: caching, offline support, push notifications
+//  Fixed for subfolder: /app/
 // ============================================================
 
 const CACHE_NAME = 'gcc-church-v1';
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
+  '/GCCwakiso/app/',
+  '/GCCwakiso/app/index.html',
+  '/GCCwakiso/app/manifest.json',
+  '/GCCwakiso/app/firebase.js',
   'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap'
 ];
 
@@ -51,10 +52,10 @@ self.addEventListener('push', event => {
   const title   = data.title   || 'Glory of Christ Church';
   const options = {
     body:    data.body    || 'You have a new notification.',
-    icon:    data.icon    || '/icons/icon-192.png',
-    badge:   '/icons/icon-72.png',
+    icon:    data.icon    || '/GCCwakiso/app/icons/icon-192.png',
+    badge:   '/GCCwakiso/app/icons/icon-72.png',
     vibrate: [200, 100, 200],
-    data:    { url: data.url || '/' },
+    data:    { url: data.url || '/GCCwakiso/app/' },
     actions: [
       { action: 'open',    title: 'Open App' },
       { action: 'dismiss', title: 'Dismiss'  }
@@ -68,6 +69,6 @@ self.addEventListener('notificationclick', event => {
   event.notification.close();
   if (event.action === 'dismiss') return;
   event.waitUntil(
-    clients.openWindow(event.notification.data.url || '/')
+    clients.openWindow(event.notification.data.url || '/GCCwakiso/app/')
   );
 });

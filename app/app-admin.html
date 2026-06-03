@@ -1092,7 +1092,7 @@
           <div class="topbar-badge" id="fbStatus">
             <span>●</span> Firebase Connected
           </div>
-          <a href="index.html" target="_blank" class="view-app-btn">
+          <a href="https://wakisogloryofchristchurch-cyber.github.io/GCCwakiso/app/" target="_blank" class="view-app-btn">
             📱 Preview App
           </a>
         </div>
@@ -1917,8 +1917,8 @@
               <div class="a-card">
                 <div class="a-card-head"><h3>🔗 Quick Links</h3></div>
                 <div class="a-card-body" style="display:flex; flex-direction:column; gap:0.6rem;">
-                  <a href="index.html" target="_blank"><button class="btn btn-ghost btn-full">📱 Open App</button></a>
-                  <a href="../glory-of-christ-church/admin.html" target="_blank"><button class="btn btn-ghost btn-full">🌐 Website Admin</button></a>
+                  <a href="https://wakisogloryofchristchurch-cyber.github.io/GCCwakiso/app/" target="_blank"><button class="btn btn-ghost btn-full">📱 Open App</button></a>
+                  <a href="https://wakisogloryofchristchurch-cyber.github.io/GCCwakiso/admin.html" target="_blank"><button class="btn btn-ghost btn-full">🌐 Website Admin</button></a>
                   <a href="https://console.firebase.google.com" target="_blank"><button class="btn btn-ghost btn-full">🔥 Firebase Console</button></a>
                   <a href="https://app.netlify.com" target="_blank"><button class="btn btn-ghost btn-full">🚀 Netlify Deploy</button></a>
                 </div>
@@ -1939,7 +1939,7 @@
      FIREBASE + APP SCRIPT
 ============================================================ -->
 <script type="module">
-  import { auth, db, storage } from './firebase.js';
+  import { auth, db } from './firebase.js';
   import {
     signInWithEmailAndPassword, signOut, onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -1947,19 +1947,19 @@
     collection, addDoc, getDocs, deleteDoc, doc,
     orderBy, query, serverTimestamp, Timestamp, limit, where, setDoc, getDoc
   } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  import {
-    ref, uploadBytesResumable, getDownloadURL
-  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+  // ============================================================
+  //  CLOUDINARY CONFIG — droecocgs / GCC wakiso preset
+  // ============================================================
+  window.CLOUDINARY_CLOUD  = 'droecocgs';
+  window.CLOUDINARY_PRESET = 'GCC wakiso';
 
   // Expose globals needed by inline onclick handlers
-  window._db = db; window._storage = storage; window._auth = auth;
+  window._db = db; window._auth = auth;
   window._addDoc = addDoc; window._getDocs = getDocs; window._deleteDoc = deleteDoc;
   window._doc = doc; window._query = query; window._collection = collection;
   window._orderBy = orderBy; window._serverTimestamp = serverTimestamp;
   window._Timestamp = Timestamp; window._limit = limit; window._where = where;
   window._setDoc = setDoc; window._getDoc = getDoc;
-  window._ref = ref; window._uploadBytesResumable = uploadBytesResumable;
-  window._getDownloadURL = getDownloadURL;
 
   // ===== AUTH STATE =====
   onAuthStateChanged(auth, user => {
@@ -2107,7 +2107,7 @@
     if (!title || !dateVal) { toast('Title and date are required','error'); return; }
     try {
       let image = '';
-      if (file) image = await uploadFile(file, `events/${Date.now()}_${file.name}`, 'eUploadBar', 'eUploadProg');
+      if (file) image = await uploadToCloudinary(file, 'eUploadBar', 'eUploadProg', 'gcc-church/events');
       const evtData = { title, date: Timestamp.fromDate(new Date(dateVal)), time, location, description: desc, type, image, createdAt: serverTimestamp() };
       await addDoc(collection(db,'events'), evtData);
       if (sendNotif) {
@@ -2264,27 +2264,58 @@
     } catch { toast('Saved! (Configure Firebase to persist)','info'); }
   };
 
-  // ===== UPLOAD FILE =====
-  async function uploadFile(file, path, barId, wrapId) {
+  // ===== CLOUDINARY UPLOAD =====
+  // Uses unsigned upload preset — no backend needed
+  async function uploadToCloudinary(file, barId, wrapId, folder = 'gcc-church') {
     return new Promise((resolve, reject) => {
-      const storageRef = _ref(storage, path);
-      const task = _uploadBytesResumable(storageRef, file);
-      document.getElementById(wrapId).style.display = 'block';
-      task.on('state_changed',
-        snap => { document.getElementById(barId).style.width = (snap.bytesTransferred/snap.totalBytes*100)+'%'; },
-        reject,
-        async () => { document.getElementById(wrapId).style.display='none'; resolve(await _getDownloadURL(task.snapshot.ref)); }
-      );
+      const url  = `https://api.cloudinary.com/v1_1/${window.CLOUDINARY_CLOUD}/image/upload`;
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', window.CLOUDINARY_PRESET);
+      data.append('folder', folder);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+
+      // Show progress bar
+      if (wrapId) document.getElementById(wrapId).style.display = 'block';
+
+      xhr.upload.onprogress = e => {
+        if (e.lengthComputable && barId) {
+          const pct = Math.round((e.loaded / e.total) * 100);
+          document.getElementById(barId).style.width = pct + '%';
+        }
+      };
+
+      xhr.onload = () => {
+        if (wrapId) document.getElementById(wrapId).style.display = 'none';
+        if (xhr.status === 200) {
+          const res = JSON.parse(xhr.responseText);
+          resolve(res.secure_url);
+        } else {
+          reject(new Error('Cloudinary upload failed: ' + xhr.responseText));
+        }
+      };
+
+      xhr.onerror = () => reject(new Error('Network error during upload'));
+      xhr.send(data);
     });
   }
 
   window.uploadSlide = async function() {
     const file = document.getElementById('slideImageFile').files[0];
-    if (!file) { toast('Select an image first','error'); return; }
+    if (!file) { toast('Select an image first', 'error'); return; }
     try {
-      const url = await uploadFile(file, `slides/${Date.now()}_${file.name}`, 'slideUploadBar', 'slideUploadProg');
-      toast('Slide uploaded! 🖼️','success');
-    } catch { toast('Upload failed. Check Firebase Storage.','error'); }
+      toast('Uploading slide...', 'info');
+      const url = await uploadToCloudinary(file, 'slideUploadBar', 'slideUploadProg', 'gcc-church/slides');
+      // Save slide URL to Firestore
+      await addDoc(collection(db, 'app-slides'), { url, name: file.name, createdAt: serverTimestamp() });
+      toast('Slide uploaded & saved! 🖼️', 'success');
+      document.getElementById('slideImageFile').value = '';
+    } catch(e) {
+      console.error(e);
+      toast('Upload failed: ' + e.message, 'error');
+    }
   };
 
   // ===== DELETE =====

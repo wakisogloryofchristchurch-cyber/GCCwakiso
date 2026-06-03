@@ -1,29 +1,29 @@
 // ============================================================
 //  GLORY OF CHRIST CHURCH — firebase.js
-//  Replace the firebaseConfig object with YOUR project values
-//  from: Firebase Console → Project Settings → Your Apps
+//  Firestore + Auth only (images handled by Cloudinary)
 // ============================================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getStorage }     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-import { getAuth }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getAnalytics } from "firebase/analytics";
+import { getFirestore }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth }       from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-//firebaseConfig object from Firebase Console → Project Settings → Your Apps
 const firebaseConfig = {
-  apiKey: "AIzaSyBBii2Bs0SBTxJ6Ysmy_5_EUtbGWDQkN68",
-  authDomain: "gccwakiso.firebaseapp.com",
-  projectId: "gccwakiso",
-  storageBucket: "gccwakiso.firebasestorage.app",
+  apiKey:            "AIzaSyBBii2Bs0SBTxJ6Ysmy_5_EUtbGWDQkN68",
+  authDomain:        "gccwakiso.firebaseapp.com",
+  projectId:         "gccwakiso",
+  storageBucket:     "gccwakiso.firebasestorage.app",
   messagingSenderId: "588553829106",
-  appId: "1:588553829106:web:30a805ac74f685cdb0ee6b",
-  measurementId: "G-4YWMXYTZTB"
+  appId:             "1:588553829106:web:30a805ac74f685cdb0ee6b",
+  measurementId:     "G-4YWMXYTZTB"
 };
 
-const app  = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-export const db      = getFirestore(app);
-export const storage = getStorage(app);
-export const auth    = getAuth(app);
-export const analytics = getAnalytics(app);
+export const db   = getFirestore(app);
+export const auth = getAuth(app);
+
+// ============================================================
+//  IMAGE UPLOADS → Cloudinary (not Firebase Storage)
+//  Cloud Name:    droecocgs
+//  Upload Preset: GCC wakiso  (unsigned)
+// ============================================================
