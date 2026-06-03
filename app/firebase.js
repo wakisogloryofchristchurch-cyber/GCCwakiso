@@ -8,15 +8,17 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getFirestore }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getStorage }     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 import { getAuth }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAnalytics } from "firebase/analytics";
 
-// ⬇️  REPLACE with your Firebase project config
+//firebaseConfig object from Firebase Console → Project Settings → Your Apps
 const firebaseConfig = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_PROJECT.firebaseapp.com",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId:             "YOUR_APP_ID"
+  apiKey: "AIzaSyBBii2Bs0SBTxJ6Ysmy_5_EUtbGWDQkN68",
+  authDomain: "gccwakiso.firebaseapp.com",
+  projectId: "gccwakiso",
+  storageBucket: "gccwakiso.firebasestorage.app",
+  messagingSenderId: "588553829106",
+  appId: "1:588553829106:web:30a805ac74f685cdb0ee6b",
+  measurementId: "G-4YWMXYTZTB"
 };
 
 const app  = initializeApp(firebaseConfig);
@@ -24,3 +26,4 @@ const app  = initializeApp(firebaseConfig);
 export const db      = getFirestore(app);
 export const storage = getStorage(app);
 export const auth    = getAuth(app);
+export const analytics = getAnalytics(app);
