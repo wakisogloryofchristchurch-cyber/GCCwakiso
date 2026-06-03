@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="GCC Church">
+  <meta name="theme-color" content="#0b1f3a">
+  <meta name="description" content="Glory of Christ Church Wakiso-Kayunga official app">
+
+  <title>GCC Church</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="apple-touch-startup-image" href="icons/icon-512.png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN DIRECTION: Sacred Dark — Premium church app
+       Deep navy + warm gold + pure white on dark glass surfaces
+       Native iOS/Android feel with spiritual warmth
+    ============================================================ */
+
+    :root {
+      --navy:     #0b1f3a;
+      --navy2:    #0f2748;
+      --navy3:    #162f57;
+      --gold:     #c8922a;
+      --gold-lt:  #e8b84b;
+      --gold-glow:rgba(200,146,42,0.25);
+      --white:    #ffffff;
+      --off-white:#f5f0e8;
+      --text:     #e8e2d6;
+      --muted:    rgba(232,226,214,0.55);
+      --card-bg:  rgba(255,255,255,0.06);
+      --card-bdr: rgba(200,146,42,0.18);
+      --glass:    rgba(11,31,58,0.85);
+      --red:      #e74c3c;
+      --green:    #27ae60;
+      --radius:   16px;
+      --radius-sm:10px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bot: env(safe-area-inset-bottom, 0px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== APP SHELL ===== */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      max-width: 430px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      background: var(--navy);
+    }
+
+    /* ===== STATUS BAR SPACER ===== */
+    .status-bar {
+      height: var(--safe-top);
+      background: var(--navy);
+      flex-shrink: 0;
+    }
+
+    /* ===== SCREENS ===== */
+    #screens {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(30px);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .screen::-webkit-scrollbar { display: none; }
+
+    .screen.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(0);
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+      flex-shrink: 0;
+      background: rgba(10,18,35,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(200,146,42,0.12);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-around;
+      padding: 8px 0 calc(8px + var(--safe-bot));
+      position: relative;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      padding: 4px 12px;
+      border-radius: 12px;
+      transition: all 0.2s;
+      min-width: 56px;
+      border: none;
+      background: none;
+    }
+
+    .nav-item .nav-icon {
+      font-size: 1.45rem;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      display: block;
+    }
+
+    .nav-item .nav-label {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .nav-item.active .nav-icon { transform: scale(1.18) translateY(-2px); }
+    .nav-item.active .nav-label { color: var(--gold-lt); }
+
+    .nav-item .nav-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-top: 2px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .nav-item.active .nav-dot { opacity: 1; }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; line-height: 1.2; }
+
+    .screen-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-bdr);
+      border-radius: var(--radius);
+      backdrop-filter: blur(8px);
+      overflow: hidden;
+    }
+
+    .card-press {
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      cursor: pointer;
+    }
+    .card-press:active { transform: scale(0.97); opacity: 0.85; }
+
+    /* ===== PILL BADGE ===== */
+    .pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .pill-gold  { background: rgba(200,146,42,0.2); color: var(--gold-lt); border: 1px solid var(--gold-bdr, rgba(200,146,42,0.3)); }
+    .pill-blue  { background: rgba(59,130,246,0.2); color: #93c5fd; }
+    .pill-green { background: rgba(39,174,96,0.2);  color: #6ee7b7; }
+    .pill-red   { background: rgba(231,76,60,0.2);  color: #fca5a5; }
+
+    /* ===== DIVIDER ===== */
+    .gold-bar { width: 36px; height: 3px; background: var(--gold); border-radius: 2px; }
+
+    /* ===== BUTTON ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 13px 24px;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-gold  { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: var(--gold-lt); }
+    .btn-ghost { background: var(--card-bg); color: var(--text); border: 1px solid var(--card-bdr); }
+    .btn-full  { width: 100%; }
+
+    /* ===== FORM ===== */
+    .form-field {
+      margin-bottom: 1rem;
+    }
+    .form-field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border: 1.5px solid rgba(200,146,42,0.2);
+      border-radius: 10px;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus { border-color: var(--gold); }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: var(--muted); }
+    .form-field select option { background: var(--navy2); }
+
+    /* ===== TOGGLE SWITCH ===== */
+    .toggle {
+      width: 46px; height: 26px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 13px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+      flex-shrink: 0;
+    }
+    .toggle::after {
+      content: '';
+      position: absolute;
+      width: 20px; height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      top: 3px; left: 3px;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .toggle.on { background: var(--gold); }
+    .toggle.on::after { transform: translateX(20px); }
+
+    /* ===== SEPARATOR ===== */
+    .sep { height: 1px; background: rgba(255,255,255,0.07); margin: 0.6rem 0; }
+
+    /* ============================================================
+       SCREEN: HOME
+    ============================================================ */
+    #screen-home .hero-wrap {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .hero-slide-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .hero-slide-img.active { opacity: 1; }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(11,31,58,0.3) 0%, rgba(11,31,58,0.92) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.2rem 1.4rem;
+    }
+
+    .hero-greeting {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-lt);
+      margin-bottom: 4px;
+    }
+
+    .hero-verse {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      color: var(--white);
+      font-style: italic;
+      line-height: 1.35;
+    }
+
+    .hero-verse-ref {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .hero-dots-wrap {
+      position: absolute;
+      bottom: 10px; right: 14px;
+      display: flex; gap: 5px;
+    }
+
+    .hero-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: all 0.3s;
+    }
+    .hero-dot.active { background: var(--gold-lt); width: 14px; border-radius: 3px; }
+
+    /* Quick stat row */
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+      padding: 1rem 1rem 0;
+    }
+
+    .qs-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-bdr);
+      border-radius: 12px;
+      padding: 0.8rem 0.4rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .qs-item:active { transform: scale(0.95); }
+
+    .qs-icon { font-size: 1.3rem; margin-bottom: 3px; }
+    .qs-label { font-size: 0.6rem; font-weight: 600; color: var(--muted); letter-spacing: 0.05em; }
+
+    /* Next service card */
+    .next-service {
+      margin: 1rem;
+      padding: 1.2rem;
+      background: linear-gradient(135deg, rgba(200,146,42,0.18), rgba(200,146,42,0.06));
+      border: 1px solid rgba(200,146,42,0.35);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .next-svc-icon {
+      width: 52px; height: 52px;
+      background: var(--gold);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .next-svc-label { font-size: 0.7rem; color: var(--gold); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+    .next-svc-name  { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--white); margin: 2px 0; }
+    .next-svc-time  { font-size: 0.82rem; color: var(--muted); }
+    .next-svc-arrow { margin-left: auto; color: var(--gold); font-size: 1.2rem; }
+
+    /* Section */
+    .home-section { padding: 0 1rem; margin-top: 1.4rem; }
+    .home-sec-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; }
+    .home-sec-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--white); }
+    .home-sec-more { font-size: 0.78rem; color: var(--gold); font-weight: 500; cursor: pointer; }
+
+    /* Mini event card */
+    .mini-event {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+    }
+
+    .mini-event-date {
+      width: 44px; height: 48px;
+      background: var(--navy3);
+      border-radius: 10px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid var(--card-bdr);
+    }
+    .mini-event-day   { font-size: 1.1rem; font-weight: 700; color: var(--gold-lt); line-height: 1; }
+    .mini-event-month { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+
+    .mini-event-info { flex: 1; }
+    .mini-event-title { font-size: 0.9rem; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+    .mini-event-sub   { font-size: 0.75rem; color: var(--muted); }
+
+    /* Mini sermon */
+    .mini-sermon {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.9rem;
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+    }
+
+    .play-circle {
+      width: 44px; height: 44px;
+      background: rgba(200,146,42,0.15);
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      color: var(--gold-lt);
+    }
+
+    .mini-sermon-title { font-size: 0.88rem; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+    .mini-sermon-sub   { font-size: 0.75rem; color: var(--muted); }
+
+    /* ============================================================
+       SCREEN: EVENTS (Calendar)
+    ============================================================ */
+    #screen-events {
+      padding: 0;
+    }
+
+    .events-header {
+      padding: 1.2rem 1.2rem 0;
+    }
+
+    /* Mini Calendar */
+    .calendar-wrap {
+      margin: 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-bdr);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+
+    .cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .cal-month {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--white);
+    }
+
+    .cal-nav {
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-size: 1.2rem;
+      cursor: pointer;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .cal-nav:hover { background: var(--gold-glow); }
+
+    .cal-days-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .cal-day-name {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      padding: 4px 0;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+    }
+
+    .cal-cell {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      cursor: pointer;
+      position: relative;
+      font-size: 0.85rem;
+      color: var(--text);
+      transition: background 0.15s;
+    }
+    .cal-cell:hover { background: rgba(200,146,42,0.1); }
+    .cal-cell.other-month { color: rgba(255,255,255,0.2); }
+    .cal-cell.today { background: rgba(200,146,42,0.15); color: var(--gold-lt); font-weight: 700; }
+    .cal-cell.has-event::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+    .cal-cell.selected {
+      background: var(--gold) !important;
+      color: var(--navy) !important;
+      font-weight: 700;
+    }
+
+    /* Event list */
+    .events-list { padding: 0 1rem; }
+
+    .event-card-full {
+      padding: 1.1rem;
+      margin-bottom: 0.8rem;
+      cursor: pointer;
+    }
+
+    .event-card-top {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+    }
+
+    .event-date-block {
+      width: 50px; height: 54px;
+      background: var(--navy3);
+      border-radius: 10px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .edb-day { font-size: 1.3rem; font-weight: 700; color: var(--gold-lt); line-height: 1; }
+    .edb-mon { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+
+    .event-info { flex: 1; }
+    .event-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--white); margin-bottom: 4px; }
+    .event-meta  { font-size: 0.78rem; color: var(--muted); line-height: 1.8; }
+    .event-desc  { font-size: 0.82rem; color: rgba(232,226,214,0.65); margin-top: 0.5rem; line-height: 1.6; }
+
+    .remind-btn {
+      margin-top: 0.8rem;
+      font-size: 0.8rem;
+      padding: 8px 14px;
+    }
+
+    /* ============================================================
+       SCREEN: SERMONS
+    ============================================================ */
+    .sermons-header { padding: 1.2rem 1.2rem 0; }
+
+    .sermon-filter {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.8rem 1rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .sermon-filter::-webkit-scrollbar { display: none; }
+
+    .filter-pill {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1px solid var(--card-bdr);
+      background: var(--card-bg);
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .filter-pill.active {
+      background: var(--gold);
+      color: var(--navy);
+      border-color: var(--gold);
+    }
+
+    .sermons-list-wrap { padding: 0 1rem; }
+
+    .sermon-card {
+      padding: 1.1rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      gap: 0.9rem;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .sermon-thumb {
+      width: 56px; height: 56px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy3), var(--navy2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      border: 1px solid var(--card-bdr);
+    }
+
+    .sermon-info { flex: 1; min-width: 0; }
+    .sermon-title { font-size: 0.92rem; font-weight: 600; color: var(--white); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sermon-meta  { font-size: 0.75rem; color: var(--muted); margin-bottom: 4px; }
+
+    .sermon-play-btn {
+      width: 36px; height: 36px;
+      background: var(--gold);
+      border: none;
+      border-radius: 50%;
+      color: var(--navy);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .sermon-play-btn:active { transform: scale(0.9); }
+
+    /* Audio Player Bar */
+    .player-bar {
+      position: fixed;
+      bottom: calc(65px + var(--safe-bot));
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      width: calc(100% - 2rem);
+      max-width: 398px;
+      background: rgba(15, 39, 72, 0.97);
+      border: 1px solid rgba(200,146,42,0.3);
+      border-radius: 16px;
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      backdrop-filter: blur(20px);
+      z-index: 90;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 -4px 30px rgba(0,0,0,0.4);
+    }
+
+    .player-bar.visible { transform: translateX(-50%) translateY(0); }
+
+    .player-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .player-info { flex: 1; min-width: 0; }
+    .player-title { font-size: 0.82rem; font-weight: 600; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .player-speaker { font-size: 0.7rem; color: var(--muted); }
+    .player-progress {
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+    .player-bar-fill { height: 100%; background: var(--gold); border-radius: 2px; width: 0%; transition: width 0.5s linear; }
+
+    .player-btn {
+      background: var(--gold);
+      border: none;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      color: var(--navy);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .player-btn:active { transform: scale(0.9); }
+
+    .player-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1rem;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       SCREEN: REMINDERS
+    ============================================================ */
+    .reminders-header { padding: 1.2rem 1.2rem 0; }
+
+    .add-reminder-card {
+      margin: 1rem;
+      padding: 1.2rem;
+    }
+
+    .add-reminder-card h3 {
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .reminders-list { padding: 0 1rem; }
+
+    .reminder-item {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1rem 1.1rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .reminder-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .ri-prayer  { background: rgba(200,146,42,0.15); }
+    .ri-event   { background: rgba(59,130,246,0.15); }
+    .ri-sermon  { background: rgba(39,174,96,0.15);  }
+    .ri-custom  { background: rgba(167,139,250,0.15);}
+
+    .reminder-info { flex: 1; }
+    .reminder-title { font-size: 0.9rem; font-weight: 600; color: var(--white); }
+    .reminder-sub   { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
+
+    .reminder-del {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      transition: color 0.2s;
+    }
+    .reminder-del:hover { color: var(--red); }
+
+    /* ============================================================
+       SCREEN: GIVE
+    ============================================================ */
+    .give-header {
+      padding: 1.2rem 1.2rem 0;
+    }
+
+    .give-hero {
+      margin: 1rem;
+      padding: 1.8rem;
+      background: linear-gradient(135deg, rgba(200,146,42,0.22) 0%, rgba(200,146,42,0.06) 100%);
+      border: 1px solid rgba(200,146,42,0.3);
+      border-radius: var(--radius);
+      text-align: center;
+    }
+
+    .give-hero .icon { font-size: 2.5rem; margin-bottom: 0.6rem; }
+    .give-hero h2 { font-size: 1.6rem; color: var(--white); margin-bottom: 0.4rem; }
+    .give-hero p  { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+    .give-options { padding: 0 1rem; }
+
+    .give-option {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem;
+      margin-bottom: 0.8rem;
+      cursor: pointer;
+    }
+
+    .give-opt-icon {
+      width: 50px; height: 50px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .goi-bank   { background: linear-gradient(135deg, #1a3a6c, #0f2748); border: 1px solid rgba(200,146,42,0.3); }
+    .goi-mtn    { background: linear-gradient(135deg, #c8922a, #e8b84b); }
+    .goi-airtel { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+    .goi-centre { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+
+    .give-opt-info { flex: 1; }
+    .give-opt-name { font-weight: 600; color: var(--white); font-size: 0.95rem; }
+    .give-opt-sub  { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+    .give-opt-arrow { color: var(--gold); font-size: 1rem; }
+
+    /* Bank modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 200;
+      display: flex;
+      align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal-sheet {
+      background: var(--navy2);
+      border-radius: 20px 20px 0 0;
+      padding: 1.5rem;
+      width: 100%;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.34,1.2,0.64,1);
+      border-top: 1px solid var(--card-bdr);
+    }
+    .modal-overlay.open .modal-sheet { transform: translateY(0); }
+
+    .modal-handle {
+      width: 36px; height: 4px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 2px;
+      margin: 0 auto 1.2rem;
+    }
+
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--white);
+      margin-bottom: 1.2rem;
+    }
+
+    .info-row {
+      display: flex; justify-content: space-between;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.88rem;
+    }
+    .info-row:last-of-type { border-bottom: none; }
+    .info-row .label { color: var(--muted); }
+    .info-row .value { color: var(--white); font-weight: 600; }
+
+    /* ============================================================
+       SCREEN: PROFILE / SETTINGS
+    ============================================================ */
+    .profile-header {
+      padding: 1.2rem 1.2rem 0;
+    }
+
+    .profile-card {
+      margin: 1rem;
+      padding: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .profile-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      border: 2px solid var(--gold);
+      overflow: hidden;
+    }
+
+    .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .profile-name { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--white); }
+    .profile-sub  { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+    .settings-section { padding: 0 1rem; margin-top: 1rem; }
+    .settings-label   { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; padding: 0 0.4rem; }
+
+    .settings-group {
+      background: var(--card-bg);
+      border: 1px solid var(--card-bdr);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.4rem;
+    }
+
+    .settings-row {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1rem 1.1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-row:active { background: rgba(255,255,255,0.04); }
+
+    .settings-row-icon { font-size: 1.2rem; width: 24px; text-align: center; }
+    .settings-row-label { flex: 1; font-size: 0.9rem; color: var(--text); }
+    .settings-row-val   { font-size: 0.8rem; color: var(--muted); }
+    .settings-row-arrow { color: var(--muted); font-size: 0.8rem; }
+
+    /* ============================================================
+       INSTALL BANNER
+    ============================================================ */
+    .install-banner {
+      position: fixed;
+      top: 0; left: 50%;
+      transform: translateX(-50%) translateY(-120px);
+      width: calc(100% - 2rem);
+      max-width: 398px;
+      background: var(--navy3);
+      border: 1px solid rgba(200,146,42,0.4);
+      border-radius: 0 0 16px 16px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      z-index: 300;
+      transition: transform 0.4s cubic-bezier(0.34,1.2,0.64,1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .install-banner.visible { transform: translateX(-50%) translateY(0); }
+
+    .install-banner img { width: 44px; height: 44px; border-radius: 12px; }
+    .install-banner-info { flex: 1; }
+    .install-banner-title { font-size: 0.9rem; font-weight: 700; color: var(--white); }
+    .install-banner-sub   { font-size: 0.72rem; color: var(--muted); }
+    .install-btn          { background: var(--gold); color: var(--navy); border: none; padding: 8px 14px; border-radius: 8px; font-weight: 700; font-size: 0.8rem; cursor: pointer; white-space: nowrap; }
+    .install-close        { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.1rem; flex-shrink: 0; }
+
+    /* ============================================================
+       TOAST NOTIFICATION
+    ============================================================ */
+    .toast {
+      position: fixed;
+      top: calc(var(--safe-top) + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-80px);
+      background: var(--navy3);
+      color: var(--white);
+      padding: 11px 20px;
+      border-radius: 24px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 400;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      white-space: nowrap;
+      border: 1px solid rgba(200,146,42,0.2);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Scroll padding helpers */
+    .pb-4 { padding-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <div class="status-bar"></div>
+
+  <!-- ============================================================
+       SCREENS
+  ============================================================ -->
+  <div id="screens">
+
+    <!-- ===== HOME ===== -->
+    <div class="screen active" id="screen-home">
+
+      <!-- Hero Image Slider -->
+      <div class="hero-wrap">
+        <img class="hero-slide-img active" src="prwrs.jpg" alt="Worship">
+        <img class="hero-slide-img" src="Pastor1.jpg" alt="Pastor">
+        <img class="hero-slide-img" src="sh1.jpg" alt="Service">
+        <div class="hero-overlay">
+          <p class="hero-greeting">✝️ Daily Verse</p>
+          <p class="hero-verse" id="dailyVerse">"For God so loved the world that He gave His one and only Son."</p>
+          <p class="hero-verse-ref" id="dailyVerseRef">— John 3:16</p>
+        </div>
+        <div class="hero-dots-wrap" id="heroDots"></div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="quick-stats">
+        <div class="qs-item" onclick="goTo('events')">
+          <div class="qs-icon">📅</div>
+          <div class="qs-label">Events</div>
+        </div>
+        <div class="qs-item" onclick="goTo('sermons')">
+          <div class="qs-icon">🎙️</div>
+          <div class="qs-label">Sermons</div>
+        </div>
+        <div class="qs-item" onclick="goTo('reminders')">
+          <div class="qs-icon">🔔</div>
+          <div class="qs-label">Remind</div>
+        </div>
+        <div class="qs-item" onclick="goTo('give')">
+          <div class="qs-icon">💛</div>
+          <div class="qs-label">Give</div>
+        </div>
+      </div>
+
+      <!-- Next Service -->
+      <div class="next-service card-press" onclick="goTo('events')">
+        <div class="next-svc-icon">🙌</div>
+        <div>
+          <div class="next-svc-label">Next Service</div>
+          <div class="next-svc-name" id="nextServiceName">Sunday Worship</div>
+          <div class="next-svc-time" id="nextServiceTime">Sunday · 9:00 AM · Main Sanctuary</div>
+        </div>
+        <div class="next-svc-arrow">›</div>
+      </div>
+
+      <!-- Upcoming Events -->
+      <div class="home-section">
+        <div class="home-sec-header">
+          <div class="home-sec-title">Upcoming Events</div>
+          <div class="home-sec-more" onclick="goTo('events')">See all</div>
+        </div>
+        <div id="homeEventsList">
+          <div class="card mini-event card-press">
+            <div class="mini-event-date"><div class="mini-event-day">15</div><div class="mini-event-month">Jun</div></div>
+            <div class="mini-event-info">
+              <div class="mini-event-title">Annual Thanksgiving Service</div>
+              <div class="mini-event-sub">9:00 AM · Main Sanctuary</div>
+            </div>
+            <div style="color:var(--muted); font-size:0.8rem;">›</div>
+          </div>
+          <div class="card mini-event card-press">
+            <div class="mini-event-date"><div class="mini-event-day">21</div><div class="mini-event-month">Jun</div></div>
+            <div class="mini-event-info">
+              <div class="mini-event-title">Youth Camp 2025</div>
+              <div class="mini-event-sub">All Day · Church Grounds</div>
+            </div>
+            <div style="color:var(--muted); font-size:0.8rem;">›</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Latest Sermons -->
+      <div class="home-section" style="margin-bottom: 1.5rem;">
+        <div class="home-sec-header">
+          <div class="home-sec-title">Latest Sermons</div>
+          <div class="home-sec-more" onclick="goTo('sermons')">See all</div>
+        </div>
+        <div class="card mini-sermon card-press" onclick="playSermon('Walking in the Spirit', 'Pastor Harriet Ndagire', 'Galatians 5:16')">
+          <div class="play-circle">▶</div>
+          <div style="flex:1;">
+            <div class="mini-sermon-title">Walking in the Spirit</div>
+            <div class="mini-sermon-sub">Pastor Harriet · Galatians 5:16</div>
+          </div>
+          <span class="pill pill-gold">New</span>
+        </div>
+        <div class="card mini-sermon card-press" onclick="playSermon('Grace Sufficient', 'Pastor Rogers', '2 Corinthians 12:9')">
+          <div class="play-circle">▶</div>
+          <div style="flex:1;">
+            <div class="mini-sermon-title">Grace Sufficient</div>
+            <div class="mini-sermon-sub">Pastor Rogers · 2 Cor 12:9</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /screen-home -->
+
+
+    <!-- ===== EVENTS / CALENDAR ===== -->
+    <div class="screen" id="screen-events">
+      <div class="events-header">
+        <div class="tag">Church Calendar</div>
+        <div class="screen-title">Events</div>
+        <div class="gold-bar" style="margin-top:6px;"></div>
+      </div>
+
+      <!-- Calendar -->
+      <div class="calendar-wrap">
+        <div class="cal-header">
+          <button class="cal-nav" id="calPrev">‹</button>
+          <div class="cal-month" id="calMonth">June 2025</div>
+          <button class="cal-nav" id="calNext">›</button>
+        </div>
+        <div class="cal-days-row">
+          <div class="cal-day-name">S</div><div class="cal-day-name">M</div>
+          <div class="cal-day-name">T</div><div class="cal-day-name">W</div>
+          <div class="cal-day-name">T</div><div class="cal-day-name">F</div>
+          <div class="cal-day-name">S</div>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+
+      <!-- Weekly Schedule -->
+      <div style="padding: 0 1rem; margin-bottom: 0.6rem;">
+        <div class="tag" style="margin-bottom: 6px;">Weekly Services</div>
+      </div>
+
+      <div class="events-list">
+        <div class="card event-card-full card-press">
+          <div class="event-card-top">
+            <div class="event-date-block" style="background: rgba(200,146,42,0.15); border: 1px solid rgba(200,146,42,0.3);">
+              <span style="font-size:1.3rem;">🙌</span>
+            </div>
+            <div class="event-info">
+              <div class="event-title">Sunday Worship Service</div>
+              <div class="event-meta">📅 Every Sunday &nbsp;·&nbsp; 🕐 9:00 AM<br>📍 Main Sanctuary</div>
+            </div>
+            <span class="pill pill-gold">Weekly</span>
+          </div>
+        </div>
+
+        <div class="card event-card-full card-press">
+          <div class="event-card-top">
+            <div class="event-date-block" style="background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.25);">
+              <span style="font-size:1.3rem;">🕊️</span>
+            </div>
+            <div class="event-info">
+              <div class="event-title">Tuesday Prayer Meeting</div>
+              <div class="event-meta">📅 Every Tuesday &nbsp;·&nbsp; 🕐 3:00 PM<br>📍 Main Sanctuary</div>
+            </div>
+            <span class="pill pill-blue">Weekly</span>
+          </div>
+        </div>
+
+        <div class="card event-card-full card-press">
+          <div class="event-card-top">
+            <div class="event-date-block" style="background: rgba(39,174,96,0.12); border: 1px solid rgba(39,174,96,0.25);">
+              <span style="font-size:1.3rem;">📖</span>
+            </div>
+            <div class="event-info">
+              <div class="event-title">Wednesday Bible Study</div>
+              <div class="event-meta">📅 Every Wednesday &nbsp;·&nbsp; 🕐 5:00 PM<br>📍 Main Sanctuary</div>
+            </div>
+            <span class="pill pill-green">Weekly</span>
+          </div>
+        </div>
+
+        <div class="card event-card-full card-press">
+          <div class="event-card-top">
+            <div class="event-date-block" style="background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.25);">
+              <span style="font-size:1.3rem;">🌙</span>
+            </div>
+            <div class="event-info">
+              <div class="event-title">Friday Overnight Prayers</div>
+              <div class="event-meta">📅 Every Friday &nbsp;·&nbsp; 🕐 9:00 PM<br>📍 Main Sanctuary</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Special Events -->
+        <div style="margin: 1rem 0 0.6rem;"><div class="tag">Special Events</div></div>
+
+        <div class="card event-card-full card-press" id="ev1">
+          <div class="event-card-top">
+            <div class="event-date-block"><div class="edb-day">15</div><div class="edb-mon">Jun</div></div>
+            <div class="event-info">
+              <div class="event-title">Annual Thanksgiving Service</div>
+              <div class="event-meta">🕐 9:00 AM &nbsp;·&nbsp; 📍 Main Sanctuary</div>
+              <div class="event-desc">Join us as we give thanks to God for His faithfulness over the year. Special music, testimonies, and a powerful message.</div>
+            </div>
+          </div>
+          <button class="btn btn-ghost remind-btn" onclick="addReminder('Annual Thanksgiving Service', 'Jun 15 · 9:00 AM', '📅')">
+            🔔 Set Reminder
+          </button>
+        </div>
+
+        <div class="card event-card-full card-press">
+          <div class="event-card-top">
+            <div class="event-date-block"><div class="edb-day">21</div><div class="edb-mon">Jun</div></div>
+            <div class="event-info">
+              <div class="event-title">Youth Camp 2025</div>
+              <div class="event-meta">🕐 All Day &nbsp;·&nbsp; 📍 Church Grounds</div>
+              <div class="event-desc">A transformative weekend camp for youth aged 13–25. Worship, sports, discipleship and fellowship.</div>
+            </div>
+          </div>
+          <button class="btn btn-ghost remind-btn" onclick="addReminder('Youth Camp 2025', 'Jun 21 · All Day', '🏕️')">
+            🔔 Set Reminder
+          </button>
+        </div>
+
+        <div class="card event-card-full card-press">
+          <div class="event-card-top">
+            <div class="event-date-block"><div class="edb-day">06</div><div class="edb-mon">Jul</div></div>
+            <div class="event-info">
+              <div class="event-title">Healing & Deliverance Night</div>
+              <div class="event-meta">🕐 6:00 PM &nbsp;·&nbsp; 📍 Main Sanctuary</div>
+              <div class="event-desc">A special evening of prayer for healing, miracles, and God's power to transform lives.</div>
+            </div>
+          </div>
+          <button class="btn btn-ghost remind-btn" onclick="addReminder('Healing & Deliverance Night', 'Jul 6 · 6:00 PM', '🙏')">
+            🔔 Set Reminder
+          </button>
+        </div>
+
+        <div style="height:1rem;"></div>
+      </div>
+    </div><!-- /screen-events -->
+
+
+    <!-- ===== SERMONS ===== -->
+    <div class="screen" id="screen-sermons">
+      <div class="sermons-header">
+        <div class="tag">The Word of God</div>
+        <div class="screen-title">Sermons</div>
+        <div class="gold-bar" style="margin-top:6px;"></div>
+      </div>
+
+      <!-- Filter -->
+      <div class="sermon-filter">
+        <div class="filter-pill active" onclick="filterSermons(this, 'all')">All</div>
+        <div class="filter-pill" onclick="filterSermons(this, 'pastor-harriet')">Pr. Harriet</div>
+        <div class="filter-pill" onclick="filterSermons(this, 'pastor-rogers')">Pr. Rogers</div>
+        <div class="filter-pill" onclick="filterSermons(this, 'pastor-sharif')">Pr. Sharif</div>
+        <div class="filter-pill" onclick="filterSermons(this, 'guest')">Guest</div>
+      </div>
+
+      <div class="sermons-list-wrap" id="sermonsList">
+
+        <div class="card sermon-card card-press" data-speaker="pastor-harriet">
+          <div class="sermon-thumb">🕊️</div>
+          <div class="sermon-info">
+            <div class="sermon-title">Walking in the Spirit</div>
+            <div class="sermon-meta">Pastor Harriet · Galatians 5:16 · Jun 1, 2025</div>
+            <span class="pill pill-gold">Latest</span>
+          </div>
+          <button class="sermon-play-btn" onclick="playSermon('Walking in the Spirit', 'Pastor Harriet Ndagire', 'Galatians 5:16')">▶</button>
+        </div>
+
+        <div class="card sermon-card card-press" data-speaker="pastor-rogers">
+          <div class="sermon-thumb">✝️</div>
+          <div class="sermon-info">
+            <div class="sermon-title">Grace Sufficient</div>
+            <div class="sermon-meta">Pastor Rogers · 2 Cor 12:9 · May 25, 2025</div>
+          </div>
+          <button class="sermon-play-btn" onclick="playSermon('Grace Sufficient', 'Pastor Rogers Lukwago', '2 Corinthians 12:9')">▶</button>
+        </div>
+
+        <div class="card sermon-card card-press" data-speaker="pastor-harriet">
+          <div class="sermon-thumb">🌟</div>
+          <div class="sermon-info">
+            <div class="sermon-title">The Finished Work of the Cross</div>
+            <div class="sermon-meta">Pastor Harriet · John 19:30 · May 18, 2025</div>
+          </div>
+          <button class="sermon-play-btn" onclick="playSermon('The Finished Work of the Cross', 'Pastor Harriet Ndagire', 'John 19:30')">▶</button>
+        </div>
+
+        <div class="card sermon-card card-press" data-speaker="pastor-sharif">
+          <div class="sermon-thumb">🔥</div>
+          <div class="sermon-info">
+            <div class="sermon-title">Identity in Christ</div>
+            <div class="sermon-meta">Pastor Sharif · Ephesians 2:10 · May 11, 2025</div>
+          </div>
+          <button class="sermon-play-btn" onclick="playSermon('Identity in Christ', 'Pastor Sharif Muwanguzi', 'Ephesians 2:10')">▶</button>
+        </div>
+
+        <div class="card sermon-card card-press" data-speaker="guest">
+          <div class="sermon-thumb">📖</div>
+          <div class="sermon-info">
+            <div class="sermon-title">The Power of Prayer</div>
+            <div class="sermon-meta">Guest Speaker · James 5:16 · May 4, 2025</div>
+          </div>
+          <button class="sermon-play-btn" onclick="playSermon('The Power of Prayer', 'Guest Speaker', 'James 5:16')">▶</button>
+        </div>
+
+        <div class="card sermon-card card-press" data-speaker="pastor-rogers">
+          <div class="sermon-thumb">💛</div>
+          <div class="sermon-info">
+            <div class="sermon-title">Love Never Fails</div>
+            <div class="sermon-meta">Pastor Rogers · 1 Cor 13:8 · Apr 27, 2025</div>
+          </div>
+          <button class="sermon-play-btn" onclick="playSermon('Love Never Fails', 'Pastor Rogers Lukwago', '1 Corinthians 13:8')">▶</button>
+        </div>
+
+        <div style="height:1rem;"></div>
+      </div>
+    </div><!-- /screen-sermons -->
+
+
+    <!-- ===== REMINDERS ===== -->
+    <div class="screen" id="screen-reminders">
+      <div class="reminders-header">
+        <div class="tag">Stay Connected</div>
+        <div class="screen-title">Reminders</div>
+        <div class="gold-bar" style="margin-top:6px;"></div>
+      </div>
+
+      <!-- Add Reminder -->
+      <div class="card add-reminder-card" style="margin:1rem;">
+        <h3>➕ Add Custom Reminder</h3>
+        <div class="form-field">
+          <label>Reminder Title</label>
+          <input type="text" id="reminderTitle" placeholder="e.g. Pray for the church…">
+        </div>
+        <div class="form-field">
+          <label>Date & Time</label>
+          <input type="datetime-local" id="reminderDateTime">
+        </div>
+        <div class="form-field">
+          <label>Type</label>
+          <select id="reminderType">
+            <option value="🔔">🔔 General</option>
+            <option value="🙏">🙏 Prayer</option>
+            <option value="📅">📅 Event</option>
+            <option value="🎙️">🎙️ Sermon</option>
+          </select>
+        </div>
+        <button class="btn btn-gold btn-full" onclick="saveCustomReminder()">Set Reminder 🔔</button>
+      </div>
+
+      <!-- Notification Permission -->
+      <div style="padding: 0 1rem; margin-bottom: 1rem;">
+        <div class="card" style="padding: 1rem; display:flex; align-items:center; gap:0.9rem;" id="notifCard">
+          <div style="font-size:1.4rem;">🔔</div>
+          <div style="flex:1;">
+            <div style="font-size:0.88rem; font-weight:600; color:var(--white);">Push Notifications</div>
+            <div style="font-size:0.75rem; color:var(--muted);">Get alerts for services & events</div>
+          </div>
+          <div class="toggle" id="notifToggle" onclick="toggleNotifications()"></div>
+        </div>
+      </div>
+
+      <!-- Reminders List -->
+      <div style="padding: 0 1rem 0.4rem; display:flex; align-items:center; justify-content:space-between;">
+        <div class="tag">Your Reminders</div>
+        <div style="font-size:0.75rem; color:var(--muted);" id="reminderCount">0 reminders</div>
+      </div>
+
+      <div class="reminders-list" id="remindersList">
+        <!-- Built-in service reminders -->
+        <div class="card reminder-item">
+          <div class="reminder-icon ri-prayer">🙌</div>
+          <div class="reminder-info">
+            <div class="reminder-title">Sunday Worship Service</div>
+            <div class="reminder-sub">Every Sunday · 8:30 AM reminder</div>
+          </div>
+          <div class="toggle on"></div>
+        </div>
+        <div class="card reminder-item">
+          <div class="reminder-icon ri-prayer">🕊️</div>
+          <div class="reminder-info">
+            <div class="reminder-title">Tuesday Prayer Meeting</div>
+            <div class="reminder-sub">Every Tuesday · 2:30 PM reminder</div>
+          </div>
+          <div class="toggle on"></div>
+        </div>
+        <div class="card reminder-item">
+          <div class="reminder-icon ri-sermon">📖</div>
+          <div class="reminder-info">
+            <div class="reminder-title">Wednesday Bible Study</div>
+            <div class="reminder-sub">Every Wednesday · 4:30 PM reminder</div>
+          </div>
+          <div class="toggle"></div>
+        </div>
+      </div>
+
+      <div style="height:1rem;"></div>
+    </div><!-- /screen-reminders -->
+
+
+    <!-- ===== GIVE ===== -->
+    <div class="screen" id="screen-give">
+      <div class="give-header">
+        <div class="tag">Support the Ministry</div>
+        <div class="screen-title">Give</div>
+        <div class="gold-bar" style="margin-top:6px;"></div>
+      </div>
+
+      <div class="give-hero">
+        <div class="icon">💛</div>
+        <h2>Your Gift Matters</h2>
+        <p>Every contribution helps us worship, serve, and reach more lives with the Gospel of Christ in Wakiso-Kayunga and beyond.</p>
+      </div>
+
+      <div class="give-options">
+        <div class="tag" style="margin-bottom:0.8rem;">Choose a Giving Method</div>
+
+        <div class="card give-option card-press" onclick="openModal('bankModal')">
+          <div class="give-opt-icon goi-bank">🏦</div>
+          <div class="give-opt-info">
+            <div class="give-opt-name">Bank Transfer</div>
+            <div class="give-opt-sub">Centenary Bank · Wakiso</div>
+          </div>
+          <div class="give-opt-arrow">›</div>
+        </div>
+
+        <div class="card give-option card-press" onclick="openModal('mtnModal')">
+          <div class="give-opt-icon goi-mtn">📱</div>
+          <div class="give-opt-info">
+            <div class="give-opt-name">MTN Mobile Money</div>
+            <div class="give-opt-sub">Dial *165# &nbsp;·&nbsp; +256 700 592 303</div>
+          </div>
+          <div class="give-opt-arrow">›</div>
+        </div>
+
+        <div class="card give-option card-press" onclick="openModal('airtelModal')">
+          <div class="give-opt-icon goi-airtel">📲</div>
+          <div class="give-opt-info">
+            <div class="give-opt-name">Airtel Money</div>
+            <div class="give-opt-sub">Dial *185# &nbsp;·&nbsp; +256 774 458 786</div>
+          </div>
+          <div class="give-opt-arrow">›</div>
+        </div>
+
+        <div class="card give-option card-press" onclick="openModal('centreModal')">
+          <div class="give-opt-icon goi-centre">💳</div>
+          <div class="give-opt-info">
+            <div class="give-opt-name">Centenary Mobile</div>
+            <div class="give-opt-sub">Dial *236# &nbsp;·&nbsp; Account 200210030471</div>
+          </div>
+          <div class="give-opt-arrow">›</div>
+        </div>
+      </div>
+
+      <div style="margin: 1.2rem 1rem 0; padding: 1rem; background: var(--card-bg); border: 1px solid var(--card-bdr); border-radius: var(--radius); text-align:center;">
+        <div style="font-size:0.75rem; color:var(--muted); line-height:1.8;">
+          "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver." — 2 Corinthians 9:7
+        </div>
+      </div>
+
+      <div style="height:1.5rem;"></div>
+    </div><!-- /screen-give -->
+
+
+    <!-- ===== PROFILE / SETTINGS ===== -->
+    <div class="screen" id="screen-profile">
+      <div class="profile-header">
+        <div class="tag">Account</div>
+        <div class="screen-title">Profile</div>
+        <div class="gold-bar" style="margin-top:6px;"></div>
+      </div>
+
+      <!-- Profile Card -->
+      <div class="card profile-card" style="margin: 1rem;">
+        <div class="profile-avatar">✝️</div>
+        <div>
+          <div class="profile-name">Church Member</div>
+          <div class="profile-sub">Glory of Christ Church</div>
+          <div class="profile-sub" style="margin-top:3px;">Wakiso-Kayunga, Uganda</div>
+        </div>
+      </div>
+
+      <!-- About the Church -->
+      <div class="settings-section">
+        <div class="settings-label">About The Church</div>
+        <div class="settings-group">
+          <div class="settings-row">
+            <div class="settings-row-icon">📍</div>
+            <div class="settings-row-label">Location</div>
+            <div class="settings-row-val">Wakiso-Kayunga</div>
+          </div>
+          <div class="settings-row" onclick="callPhone('+256700592303')">
+            <div class="settings-row-icon">📞</div>
+            <div class="settings-row-label">Call Us</div>
+            <div class="settings-row-val">+256 700 592 303</div>
+          </div>
+          <div class="settings-row" onclick="sendEmail()">
+            <div class="settings-row-icon">✉️</div>
+            <div class="settings-row-label">Email Us</div>
+            <div class="settings-row-val">Gmail</div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-icon">🌐</div>
+            <div class="settings-row-label">Website</div>
+            <div class="settings-row-val">gloryofchristchurch.org</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- App Settings -->
+      <div class="settings-section">
+        <div class="settings-label">App Settings</div>
+        <div class="settings-group">
+          <div class="settings-row" onclick="toggleNotifications()">
+            <div class="settings-row-icon">🔔</div>
+            <div class="settings-row-label">Push Notifications</div>
+            <div class="toggle" id="notifToggle2"></div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-icon">🌙</div>
+            <div class="settings-row-label">Dark Mode</div>
+            <div class="toggle on"></div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-icon">📖</div>
+            <div class="settings-row-label">Daily Verse</div>
+            <div class="toggle on"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service Times Quick Ref -->
+      <div class="settings-section">
+        <div class="settings-label">Service Times</div>
+        <div class="settings-group">
+          <div class="settings-row"><div class="settings-row-icon">🙌</div><div class="settings-row-label">Sunday Worship</div><div class="settings-row-val">9:00 AM</div></div>
+          <div class="settings-row"><div class="settings-row-icon">🕊️</div><div class="settings-row-label">Tuesday Prayers</div><div class="settings-row-val">3:00 PM</div></div>
+          <div class="settings-row"><div class="settings-row-icon">📖</div><div class="settings-row-label">Wednesday Bible Study</div><div class="settings-row-val">5:00 PM</div></div>
+          <div class="settings-row"><div class="settings-row-icon">🌙</div><div class="settings-row-label">Friday Overnight</div><div class="settings-row-val">9:00 PM</div></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; padding: 1rem 1rem 2rem; color: var(--muted); font-size:0.75rem;">
+        <div style="font-size:1.2rem; margin-bottom:4px;">✝️</div>
+        Glory of Christ Church App v1.0<br>
+        "Where we worship God in spirit and in truth"<br><br>
+        <span style="font-size:0.65rem; color:rgba(212,207,199,0.3);">Designed &amp; Built by <span style="color:rgba(200,146,42,0.55); font-weight:600;">Lvis Technologies</span></span>
+      </div>
+
+      <div style="height:1rem;"></div>
+    </div><!-- /screen-profile -->
+
+  </div><!-- /screens -->
+
+  <!-- ============================================================
+       BOTTOM NAVIGATION
+  ============================================================ -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-screen="home" onclick="goTo('home')">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Home</span>
+      <div class="nav-dot"></div>
+    </button>
+    <button class="nav-item" data-screen="events" onclick="goTo('events')">
+      <span class="nav-icon">📅</span>
+      <span class="nav-label">Events</span>
+      <div class="nav-dot"></div>
+    </button>
+    <button class="nav-item" data-screen="sermons" onclick="goTo('sermons')">
+      <span class="nav-icon">🎙️</span>
+      <span class="nav-label">Sermons</span>
+      <div class="nav-dot"></div>
+    </button>
+    <button class="nav-item" data-screen="reminders" onclick="goTo('reminders')">
+      <span class="nav-icon">🔔</span>
+      <span class="nav-label">Reminders</span>
+      <div class="nav-dot"></div>
+    </button>
+    <button class="nav-item" data-screen="give" onclick="goTo('give')">
+      <span class="nav-icon">💛</span>
+      <span class="nav-label">Give</span>
+      <div class="nav-dot"></div>
+    </button>
+    <button class="nav-item" data-screen="profile" onclick="goTo('profile')">
+      <span class="nav-icon">👤</span>
+      <span class="nav-label">Profile</span>
+      <div class="nav-dot"></div>
+    </button>
+  </nav>
+
+</div><!-- /app -->
+
+<!-- ============================================================
+     MODALS (Bottom Sheets)
+============================================================ -->
+
+<!-- Bank -->
+<div class="modal-overlay" id="bankModal" onclick="closeModalOutside(event, 'bankModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🏦 Bank Transfer</div>
+    <div class="info-row"><span class="label">Bank</span><span class="value">Centenary Bank</span></div>
+    <div class="info-row"><span class="label">Account Name</span><span class="value">Glory of Christ Church</span></div>
+    <div class="info-row"><span class="label">Account Number</span><span class="value">200210030471</span></div>
+    <div class="info-row"><span class="label">Branch</span><span class="value">Wakiso</span></div>
+    <div class="info-row"><span class="label">Swift Code</span><span class="value">CERBUGKA</span></div>
+    <button class="btn btn-gold btn-full" style="margin-top:1.2rem;" onclick="closeModal('bankModal')">Done</button>
+  </div>
+</div>
+
+<!-- MTN -->
+<div class="modal-overlay" id="mtnModal" onclick="closeModalOutside(event, 'mtnModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📱 MTN Mobile Money</div>
+    <div class="info-row"><span class="label">Dial</span><span class="value">*165#</span></div>
+    <div class="info-row"><span class="label">Number</span><span class="value">+256 700 592 303</span></div>
+    <div class="info-row"><span class="label">Name</span><span class="value">Glory of Christ Church</span></div>
+    <a href="tel:*165#"><button class="btn btn-gold btn-full" style="margin-top:1.2rem; border:none; cursor:pointer;">📲 Open MTN Dial</button></a>
+  </div>
+</div>
+
+<!-- Airtel -->
+<div class="modal-overlay" id="airtelModal" onclick="closeModalOutside(event, 'airtelModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📲 Airtel Money</div>
+    <div class="info-row"><span class="label">Dial</span><span class="value">*185#</span></div>
+    <div class="info-row"><span class="label">Number</span><span class="value">+256 774 458 786</span></div>
+    <div class="info-row"><span class="label">Name</span><span class="value">Glory of Christ Church</span></div>
+    <a href="tel:*185#"><button class="btn btn-gold btn-full" style="margin-top:1.2rem; border:none; cursor:pointer;">📲 Open Airtel Dial</button></a>
+  </div>
+</div>
+
+<!-- Centenary Mobile -->
+<div class="modal-overlay" id="centreModal" onclick="closeModalOutside(event, 'centreModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">💳 Centenary Mobile</div>
+    <div class="info-row"><span class="label">Dial</span><span class="value">*236#</span></div>
+    <div class="info-row"><span class="label">Account</span><span class="value">200210030471</span></div>
+    <div class="info-row"><span class="label">Name</span><span class="value">Glory of Christ Church</span></div>
+    <a href="tel:*236#"><button class="btn btn-gold btn-full" style="margin-top:1.2rem; border:none; cursor:pointer;">📲 Open Centenary Dial</button></a>
+  </div>
+</div>
+
+<!-- ===== AUDIO PLAYER BAR ===== -->
+<div class="player-bar" id="playerBar">
+  <div class="player-icon">🎙️</div>
+  <div class="player-info">
+    <div class="player-title" id="playerTitle">Sermon Title</div>
+    <div class="player-speaker" id="playerSpeaker">Speaker</div>
+    <div class="player-progress"><div class="player-bar-fill" id="playerFill"></div></div>
+  </div>
+  <button class="player-btn" id="playerBtn" onclick="togglePlay()">▶</button>
+  <button class="player-close" onclick="closePlayer()">✕</button>
+</div>
+
+<!-- ===== INSTALL BANNER ===== -->
+<div class="install-banner" id="installBanner">
+  <img src="elvis.jpg" alt="GCC" onerror="this.style.display='none'">
+  <div class="install-banner-info">
+    <div class="install-banner-title">Install GCC Church App</div>
+    <div class="install-banner-sub">Add to Home Screen for quick access</div>
+  </div>
+  <button class="install-btn" id="installBtn">Install</button>
+  <button class="install-close" onclick="dismissInstall()">✕</button>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ============================================================
+  //  GCC CHURCH APP — Main JavaScript
+  // ============================================================
+
+  // ===== NAVIGATION =====
+  function goTo(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('screen-' + screenId).classList.add('active');
+    document.querySelector(`.nav-item[data-screen="${screenId}"]`)?.classList.add('active');
+  }
+
+  // ===== HERO SLIDER =====
+  (function() {
+    const imgs = document.querySelectorAll('.hero-slide-img');
+    const dotsEl = document.getElementById('heroDots');
+    let cur = 0;
+
+    imgs.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'hero-dot' + (i===0 ? ' active' : '');
+      dotsEl.appendChild(d);
+    });
+
+    function showSlide(n) {
+      imgs[cur].classList.remove('active');
+      dotsEl.children[cur].classList.remove('active');
+      cur = (n + imgs.length) % imgs.length;
+      imgs[cur].classList.add('active');
+      dotsEl.children[cur].classList.add('active');
+    }
+
+    setInterval(() => showSlide(cur + 1), 5000);
+  })();
+
+  // ===== DAILY VERSES =====
+  const verses = [
+    { text: '"For God so loved the world that He gave His one and only Son."', ref: '— John 3:16' },
+    { text: '"I can do all things through Christ who strengthens me."', ref: '— Philippians 4:13' },
+    { text: '"Trust in the Lord with all your heart and lean not on your own understanding."', ref: '— Proverbs 3:5' },
+    { text: '"The Lord is my shepherd; I shall not want."', ref: '— Psalm 23:1' },
+    { text: '"Be strong and courageous. Do not be afraid; do not be discouraged."', ref: '— Joshua 1:9' },
+    { text: '"Come to me, all you who are weary and burdened, and I will give you rest."', ref: '— Matthew 11:28' },
+    { text: '"The Lord your God is with you, the Mighty Warrior who saves."', ref: '— Zephaniah 3:17' },
+  ];
+
+  (function() {
+    const dayOfWeek = new Date().getDay();
+    const v = verses[dayOfWeek];
+    document.getElementById('dailyVerse').textContent = v.text;
+    document.getElementById('dailyVerseRef').textContent = v.ref;
+  })();
+
+  // ===== NEXT SERVICE =====
+  (function() {
+    const services = [
+      { day: 0, name: 'Sunday Worship Service',  time: 'Sunday · 9:00 AM' },
+      { day: 2, name: 'Tuesday Prayer Meeting',  time: 'Tuesday · 3:00 PM' },
+      { day: 3, name: 'Wednesday Bible Study',   time: 'Wednesday · 5:00 PM' },
+      { day: 5, name: 'Friday Overnight Prayers',time: 'Friday · 9:00 PM' },
+    ];
+    const today = new Date().getDay();
+    let next = services.find(s => s.day >= today) || services[0];
+    document.getElementById('nextServiceName').textContent = next.name;
+    document.getElementById('nextServiceTime').textContent = next.time + ' · Main Sanctuary';
+  })();
+
+  // ===== CALENDAR =====
+  let calDate = new Date();
+
+  function renderCalendar() {
+    const year  = calDate.getFullYear();
+    const month = calDate.getMonth();
+    const today = new Date();
+
+    document.getElementById('calMonth').textContent =
+      calDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysInPrev  = new Date(year, month, 0).getDate();
+
+    // Event days (for demo — would come from Firebase)
+    const eventDays = [15, 21];
+
+    let html = '';
+    let total = 42;
+
+    for (let i = 0; i < total; i++) {
+      const dayNum = i - firstDay + 1;
+      let cls = 'cal-cell';
+      let display = '';
+
+      if (i < firstDay) {
+        display = daysInPrev - firstDay + i + 1;
+        cls += ' other-month';
+      } else if (dayNum > daysInMonth) {
+        display = dayNum - daysInMonth;
+        cls += ' other-month';
+      } else {
+        display = dayNum;
+        if (year === today.getFullYear() && month === today.getMonth() && dayNum === today.getDate()) {
+          cls += ' today';
+        }
+        if (eventDays.includes(dayNum)) cls += ' has-event';
+      }
+
+      html += `<div class="${cls}" onclick="selectDay(${display})">${display}</div>`;
+    }
+
+    document.getElementById('calGrid').innerHTML = html;
+  }
+
+  function selectDay(day) {
+    document.querySelectorAll('.cal-cell').forEach(c => {
+      if (parseInt(c.textContent) === day && !c.classList.contains('other-month')) {
+        c.classList.add('selected');
+      } else {
+        c.classList.remove('selected');
+      }
+    });
+  }
+
+  document.getElementById('calPrev').addEventListener('click', () => {
+    calDate.setMonth(calDate.getMonth() - 1);
+    renderCalendar();
+  });
+
+  document.getElementById('calNext').addEventListener('click', () => {
+    calDate.setMonth(calDate.getMonth() + 1);
+    renderCalendar();
+  });
+
+  renderCalendar();
+
+  // ===== SERMON FILTER =====
+  function filterSermons(el, filter) {
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('#sermonsList .sermon-card').forEach(card => {
+      card.style.display = (filter === 'all' || card.dataset.speaker === filter) ? 'flex' : 'none';
+    });
+  }
+
+  // ===== AUDIO PLAYER =====
+  let isPlaying = false;
+  let playerInterval = null;
+  let playerProgress = 0;
+
+  function playSermon(title, speaker, scripture) {
+    document.getElementById('playerTitle').textContent = title;
+    document.getElementById('playerSpeaker').textContent = `${speaker} · ${scripture}`;
+    document.getElementById('playerBar').classList.add('visible');
+    playerProgress = 0;
+    document.getElementById('playerFill').style.width = '0%';
+    isPlaying = true;
+    document.getElementById('playerBtn').textContent = '⏸';
+    startProgress();
+    showToast('▶ Now playing: ' + title);
+    goTo('sermons');
+  }
+
+  function togglePlay() {
+    isPlaying = !isPlaying;
+    document.getElementById('playerBtn').textContent = isPlaying ? '⏸' : '▶';
+    isPlaying ? startProgress() : stopProgress();
+  }
+
+  function startProgress() {
+    stopProgress();
+    playerInterval = setInterval(() => {
+      playerProgress = Math.min(playerProgress + 0.3, 100);
+      document.getElementById('playerFill').style.width = playerProgress + '%';
+      if (playerProgress >= 100) { stopProgress(); document.getElementById('playerBtn').textContent = '▶'; isPlaying = false; }
+    }, 300);
+  }
+
+  function stopProgress() {
+    if (playerInterval) { clearInterval(playerInterval); playerInterval = null; }
+  }
+
+  function closePlayer() {
+    document.getElementById('playerBar').classList.remove('visible');
+    stopProgress(); isPlaying = false;
+  }
+
+  // ===== REMINDERS =====
+  let reminders = JSON.parse(localStorage.getItem('gcc-reminders') || '[]');
+
+  function updateReminderCount() {
+    const total = reminders.length + 3; // 3 built-in
+    document.getElementById('reminderCount').textContent = total + ' reminder' + (total !== 1 ? 's' : '');
+  }
+
+  function renderReminders() {
+    const list = document.getElementById('remindersList');
+    const builtIn = list.querySelectorAll('.card.reminder-item');
+    // Remove custom ones first
+    list.querySelectorAll('.custom-reminder').forEach(r => r.remove());
+
+    reminders.forEach((r, i) => {
+      const div = document.createElement('div');
+      div.className = 'card reminder-item custom-reminder';
+      div.innerHTML = `
+        <div class="reminder-icon ri-custom">${r.icon}</div>
+        <div class="reminder-info">
+          <div class="reminder-title">${r.title}</div>
+          <div class="reminder-sub">${r.datetime || 'Custom reminder'}</div>
+        </div>
+        <button class="reminder-del" onclick="deleteReminder(${i})">🗑</button>
+      `;
+      list.appendChild(div);
+    });
+    updateReminderCount();
+  }
+
+  function saveCustomReminder() {
+    const title    = document.getElementById('reminderTitle').value.trim();
+    const datetime = document.getElementById('reminderDateTime').value;
+    const icon     = document.getElementById('reminderType').value;
+    if (!title) { showToast('Please enter a reminder title.', true); return; }
+
+    const dt = datetime ? new Date(datetime).toLocaleString('en-UG', { weekday:'short', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }) : '';
+    reminders.push({ title, datetime: dt, icon });
+    localStorage.setItem('gcc-reminders', JSON.stringify(reminders));
+    renderReminders();
+
+    // Schedule notification if permission granted
+    if (Notification.permission === 'granted' && datetime) {
+      const delay = new Date(datetime).getTime() - Date.now();
+      if (delay > 0) {
+        setTimeout(() => {
+          new Notification('GCC Church Reminder', { body: title, icon: 'icons/icon-192.png' });
+        }, delay);
+      }
+    }
+
+    document.getElementById('reminderTitle').value = '';
+    document.getElementById('reminderDateTime').value = '';
+    showToast('✅ Reminder set!');
+    goTo('reminders');
+  }
+
+  function addReminder(title, subtitle, icon) {
+    reminders.push({ title, datetime: subtitle, icon });
+    localStorage.setItem('gcc-reminders', JSON.stringify(reminders));
+    renderReminders();
+    showToast('🔔 Reminder added!');
+    goTo('reminders');
+  }
+
+  function deleteReminder(index) {
+    reminders.splice(index, 1);
+    localStorage.setItem('gcc-reminders', JSON.stringify(reminders));
+    renderReminders();
+    showToast('Reminder removed.');
+  }
+
+  renderReminders();
+
+  // ===== NOTIFICATIONS =====
+  function toggleNotifications() {
+    if (Notification.permission === 'default') {
+      Notification.requestPermission().then(perm => {
+        if (perm === 'granted') {
+          document.getElementById('notifToggle').classList.add('on');
+          document.getElementById('notifToggle2').classList.add('on');
+          showToast('✅ Notifications enabled!');
+        }
+      });
+    } else if (Notification.permission === 'granted') {
+      showToast('Manage notifications in your browser settings.');
+    } else {
+      showToast('Notifications blocked. Enable in browser settings.', true);
+    }
+  }
+
+  if (Notification.permission === 'granted') {
+    document.getElementById('notifToggle').classList.add('on');
+    document.getElementById('notifToggle2').classList.add('on');
+  }
+
+  // ===== MODALS =====
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+  }
+  function closeModalOutside(e, id) {
+    if (e.target.classList.contains('modal-overlay')) closeModal(id);
+  }
+
+  // ===== CONTACT =====
+  function callPhone(num) { window.location.href = 'tel:' + num; }
+  function sendEmail() { window.location.href = 'mailto:wakisogloryofchristchurch@gmail.com'; }
+
+  // ===== TOAST =====
+  function showToast(msg, isError = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.borderLeft = isError ? '3px solid #e74c3c' : '3px solid var(--gold)';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // ===== SERVICE WORKER =====
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+
+  // ===== PWA INSTALL =====
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    setTimeout(() => {
+      document.getElementById('installBanner').classList.add('visible');
+    }, 3000);
+  });
+
+  document.getElementById('installBtn').addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    dismissInstall();
+    if (outcome === 'accepted') showToast('✅ App installed!');
+  });
+
+  function dismissInstall() {
+    document.getElementById('installBanner').classList.remove('visible');
+  }
+
+  // iOS Safari install hint
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = window.navigator.standalone;
+  if (isIOS && !isStandalone) {
+    setTimeout(() => {
+      const banner = document.getElementById('installBanner');
+      banner.querySelector('.install-banner-sub').textContent = 'Tap Share → Add to Home Screen';
+      banner.classList.add('visible');
+    }, 3000);
+  }
+</script>
+</body>
+</html>
