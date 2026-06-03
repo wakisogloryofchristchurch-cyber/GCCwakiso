@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Glory of Christ Church</title>
+  <meta name="description" content="Learn about Glory of Christ Church Wakiso-Kayunga, our mission, vision, and leadership team.">
+  <link rel="icon" href="elvis.jpg" type="image/jpeg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== PAGE HERO ===== */
+    .page-hero {
+      background: var(--navy);
+      padding: 5rem 2rem 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 0%, rgba(200,146,42,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-hero-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-lt);
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    .page-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      color: #fff;
+      max-width: 680px;
+      margin: 0 auto 1rem;
+    }
+
+    .page-hero p {
+      color: rgba(255,255,255,0.6);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ===== MISSION / VISION ===== */
+    .mv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .mv-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--gold);
+    }
+
+    .mv-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mv-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.8; }
+
+    /* ===== LEADERS ===== */
+    .leaders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .leader-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      text-align: center;
+      transition: transform var(--trans), box-shadow var(--trans);
+    }
+
+    .leader-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 40px rgba(11,31,58,0.14);
+    }
+
+    .leader-img-wrap {
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    .leader-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .leader-card:hover .leader-img-wrap img { transform: scale(1.05); }
+
+    .leader-info {
+      padding: 1.2rem 1rem 1.5rem;
+    }
+
+    .leader-role {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .leader-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+
+    .leader-bio {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.6;
+    }
+
+    /* ===== VALUES ===== */
+    .values-section {
+      background: var(--navy);
+      padding: 4.5rem 2rem;
+    }
+
+    .values-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .values-inner .section-tag  { color: var(--gold-lt); }
+    .values-inner .section-title { color: #fff; }
+    .values-inner .divider { background: var(--gold); }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+
+    .value-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,146,42,0.2);
+      border-radius: var(--radius);
+      padding: 1.8rem 1.4rem;
+      transition: var(--trans);
+    }
+
+    .value-item:hover {
+      background: rgba(200,146,42,0.1);
+      border-color: var(--gold);
+    }
+
+    .value-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .value-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--gold-lt);
+      margin-bottom: 0.5rem;
+    }
+
+    .value-desc { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
+
+    /* ===== LOADING STATE ===== */
+    .leaders-loading { text-align: center; padding: 3rem 0; }
+
+    @media (max-width: 768px) {
+      .mv-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <img src="elvis.jpg" alt="Logo" class="nav-logo">
+    <div>
+      <div class="nav-title">Glory of Christ Church</div>
+      <div class="nav-sub">Wakiso-Kayunga, Uganda</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html" class="active">About</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html#donate" class="nav-donate">Give</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="nav-drawer" id="navDrawer">
+  <button class="drawer-close" id="drawerClose">✕</button>
+  <nav class="drawer-links">
+    <a href="index.html">🏠 Home</a>
+    <a href="about.html" class="active">✝️ About</a>
+    <a href="services.html">🙏 Services</a>
+    <a href="contact.html">📩 Contact</a>
+    <a href="contact.html#donate">💛 Give / Donate</a>
+    <a href="admin.html">🔒 Admin</a>
+  </nav>
+</div>
+
+<!-- ===== PAGE HERO ===== -->
+<div class="page-hero">
+  <p class="page-hero-tag">Who We Are</p>
+  <h1>About Glory of Christ Church</h1>
+  <p>A Spirit-filled, Christ-centered community in the heart of Wakiso-Kayunga, Uganda.</p>
+</div>
+
+<!-- ===== MISSION & VISION ===== -->
+<section class="section">
+  <span class="section-tag">Our Foundation</span>
+  <h2 class="section-title">Mission & Vision</h2>
+  <div class="divider"></div>
+  <div class="mv-grid">
+    <div class="mv-card">
+      <h3>🎯 Our Mission</h3>
+      <p>To know Christ and to make Him known — building lives through worship, the Word, and Spirit-led outreach in our community and beyond.</p>
+    </div>
+    <div class="mv-card">
+      <h3>👁️ Our Vision</h3>
+      <p>To reveal the Glory of Christ and His finished work on the Cross, raising disciples who impact Wakiso-Kayunga and all of Uganda for God's kingdom.</p>
+    </div>
+    <div class="mv-card">
+      <h3>📖 Our Belief</h3>
+      <p>We believe in the authority of Scripture, the saving grace of Jesus Christ, the power of the Holy Spirit, and the call to love our neighbours as ourselves.</p>
+    </div>
+    <div class="mv-card">
+      <h3>🤝 Our Community</h3>
+      <p>Glory of Christ Church is a welcoming family where all are accepted, discipled, and empowered to live victoriously in Christ — regardless of background.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CORE VALUES ===== -->
+<div class="values-section">
+  <div class="values-inner">
+    <span class="section-tag">What Drives Us</span>
+    <h2 class="section-title">Our Core Values</h2>
+    <div class="divider"></div>
+    <div class="values-grid">
+      <div class="value-item">
+        <div class="value-icon">🙌</div>
+        <div class="value-title">Worship</div>
+        <div class="value-desc">We honour God through passionate, Spirit-led worship that transforms hearts and glorifies His name.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">📖</div>
+        <div class="value-title">The Word</div>
+        <div class="value-desc">The Bible is our ultimate authority. We teach it faithfully to build strong disciples of Christ.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">🕊️</div>
+        <div class="value-title">Prayer</div>
+        <div class="value-desc">We are a house of prayer — believing that intercession is the foundation of every breakthrough.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">🌍</div>
+        <div class="value-title">Outreach</div>
+        <div class="value-desc">We actively serve our community and beyond, bringing the hope of Christ to those in need.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">❤️</div>
+        <div class="value-title">Love</div>
+        <div class="value-desc">Love for God and neighbour is the mark of every believer. We cultivate a culture of genuine care.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">🌱</div>
+        <div class="value-title">Growth</div>
+        <div class="value-desc">We are committed to ongoing spiritual growth — individually and as a congregation together.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LEADERS ===== -->
+<section class="section">
+  <span class="section-tag">Our Leadership</span>
+  <h2 class="section-title">Meet the Pastors</h2>
+  <div class="divider"></div>
+
+  <!-- Firestore leaders load here. Falls back to static if Firebase not configured -->
+  <div id="leadersGrid" class="leaders-grid">
+    <div class="leaders-loading"><div class="spinner"></div></div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Glory of Christ Church</h4>
+      <p>A place of worship, fellowship, and transformation in Wakiso-Kayunga, Uganda.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About & Leaders</a>
+      <a href="services.html">Services & Events</a>
+      <a href="contact.html">Contact & Give</a>
+    </div>
+    <div class="footer-col">
+      <h4>Service Times</h4>
+      <p>Sunday: 9:00 AM</p>
+      <p>Tuesday: 3:00 PM</p>
+      <p>Wednesday: 5:00 PM</p>
+      <p>Friday: 9:00 PM</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="tel:+256700592303">📞 +256 700 592 303</a>
+      <a href="mailto:wakisogloryofchristchurch@gmail.com">✉️ Email Us</a>
+      <p>📍 Wakiso-Kayunga, Nayasa Road, Uganda</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Glory of Christ Church Wakiso-Kayunga · All Rights Reserved</p>
+    <p style="margin-top:6px; font-size:0.72rem; color:rgba(255,255,255,0.25);">Designed &amp; Built by <a href="#" style="color:rgba(200,146,42,0.6); font-weight:600;">Lvis Technologies</a></p>  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { db } from './firebase.js';
+  import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // ===== NAVBAR MOBILE =====
+  const toggle   = document.getElementById('navToggle');
+  const drawer   = document.getElementById('navDrawer');
+  const overlay  = document.getElementById('navOverlay');
+  const closeBtn = document.getElementById('drawerClose');
+  toggle.addEventListener('click',   () => { drawer.classList.add('open'); overlay.classList.add('open'); });
+  closeBtn.addEventListener('click', () => { drawer.classList.remove('open'); overlay.classList.remove('open'); });
+  overlay.addEventListener('click',  () => { drawer.classList.remove('open'); overlay.classList.remove('open'); });
+
+  // ===== FOOTER YEAR =====
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ===== STATIC FALLBACK LEADERS =====
+  const staticLeaders = [
+    { name: 'Pastor Harriet Ndagire Bagonza', role: 'Lead Pastor',   image: 'Pastor1.jpg',  bio: 'Founder and Lead Pastor of Glory of Christ Church.' },
+    { name: 'Mr & Mrs Kaate Godfrey',         role: 'Co-Pastors',    image: 'Kaates.jpg',   bio: 'Co-Pastors serving the church community faithfully.' },
+    { name: 'Pastor Rogers Lukwago',           role: 'Co-Pastor',     image: 'r.jpg',        bio: 'Supporting pastoral leadership and discipleship.' },
+    { name: 'Pastor Sharif Muwanguzi',         role: 'Youth Pastor',  image: 'sh1.jpg',      bio: 'Leading the youth into a deeper walk with Christ.' },
+  ];
+
+  function renderLeaders(leaders) {
+    const grid = document.getElementById('leadersGrid');
+    if (!leaders.length) {
+      grid.innerHTML = '<p style="color:var(--muted); text-align:center;">No leaders found.</p>';
+      return;
+    }
+    grid.innerHTML = leaders.map(l => `
+      <div class="leader-card">
+        <div class="leader-img-wrap">
+          <img src="${l.image}" alt="${l.name}" onerror="this.src='elvis.jpg'">
+        </div>
+        <div class="leader-info">
+          <div class="leader-role">${l.role}</div>
+          <div class="leader-name">${l.name}</div>
+          ${l.bio ? `<p class="leader-bio">${l.bio}</p>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ===== LOAD LEADERS FROM FIRESTORE =====
+  async function loadLeaders() {
+    try {
+      const q = query(collection(db, 'leaders'), orderBy('order'));
+      const snap = await getDocs(q);
+      if (snap.empty) { renderLeaders(staticLeaders); return; }
+      const leaders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderLeaders(leaders);
+    } catch (e) {
+      // Firebase not configured yet — show static data
+      renderLeaders(staticLeaders);
+    }
+  }
+
+  loadLeaders();
+</script>
+</body>
+</html>
