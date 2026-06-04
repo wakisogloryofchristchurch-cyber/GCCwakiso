@@ -1596,8 +1596,7 @@
 <div class="toast" id="toast"></div>
 
 
-</body>
-</html<script type="module">
+<script type="module">
   import { db, auth } from './firebase.js';
   import {
     collection, getDocs, orderBy, query, limit, Timestamp, where
@@ -1733,7 +1732,7 @@
             (i===0 ? '<span class="pill pill-gold">Latest</span>' : '') +
           '</div>' +
           (hasLink
-            ? '<button class="sermon-play-btn" onclick="openSermonLink(\'' + s.link + '\',\'' + s.title.replace(/'/g,"") + '\',\'' + (s.speaker||'').replace(/'/g,"") + '\',\'' + (s.scripture||'') + '\')">▶</button>'
+            ? '<button class="sermon-play-btn" onclick="openSermonLink(\'' + s.audioUrl + '\',\'' + s.title.replace(/'/g,"") + '\',\'' + (s.speaker||'').replace(/'/g,"") + '\',\'' + (s.scripture||'') + '\')">▶</button>'
             : '<button class="sermon-play-btn" style="opacity:0.3;cursor:not-allowed" title="No audio link yet">▶</button>') +
         '</div>';
       }).join('') + '<div style="height:1rem;"></div>';
@@ -1744,7 +1743,7 @@
         homeSermons.innerHTML = snap.docs.slice(0,2).map(function(d,i) {
           var s = d.data();
           var hasLink = s.audioUrl && s.audioUrl.trim();
-          return '<div class="card mini-sermon card-press"' + (hasLink ? ' onclick="openSermonLink(\'' + s.link + '\',\'' + s.title.replace(/'/g,'') + '\',\'' + (s.speaker||'').replace(/'/g,'') + '\',\'\')"' : '') + '>' +
+          return '<div class="card mini-sermon card-press"' + (hasLink ? ' onclick="openSermonLink(\'' + s.audioUrl + '\',\'' + s.title.replace(/'/g,'') + '\',\'' + (s.speaker||'').replace(/'/g,'') + '\',\'\')"' : '') + '>' +
             '<div class="play-circle" style="' + (!hasLink?'opacity:0.4':'') + '">▶</div>' +
             '<div style="flex:1;"><div class="mini-sermon-title">' + s.title + '</div>' +
             '<div class="mini-sermon-sub">' + (s.speaker||'') + (s.scripture ? ' · '+s.scripture : '') + '</div></div>' +
