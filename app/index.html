@@ -1081,20 +1081,8 @@
           <div class="home-sec-title">Latest Sermons</div>
           <div class="home-sec-more" onclick="goTo('sermons')">See all</div>
         </div>
-        <div class="card mini-sermon card-press" onclick="playSermon('Walking in the Spirit', 'Pastor Harriet Ndagire', 'Galatians 5:16')">
-          <div class="play-circle">▶</div>
-          <div style="flex:1;">
-            <div class="mini-sermon-title">Walking in the Spirit</div>
-            <div class="mini-sermon-sub">Pastor Harriet · Galatians 5:16</div>
-          </div>
-          <span class="pill pill-gold">New</span>
-        </div>
-        <div class="card mini-sermon card-press" onclick="playSermon('Grace Sufficient', 'Pastor Rogers', '2 Corinthians 12:9')">
-          <div class="play-circle">▶</div>
-          <div style="flex:1;">
-            <div class="mini-sermon-title">Grace Sufficient</div>
-            <div class="mini-sermon-sub">Pastor Rogers · 2 Cor 12:9</div>
-          </div>
+        <div id="homeSermonsList">
+          <p style="color:var(--muted);font-size:0.82rem;text-align:center;padding:1rem 0;">Loading sermons…</p>
         </div>
       </div>
 
@@ -1241,72 +1229,15 @@
       </div>
 
       <!-- Filter -->
-      <div class="sermon-filter">
+      <div class="sermon-filter" id="sermonFilter">
         <div class="filter-pill active" onclick="filterSermons(this, 'all')">All</div>
-        <div class="filter-pill" onclick="filterSermons(this, 'pastor-harriet')">Pr. Harriet</div>
-        <div class="filter-pill" onclick="filterSermons(this, 'pastor-rogers')">Pr. Rogers</div>
-        <div class="filter-pill" onclick="filterSermons(this, 'pastor-sharif')">Pr. Sharif</div>
-        <div class="filter-pill" onclick="filterSermons(this, 'guest')">Guest</div>
       </div>
 
       <div class="sermons-list-wrap" id="sermonsList">
-
-        <div class="card sermon-card card-press" data-speaker="pastor-harriet">
-          <div class="sermon-thumb">🕊️</div>
-          <div class="sermon-info">
-            <div class="sermon-title">Walking in the Spirit</div>
-            <div class="sermon-meta">Pastor Harriet · Galatians 5:16 · Jun 1, 2025</div>
-            <span class="pill pill-gold">Latest</span>
-          </div>
-          <button class="sermon-play-btn" onclick="playSermon('Walking in the Spirit', 'Pastor Harriet Ndagire', 'Galatians 5:16')">▶</button>
+        <div style="text-align:center; padding:3rem 0;">
+          <div class="spinner" style="width:28px;height:28px;border:3px solid rgba(255,255,255,0.1);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto;"></div>
+          <p style="color:var(--muted);font-size:0.82rem;margin-top:1rem;">Loading sermons…</p>
         </div>
-
-        <div class="card sermon-card card-press" data-speaker="pastor-rogers">
-          <div class="sermon-thumb">✝️</div>
-          <div class="sermon-info">
-            <div class="sermon-title">Grace Sufficient</div>
-            <div class="sermon-meta">Pastor Rogers · 2 Cor 12:9 · May 25, 2025</div>
-          </div>
-          <button class="sermon-play-btn" onclick="playSermon('Grace Sufficient', 'Pastor Rogers Lukwago', '2 Corinthians 12:9')">▶</button>
-        </div>
-
-        <div class="card sermon-card card-press" data-speaker="pastor-harriet">
-          <div class="sermon-thumb">🌟</div>
-          <div class="sermon-info">
-            <div class="sermon-title">The Finished Work of the Cross</div>
-            <div class="sermon-meta">Pastor Harriet · John 19:30 · May 18, 2025</div>
-          </div>
-          <button class="sermon-play-btn" onclick="playSermon('The Finished Work of the Cross', 'Pastor Harriet Ndagire', 'John 19:30')">▶</button>
-        </div>
-
-        <div class="card sermon-card card-press" data-speaker="pastor-sharif">
-          <div class="sermon-thumb">🔥</div>
-          <div class="sermon-info">
-            <div class="sermon-title">Identity in Christ</div>
-            <div class="sermon-meta">Pastor Sharif · Ephesians 2:10 · May 11, 2025</div>
-          </div>
-          <button class="sermon-play-btn" onclick="playSermon('Identity in Christ', 'Pastor Sharif Muwanguzi', 'Ephesians 2:10')">▶</button>
-        </div>
-
-        <div class="card sermon-card card-press" data-speaker="guest">
-          <div class="sermon-thumb">📖</div>
-          <div class="sermon-info">
-            <div class="sermon-title">The Power of Prayer</div>
-            <div class="sermon-meta">Guest Speaker · James 5:16 · May 4, 2025</div>
-          </div>
-          <button class="sermon-play-btn" onclick="playSermon('The Power of Prayer', 'Guest Speaker', 'James 5:16')">▶</button>
-        </div>
-
-        <div class="card sermon-card card-press" data-speaker="pastor-rogers">
-          <div class="sermon-thumb">💛</div>
-          <div class="sermon-info">
-            <div class="sermon-title">Love Never Fails</div>
-            <div class="sermon-meta">Pastor Rogers · 1 Cor 13:8 · Apr 27, 2025</div>
-          </div>
-          <button class="sermon-play-btn" onclick="playSermon('Love Never Fails', 'Pastor Rogers Lukwago', '1 Corinthians 13:8')">▶</button>
-        </div>
-
-        <div style="height:1rem;"></div>
       </div>
     </div><!-- /screen-sermons -->
 
@@ -1664,31 +1595,35 @@
 <!-- ===== TOAST ===== -->
 <div class="toast" id="toast"></div>
 
-<script>
-  // ============================================================
-  //  GCC CHURCH APP — Main JavaScript
-  // ============================================================
 
-  // ===== NAVIGATION =====
-  function goTo(screenId) {
+</body>
+</html<script type="module">
+  import { db, auth } from './firebase.js';
+  import {
+    collection, getDocs, orderBy, query, limit, Timestamp, where
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // NAVIGATION
+  window.goTo = function(screenId) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('screen-' + screenId).classList.add('active');
-    document.querySelector(`.nav-item[data-screen="${screenId}"]`)?.classList.add('active');
-  }
+    document.querySelector('.nav-item[data-screen="' + screenId + '"]')?.classList.add('active');
+    if (screenId === 'sermons') loadSermons();
+    if (screenId === 'events')  loadEvents();
+  };
 
-  // ===== HERO SLIDER =====
+  // HERO SLIDER
   (function() {
     const imgs = document.querySelectorAll('.hero-slide-img');
     const dotsEl = document.getElementById('heroDots');
     let cur = 0;
-
-    imgs.forEach((_, i) => {
+    imgs.forEach(function(_, i) {
       const d = document.createElement('div');
       d.className = 'hero-dot' + (i===0 ? ' active' : '');
+      d.addEventListener('click', function() { showSlide(i); });
       dotsEl.appendChild(d);
     });
-
     function showSlide(n) {
       imgs[cur].classList.remove('active');
       dotsEl.children[cur].classList.remove('active');
@@ -1696,321 +1631,251 @@
       imgs[cur].classList.add('active');
       dotsEl.children[cur].classList.add('active');
     }
-
-    setInterval(() => showSlide(cur + 1), 5000);
+    setInterval(function() { showSlide(cur + 1); }, 5000);
   })();
 
-  // ===== DAILY VERSES =====
+  // DAILY VERSE
   const verses = [
     { text: '"For God so loved the world that He gave His one and only Son."', ref: '— John 3:16' },
     { text: '"I can do all things through Christ who strengthens me."', ref: '— Philippians 4:13' },
-    { text: '"Trust in the Lord with all your heart and lean not on your own understanding."', ref: '— Proverbs 3:5' },
+    { text: '"Trust in the Lord with all your heart."', ref: '— Proverbs 3:5' },
     { text: '"The Lord is my shepherd; I shall not want."', ref: '— Psalm 23:1' },
-    { text: '"Be strong and courageous. Do not be afraid; do not be discouraged."', ref: '— Joshua 1:9' },
-    { text: '"Come to me, all you who are weary and burdened, and I will give you rest."', ref: '— Matthew 11:28' },
+    { text: '"Be strong and courageous. Do not be afraid."', ref: '— Joshua 1:9' },
+    { text: '"Come to me all who are weary and I will give you rest."', ref: '— Matthew 11:28' },
     { text: '"The Lord your God is with you, the Mighty Warrior who saves."', ref: '— Zephaniah 3:17' },
   ];
+  var v = verses[new Date().getDay()];
+  document.getElementById('dailyVerse').textContent = v.text;
+  document.getElementById('dailyVerseRef').textContent = v.ref;
 
-  (function() {
-    const dayOfWeek = new Date().getDay();
-    const v = verses[dayOfWeek];
-    document.getElementById('dailyVerse').textContent = v.text;
-    document.getElementById('dailyVerseRef').textContent = v.ref;
-  })();
-
-  // ===== NEXT SERVICE =====
+  // NEXT SERVICE
   (function() {
     const services = [
-      { day: 0, name: 'Sunday Worship Service',  time: 'Sunday · 9:00 AM' },
-      { day: 2, name: 'Tuesday Prayer Meeting',  time: 'Tuesday · 3:00 PM' },
-      { day: 3, name: 'Wednesday Bible Study',   time: 'Wednesday · 5:00 PM' },
-      { day: 5, name: 'Friday Overnight Prayers',time: 'Friday · 9:00 PM' },
+      { day:0, name:'Sunday Worship Service',   time:'Sunday · 9:00 AM' },
+      { day:2, name:'Tuesday Prayer Meeting',   time:'Tuesday · 3:00 PM' },
+      { day:3, name:'Wednesday Bible Study',    time:'Wednesday · 5:00 PM' },
+      { day:5, name:'Friday Overnight Prayers', time:'Friday · 9:00 PM' },
     ];
-    const today = new Date().getDay();
-    let next = services.find(s => s.day >= today) || services[0];
+    var today = new Date().getDay();
+    var next  = services.find(function(s) { return s.day >= today; }) || services[0];
     document.getElementById('nextServiceName').textContent = next.name;
     document.getElementById('nextServiceTime').textContent = next.time + ' · Main Sanctuary';
   })();
 
-  // ===== CALENDAR =====
-  let calDate = new Date();
+  // DARK MODE
+  var darkMode = localStorage.getItem('gcc-dark') !== 'false';
+  function applyTheme() {
+    document.body.style.background = darkMode ? '#0b1f3a' : '#f0ebe1';
+    document.body.style.color      = darkMode ? '#e8e2d6' : '#2c2c2c';
+    document.getElementById('darkToggle') && document.getElementById('darkToggle').classList[darkMode?'add':'remove']('on');
+    document.getElementById('darkToggle2') && document.getElementById('darkToggle2').classList[darkMode?'add':'remove']('on');
+  }
+  window.toggleDarkMode = function() {
+    darkMode = !darkMode;
+    localStorage.setItem('gcc-dark', darkMode);
+    applyTheme();
+    showToast(darkMode ? '🌙 Dark mode on' : '☀️ Light mode on');
+  };
+  applyTheme();
 
-  function renderCalendar() {
-    const year  = calDate.getFullYear();
-    const month = calDate.getMonth();
-    const today = new Date();
-
-    document.getElementById('calMonth').textContent =
-      calDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const daysInPrev  = new Date(year, month, 0).getDate();
-
-    // Event days (for demo — would come from Firebase)
-    const eventDays = [15, 21];
-
-    let html = '';
-    let total = 42;
-
-    for (let i = 0; i < total; i++) {
-      const dayNum = i - firstDay + 1;
-      let cls = 'cal-cell';
-      let display = '';
-
-      if (i < firstDay) {
-        display = daysInPrev - firstDay + i + 1;
-        cls += ' other-month';
-      } else if (dayNum > daysInMonth) {
-        display = dayNum - daysInMonth;
-        cls += ' other-month';
-      } else {
-        display = dayNum;
-        if (year === today.getFullYear() && month === today.getMonth() && dayNum === today.getDate()) {
-          cls += ' today';
-        }
-        if (eventDays.includes(dayNum)) cls += ' has-event';
-      }
-
-      html += `<div class="${cls}" onclick="selectDay(${display})">${display}</div>`;
+  // NOTIFICATIONS
+  window.toggleNotifications = async function() {
+    if (!('Notification' in window)) { showToast('Not supported on this browser', true); return; }
+    if (Notification.permission === 'granted') {
+      showToast('Notifications already enabled ✅'); return;
     }
-
-    document.getElementById('calGrid').innerHTML = html;
+    var perm = await Notification.requestPermission();
+    if (perm === 'granted') {
+      document.getElementById('notifToggle')?.classList.add('on');
+      document.getElementById('notifToggle2')?.classList.add('on');
+      new Notification('GCC Church', { body: 'Notifications enabled! 🙏', icon: 'icons/icon-192.png' });
+      showToast('✅ Notifications enabled!');
+    } else {
+      showToast('Blocked. Enable in browser settings.', true);
+    }
+  };
+  if (Notification.permission === 'granted') {
+    document.getElementById('notifToggle')?.classList.add('on');
+    document.getElementById('notifToggle2')?.classList.add('on');
   }
 
-  function selectDay(day) {
-    document.querySelectorAll('.cal-cell').forEach(c => {
-      if (parseInt(c.textContent) === day && !c.classList.contains('other-month')) {
-        c.classList.add('selected');
-      } else {
-        c.classList.remove('selected');
-      }
-    });
-  }
-
-  document.getElementById('calPrev').addEventListener('click', () => {
-    calDate.setMonth(calDate.getMonth() - 1);
-    renderCalendar();
-  });
-
-  document.getElementById('calNext').addEventListener('click', () => {
-    calDate.setMonth(calDate.getMonth() + 1);
-    renderCalendar();
-  });
-
-  renderCalendar();
-
-  // ===== SERMON FILTER =====
-  function filterSermons(el, filter) {
-    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-    el.classList.add('active');
-    document.querySelectorAll('#sermonsList .sermon-card').forEach(card => {
-      card.style.display = (filter === 'all' || card.dataset.speaker === filter) ? 'flex' : 'none';
-    });
-  }
-
-  // ===== AUDIO PLAYER =====
-  let isPlaying = false;
-  let playerInterval = null;
-  let playerProgress = 0;
-
-  function playSermon(title, speaker, scripture) {
+  // OPEN SERMON LINK
+  window.openSermonLink = function(link, title, speaker, scripture) {
     document.getElementById('playerTitle').textContent = title;
-    document.getElementById('playerSpeaker').textContent = `${speaker} · ${scripture}`;
+    document.getElementById('playerSpeaker').textContent = speaker + (scripture ? ' · ' + scripture : '');
     document.getElementById('playerBar').classList.add('visible');
-    playerProgress = 0;
-    document.getElementById('playerFill').style.width = '0%';
-    isPlaying = true;
-    document.getElementById('playerBtn').textContent = '⏸';
-    startProgress();
-    showToast('▶ Now playing: ' + title);
-    goTo('sermons');
-  }
+    window.open(link, '_blank');
+    showToast('Opening: ' + title);
+  };
 
-  function togglePlay() {
-    isPlaying = !isPlaying;
-    document.getElementById('playerBtn').textContent = isPlaying ? '⏸' : '▶';
-    isPlaying ? startProgress() : stopProgress();
-  }
-
-  function startProgress() {
-    stopProgress();
-    playerInterval = setInterval(() => {
-      playerProgress = Math.min(playerProgress + 0.3, 100);
-      document.getElementById('playerFill').style.width = playerProgress + '%';
-      if (playerProgress >= 100) { stopProgress(); document.getElementById('playerBtn').textContent = '▶'; isPlaying = false; }
-    }, 300);
-  }
-
-  function stopProgress() {
-    if (playerInterval) { clearInterval(playerInterval); playerInterval = null; }
-  }
-
-  function closePlayer() {
-    document.getElementById('playerBar').classList.remove('visible');
-    stopProgress(); isPlaying = false;
-  }
-
-  // ===== REMINDERS =====
-  let reminders = JSON.parse(localStorage.getItem('gcc-reminders') || '[]');
-
-  function updateReminderCount() {
-    const total = reminders.length + 3; // 3 built-in
-    document.getElementById('reminderCount').textContent = total + ' reminder' + (total !== 1 ? 's' : '');
-  }
-
-  function renderReminders() {
-    const list = document.getElementById('remindersList');
-    const builtIn = list.querySelectorAll('.card.reminder-item');
-    // Remove custom ones first
-    list.querySelectorAll('.custom-reminder').forEach(r => r.remove());
-
-    reminders.forEach((r, i) => {
-      const div = document.createElement('div');
-      div.className = 'card reminder-item custom-reminder';
-      div.innerHTML = `
-        <div class="reminder-icon ri-custom">${r.icon}</div>
-        <div class="reminder-info">
-          <div class="reminder-title">${r.title}</div>
-          <div class="reminder-sub">${r.datetime || 'Custom reminder'}</div>
-        </div>
-        <button class="reminder-del" onclick="deleteReminder(${i})">🗑</button>
-      `;
-      list.appendChild(div);
-    });
-    updateReminderCount();
-  }
-
-  function saveCustomReminder() {
-    const title    = document.getElementById('reminderTitle').value.trim();
-    const datetime = document.getElementById('reminderDateTime').value;
-    const icon     = document.getElementById('reminderType').value;
-    if (!title) { showToast('Please enter a reminder title.', true); return; }
-
-    const dt = datetime ? new Date(datetime).toLocaleString('en-UG', { weekday:'short', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }) : '';
-    reminders.push({ title, datetime: dt, icon });
-    localStorage.setItem('gcc-reminders', JSON.stringify(reminders));
-    renderReminders();
-
-    // Schedule notification if permission granted
-    if (Notification.permission === 'granted' && datetime) {
-      const delay = new Date(datetime).getTime() - Date.now();
-      if (delay > 0) {
-        setTimeout(() => {
-          new Notification('GCC Church Reminder', { body: title, icon: 'icons/icon-192.png' });
-        }, delay);
+  // LOAD SERMONS FROM FIREBASE
+  async function loadSermons() {
+    var list = document.getElementById('sermonsList');
+    if (!list) return;
+    list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted);">Loading sermons…</div>';
+    try {
+      var q = query(collection(db,'sermons'), orderBy('date','desc'), limit(20));
+      var snap = await getDocs(q);
+      if (snap.empty) {
+        list.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--muted);"><div style="font-size:2.5rem;margin-bottom:1rem;">🎙️</div><p>No sermons yet.<br>Add from the Admin panel.</p></div>';
+        return;
       }
+      var icons = ['🕊️','✝️','🌟','🔥','📖','💛','🙏','⭐'];
+      list.innerHTML = snap.docs.map(function(d, i) {
+        var s = d.data();
+        var dt = s.date && s.date.toDate ? s.date.toDate().toLocaleDateString('en-UG',{year:'numeric',month:'short',day:'numeric'}) : '';
+        var hasLink = s.audioUrl && s.audioUrl.trim();
+        return '<div class="card sermon-card card-press" data-id="' + d.id + '" data-speaker="' + (s.speaker||'') + '">' +
+          '<div class="sermon-thumb">' + icons[i % icons.length] + '</div>' +
+          '<div class="sermon-info">' +
+            '<div class="sermon-title">' + s.title + '</div>' +
+            '<div class="sermon-meta">' + (s.speaker||'') + (dt ? ' · ' + dt : '') + (s.scripture ? ' · ' + s.scripture : '') + '</div>' +
+            (i===0 ? '<span class="pill pill-gold">Latest</span>' : '') +
+          '</div>' +
+          (hasLink
+            ? '<button class="sermon-play-btn" onclick="openSermonLink(\'' + s.link + '\',\'' + s.title.replace(/'/g,"") + '\',\'' + (s.speaker||'').replace(/'/g,"") + '\',\'' + (s.scripture||'') + '\')">▶</button>'
+            : '<button class="sermon-play-btn" style="opacity:0.3;cursor:not-allowed" title="No audio link yet">▶</button>') +
+        '</div>';
+      }).join('') + '<div style="height:1rem;"></div>';
+
+      // Update home screen sermons too
+      var homeSermons = document.getElementById('homeSermonsList');
+      if (homeSermons && snap.docs.length > 0) {
+        homeSermons.innerHTML = snap.docs.slice(0,2).map(function(d,i) {
+          var s = d.data();
+          var hasLink = s.audioUrl && s.audioUrl.trim();
+          return '<div class="card mini-sermon card-press"' + (hasLink ? ' onclick="openSermonLink(\'' + s.link + '\',\'' + s.title.replace(/'/g,'') + '\',\'' + (s.speaker||'').replace(/'/g,'') + '\',\'\')"' : '') + '>' +
+            '<div class="play-circle" style="' + (!hasLink?'opacity:0.4':'') + '">▶</div>' +
+            '<div style="flex:1;"><div class="mini-sermon-title">' + s.title + '</div>' +
+            '<div class="mini-sermon-sub">' + (s.speaker||'') + (s.scripture ? ' · '+s.scripture : '') + '</div></div>' +
+            (i===0 ? '<span class="pill pill-gold">New</span>' : '') +
+          '</div>';
+        }).join('');
+      }
+    } catch(e) {
+      console.error(e);
+      list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted);">Could not load sermons. Check connection.</div>';
     }
-
-    document.getElementById('reminderTitle').value = '';
-    document.getElementById('reminderDateTime').value = '';
-    showToast('✅ Reminder set!');
-    goTo('reminders');
   }
 
-  function addReminder(title, subtitle, icon) {
-    reminders.push({ title, datetime: subtitle, icon });
-    localStorage.setItem('gcc-reminders', JSON.stringify(reminders));
-    renderReminders();
-    showToast('🔔 Reminder added!');
-    goTo('reminders');
+  window.filterSermons = function(el, speaker) {
+    document.querySelectorAll('.sermon-filter .filter-pill').forEach(function(p) { p.classList.remove('active'); });
+    el.classList.add('active');
+    document.querySelectorAll('#sermonsList .sermon-card').forEach(function(card) {
+      card.style.display = (speaker === 'all' || (card.dataset.speaker||'').includes(speaker)) ? 'flex' : 'none';
+    });
+  };
+
+  // LOAD EVENTS FROM FIREBASE
+  async function loadEvents() {
+    try {
+      var now = Timestamp.now();
+      var q = query(collection(db,'events'), where('date','>=',now), orderBy('date'), limit(10));
+      var snap = await getDocs(q);
+      var container = document.querySelector('.events-list');
+      if (!container) return;
+      container.querySelectorAll('.firebase-event,.firebase-label').forEach(function(e) { e.remove(); });
+      if (!snap.empty) {
+        var label = document.createElement('div');
+        label.className = 'firebase-label';
+        label.style = 'margin:1rem 0 0.6rem;';
+        label.innerHTML = '<div class="tag">Upcoming Special Events</div>';
+        container.appendChild(label);
+        snap.docs.forEach(function(d) {
+          var e = d.data();
+          var dt = e.date && e.date.toDate ? e.date.toDate() : new Date();
+          var div = document.createElement('div');
+          div.className = 'card event-card-full card-press firebase-event';
+          div.innerHTML = '<div class="event-card-top">' +
+            '<div class="event-date-block"><div class="edb-day">' + String(dt.getDate()).padStart(2,'0') + '</div><div class="edb-mon">' + dt.toLocaleString('en',{month:'short'}) + '</div></div>' +
+            '<div class="event-info"><div class="event-title">' + e.title + '</div>' +
+            '<div class="event-meta">' + (e.time ? '🕐 '+e.time+' &nbsp;·&nbsp; ' : '') + '📍 ' + (e.location||'Main Sanctuary') + '</div>' +
+            (e.description ? '<div class="event-desc">' + e.description + '</div>' : '') + '</div></div>' +
+            '<button class="btn btn-ghost remind-btn" onclick="addReminder(\'' + e.title.replace(/'/g,'') + '\',\'' + dt.toLocaleDateString() + '\',\'📅\')">🔔 Set Reminder</button>';
+          container.appendChild(div);
+        });
+      }
+    } catch(err) { console.error(err); }
   }
 
-  function deleteReminder(index) {
-    reminders.splice(index, 1);
-    localStorage.setItem('gcc-reminders', JSON.stringify(reminders));
-    renderReminders();
-    showToast('Reminder removed.');
-  }
+  // CALENDAR
+  var calDate = new Date();
+  window.renderCalendar = function() {
+    var year=calDate.getFullYear(), month=calDate.getMonth(), today=new Date();
+    document.getElementById('calMonth').textContent = calDate.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+    var firstDay=new Date(year,month,1).getDay(), daysInMonth=new Date(year,month+1,0).getDate(), daysInPrev=new Date(year,month,0).getDate();
+    var html='';
+    for(var i=0;i<42;i++){
+      var dayNum=i-firstDay+1, cls='cal-cell', display='';
+      if(i<firstDay){display=daysInPrev-firstDay+i+1;cls+=' other-month';}
+      else if(dayNum>daysInMonth){display=dayNum-daysInMonth;cls+=' other-month';}
+      else{display=dayNum;if(year===today.getFullYear()&&month===today.getMonth()&&dayNum===today.getDate())cls+=' today';}
+      html+='<div class="'+cls+'" onclick="selectDay('+display+')">'+display+'</div>';
+    }
+    document.getElementById('calGrid').innerHTML=html;
+  };
+  window.selectDay=function(day){document.querySelectorAll('.cal-cell').forEach(function(c){c.classList.toggle('selected',parseInt(c.textContent)===day&&!c.classList.contains('other-month'));});};
+  document.getElementById('calPrev').addEventListener('click',function(){calDate.setMonth(calDate.getMonth()-1);window.renderCalendar();});
+  document.getElementById('calNext').addEventListener('click',function(){calDate.setMonth(calDate.getMonth()+1);window.renderCalendar();});
+  window.renderCalendar();
 
+  // PLAYER
+
+
+  // REMINDERS
+  var reminders = JSON.parse(localStorage.getItem('gcc-reminders') || '[]');
+  function updateReminderCount(){var t=reminders.length+3;var el=document.getElementById('reminderCount');if(el)el.textContent=t+' reminder'+(t!==1?'s':'');}
+  function renderReminders(){
+    var list=document.getElementById('remindersList');
+    list.querySelectorAll('.custom-reminder').forEach(function(r){r.remove();});
+    reminders.forEach(function(r,i){
+      var div=document.createElement('div');div.className='card reminder-item custom-reminder';
+      div.innerHTML='<div class="reminder-icon ri-custom">'+r.icon+'</div><div class="reminder-info"><div class="reminder-title">'+r.title+'</div><div class="reminder-sub">'+(r.datetime||'Custom reminder')+'</div></div><button class="reminder-del" onclick="deleteReminder('+i+')">🗑</button>';
+      list.appendChild(div);
+    });updateReminderCount();
+  }
+  window.saveCustomReminder=function(){
+    var title=document.getElementById('reminderTitle').value.trim();
+    var datetime=document.getElementById('reminderDateTime').value;
+    var icon=document.getElementById('reminderType').value;
+    if(!title){showToast('Please enter a title.',true);return;}
+    var dt=datetime?new Date(datetime).toLocaleString('en-UG',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
+    reminders.push({title:title,datetime:dt,icon:icon});
+    localStorage.setItem('gcc-reminders',JSON.stringify(reminders));renderReminders();
+    if(Notification.permission==='granted'&&datetime){var delay=new Date(datetime).getTime()-Date.now();if(delay>0)setTimeout(function(){new Notification('GCC Reminder: '+title,{icon:'icons/icon-192.png'});},delay);}
+    document.getElementById('reminderTitle').value='';document.getElementById('reminderDateTime').value='';
+    showToast('✅ Reminder set!');window.goTo('reminders');
+  };
+  window.addReminder=function(title,subtitle,icon){reminders.push({title:title,datetime:subtitle,icon:icon});localStorage.setItem('gcc-reminders',JSON.stringify(reminders));renderReminders();showToast('🔔 Reminder added!');window.goTo('reminders');};
+  window.deleteReminder=function(i){reminders.splice(i,1);localStorage.setItem('gcc-reminders',JSON.stringify(reminders));renderReminders();showToast('Reminder removed.');};
   renderReminders();
 
-  // ===== NOTIFICATIONS =====
-  function toggleNotifications() {
-    if (Notification.permission === 'default') {
-      Notification.requestPermission().then(perm => {
-        if (perm === 'granted') {
-          document.getElementById('notifToggle').classList.add('on');
-          document.getElementById('notifToggle2').classList.add('on');
-          showToast('✅ Notifications enabled!');
-        }
-      });
-    } else if (Notification.permission === 'granted') {
-      showToast('Manage notifications in your browser settings.');
-    } else {
-      showToast('Notifications blocked. Enable in browser settings.', true);
-    }
-  }
+  // MODALS
+  window.openModal=function(id){document.getElementById(id).classList.add('open');};
+  window.closeModal=function(id){document.getElementById(id).classList.remove('open');};
+  window.closeModalOutside=function(e,id){if(e.target.classList.contains('modal-overlay'))window.closeModal(id);};
 
-  if (Notification.permission === 'granted') {
-    document.getElementById('notifToggle').classList.add('on');
-    document.getElementById('notifToggle2').classList.add('on');
-  }
+  // CONTACT
+  window.callPhone=function(num){window.location.href='tel:'+num;};
+  window.sendEmail=function(){window.location.href='mailto:wakisogloryofchristchurch@gmail.com';};
 
-  // ===== MODALS =====
-  function openModal(id) {
-    document.getElementById(id).classList.add('open');
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('open');
-  }
-  function closeModalOutside(e, id) {
-    if (e.target.classList.contains('modal-overlay')) closeModal(id);
-  }
+  // TOAST
+  window.showToast=function(msg,isError){var t=document.getElementById('toast');t.textContent=msg;t.style.borderLeft=isError?'3px solid #e74c3c':'3px solid var(--gold)';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2800);};
 
-  // ===== CONTACT =====
-  function callPhone(num) { window.location.href = 'tel:' + num; }
-  function sendEmail() { window.location.href = 'mailto:wakisogloryofchristchurch@gmail.com'; }
+  // SERVICE WORKER
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}
 
-  // ===== TOAST =====
-  function showToast(msg, isError = false) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.borderLeft = isError ? '3px solid #e74c3c' : '3px solid var(--gold)';
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
-  }
+  // PWA INSTALL
+  var deferredPrompt;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;setTimeout(function(){document.getElementById('installBanner').classList.add('visible');},3000);});
+  document.getElementById('installBtn').addEventListener('click',async function(){if(!deferredPrompt)return;deferredPrompt.prompt();var r=await deferredPrompt.userChoice;deferredPrompt=null;window.dismissInstall();if(r.outcome==='accepted')window.showToast('✅ App installed!');});
+  window.dismissInstall=function(){document.getElementById('installBanner').classList.remove('visible');};
+  if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.navigator.standalone){setTimeout(function(){var b=document.getElementById('installBanner');b.querySelector('.install-banner-sub').textContent='Tap Share → Add to Home Screen';b.classList.add('visible');},3000);}
 
-  // ===== SERVICE WORKER =====
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
-    });
-  }
-
-  // ===== PWA INSTALL =====
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    setTimeout(() => {
-      document.getElementById('installBanner').classList.add('visible');
-    }, 3000);
-  });
-
-  document.getElementById('installBtn').addEventListener('click', async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    dismissInstall();
-    if (outcome === 'accepted') showToast('✅ App installed!');
-  });
-
-  function dismissInstall() {
-    document.getElementById('installBanner').classList.remove('visible');
-  }
-
-  // iOS Safari install hint
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  const isStandalone = window.navigator.standalone;
-  if (isIOS && !isStandalone) {
-    setTimeout(() => {
-      const banner = document.getElementById('installBanner');
-      banner.querySelector('.install-banner-sub').textContent = 'Tap Share → Add to Home Screen';
-      banner.classList.add('visible');
-    }, 3000);
-  }
+  // INIT
+  loadSermons();
+  loadEvents();
 </script>
+
 </body>
 </html>

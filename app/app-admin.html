@@ -1369,9 +1369,14 @@
                     </div>
                   </div>
                   <div class="f-group">
-                    <label>Audio / Video Link</label>
-                    <input type="url" id="sLink" placeholder="https://youtube.com/… or SoundCloud, etc.">
-                    <div class="hint">YouTube, SoundCloud, Spotify, or any direct audio URL</div>
+                    <label>Upload Audio File 🎵</label>
+                    <input type="file" id="sAudioFile" accept="audio/*,.mp3,.m4a,.wav,.ogg,.aac">
+                    <div class="hint">MP3, M4A, WAV, AAC supported. Max ~100MB via Cloudinary.</div>
+                    <div class="upload-prog" id="sAudioProg"><div class="upload-prog-bar" id="sAudioBar"></div></div>
+                    <div id="sAudioPreview" style="display:none; margin-top:8px;">
+                      <audio id="sAudioPlayer" controls style="width:100%; border-radius:8px; margin-top:6px;"></audio>
+                      <div id="sAudioName" style="font-size:0.75rem; color:var(--muted); margin-top:4px;"></div>
+                    </div>
                   </div>
                   <div class="f-group">
                     <label>Sermon Notes / Summary</label>
@@ -2042,7 +2047,7 @@
             <div style="font-size:0.85rem; font-weight:600; color:var(--white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.title}</div>
             <div style="font-size:0.72rem; color:var(--muted);">${s.speaker || ''} · ${dt}</div>
           </div>
-          ${s.link ? `<a href="${s.link}" target="_blank" style="color:var(--gold); font-size:0.75rem; font-weight:600;">▶ Play</a>` : ''}
+          ${s.audioUrl ? `<audio controls src="${s.audioUrl}" style="height:28px; max-width:140px;"></audio>` : '<span style="color:var(--muted);font-size:0.75rem;">No audio</span>'}
           <button class="btn btn-red btn-sm" onclick="deleteFBDoc('sermons','${d.id}',loadSermons)">🗑</button>
         </div>`;
       }).join('');
@@ -2056,19 +2061,47 @@
     const speaker  = document.getElementById('sSpeaker').value;
     const dateVal  = document.getElementById('sDate').value;
     const scripture= document.getElementById('sScripture').value.trim();
-    const link     = document.getElementById('sLink').value.trim();
     const notes    = document.getElementById('sNotes').value.trim();
     const category = document.getElementById('sCategory').value;
+    const audioFile= document.getElementById('sAudioFile').files[0];
+
     if (!title || !dateVal) { toast('Title and date are required', 'error'); return; }
+
     const btn = document.getElementById('saveSermonBtn');
-    btn.disabled = true; btn.textContent = 'Saving…';
+    btn.disabled = true; btn.textContent = 'Uploading…';
+
     try {
-      await addDoc(collection(db,'sermons'), { title, speaker, scripture, link, notes, category,
-        date: Timestamp.fromDate(new Date(dateVal)), createdAt: serverTimestamp() });
+      let audioUrl = '';
+      let audioDuration = '';
+
+      if (audioFile) {
+        toast('Uploading audio to Cloudinary… please wait 🎵', 'info');
+        audioUrl = await uploadAudioToCloudinary(
+          audioFile,
+          'sAudioBar',
+          'sAudioProg'
+        );
+        toast('Audio uploaded! Saving sermon…', 'info');
+      }
+
+      await addDoc(collection(db,'sermons'), {
+        title, speaker, scripture, notes, category,
+        audioUrl,
+        fileName: audioFile ? audioFile.name : '',
+        date: Timestamp.fromDate(new Date(dateVal)),
+        createdAt: serverTimestamp()
+      });
+
       toast('Sermon published! 🎙️', 'success');
-      ['sTitle','sDate','sScripture','sLink','sNotes'].forEach(id => document.getElementById(id).value='');
+      ['sTitle','sDate','sScripture','sNotes'].forEach(id => document.getElementById(id).value='');
+      document.getElementById('sAudioFile').value = '';
+      document.getElementById('sAudioPreview').style.display = 'none';
       loadSermons(); loadStats();
-    } catch { toast('Error saving. Check Firebase config.','error'); }
+    } catch(e) {
+      console.error(e);
+      toast('Error: ' + e.message, 'error');
+    }
+
     btn.disabled = false; btn.textContent = 'Save Sermon 🎙️';
   };
 
@@ -2301,6 +2334,54 @@
       xhr.send(data);
     });
   }
+
+  // ===== CLOUDINARY AUDIO UPLOAD =====
+  async function uploadAudioToCloudinary(file, barId, wrapId) {
+    return new Promise((resolve, reject) => {
+      const url  = `https://api.cloudinary.com/v1_1/${window.CLOUDINARY_CLOUD}/video/upload`;
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', window.CLOUDINARY_PRESET);
+      data.append('folder', 'gcc-church/sermons');
+      data.append('resource_type', 'video'); // Cloudinary uses 'video' for audio too
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+      if (wrapId) document.getElementById(wrapId).style.display = 'block';
+
+      xhr.upload.onprogress = e => {
+        if (e.lengthComputable && barId) {
+          const pct = Math.round((e.loaded / e.total) * 100);
+          document.getElementById(barId).style.width = pct + '%';
+          document.getElementById('saveSermonBtn').textContent = `Uploading ${pct}%…`;
+        }
+      };
+
+      xhr.onload = () => {
+        if (wrapId) document.getElementById(wrapId).style.display = 'none';
+        if (xhr.status === 200) {
+          resolve(JSON.parse(xhr.responseText).secure_url);
+        } else {
+          reject(new Error('Audio upload failed: ' + xhr.responseText));
+        }
+      };
+
+      xhr.onerror = () => reject(new Error('Network error during audio upload'));
+      xhr.send(data);
+    });
+  }
+
+  // Preview audio before upload
+  document.getElementById('sAudioFile').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const preview  = document.getElementById('sAudioPreview');
+    const player   = document.getElementById('sAudioPlayer');
+    const nameEl   = document.getElementById('sAudioName');
+    player.src = URL.createObjectURL(file);
+    nameEl.textContent = '🎵 ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(1) + ' MB)';
+    preview.style.display = 'block';
+  });
 
   window.uploadSlide = async function() {
     const file = document.getElementById('slideImageFile').files[0];
