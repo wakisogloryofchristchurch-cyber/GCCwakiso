@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Glory of Christ Church</title>
+  <link rel="icon" href="elvis.jpg" type="image/jpeg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #f0f2f5; }
+
+    /* ===== LOGIN SCREEN ===== */
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      padding: 2rem;
+    }
+
+    .login-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2.8rem 2.4rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .login-logo {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--gold);
+      margin: 0 auto 1rem;
+    }
+
+    .login-box h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .login-box p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+
+    .login-box .form-group {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .login-box .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+
+    .login-box .form-group input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--trans);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .login-box .form-group input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,146,42,0.12);
+    }
+
+    .login-error {
+      color: #e74c3c;
+      font-size: 0.82rem;
+      margin-bottom: 1rem;
+      min-height: 18px;
+    }
+
+    /* ===== DASHBOARD ===== */
+    .dashboard { display: none; }
+
+    .admin-header {
+      background: var(--navy);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .admin-brand img {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      object-fit: cover;
+    }
+
+    .admin-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.85rem;
+    }
+
+    .logout-btn {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #fff;
+      padding: 7px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-family: 'DM Sans', sans-serif;
+      transition: var(--trans);
+    }
+
+    .logout-btn:hover { background: rgba(231,76,60,0.7); }
+
+    /* ===== TABS ===== */
+    .admin-tabs {
+      background: #fff;
+      border-bottom: 2px solid var(--cream);
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      padding: 0 2rem;
+    }
+
+    .tab-btn {
+      padding: 14px 20px;
+      border: none;
+      background: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      white-space: nowrap;
+      transition: var(--trans);
+    }
+
+    .tab-btn:hover { color: var(--navy); }
+    .tab-btn.active { color: var(--navy); border-bottom-color: var(--gold); }
+
+    /* ===== PANEL ===== */
+    .admin-body { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ===== SECTION CARD ===== */
+    .admin-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .admin-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.4rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--cream);
+    }
+
+    .admin-card-header h3 {
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ===== FORM ===== */
+    .admin-form .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .admin-form .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .admin-form .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+
+    .admin-form .form-group input,
+    .admin-form .form-group textarea,
+    .admin-form .form-group select {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      transition: var(--trans);
+      background: var(--ivory);
+    }
+
+    .admin-form .form-group input:focus,
+    .admin-form .form-group textarea:focus,
+    .admin-form .form-group select:focus {
+      border-color: var(--gold);
+      background: #fff;
+    }
+
+    .admin-form .form-group textarea { min-height: 90px; resize: vertical; }
+
+    /* ===== TABLE ===== */
+    .admin-table-wrap { overflow-x: auto; }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .admin-table th {
+      background: var(--navy);
+      color: var(--gold-lt);
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .admin-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--cream);
+      vertical-align: middle;
+    }
+
+    .admin-table tr:last-child td { border-bottom: none; }
+    .admin-table tr:hover td { background: var(--ivory); }
+
+    .admin-table img {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+    }
+
+    .tbl-del-btn {
+      background: none;
+      border: none;
+      color: #e74c3c;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: var(--trans);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .tbl-del-btn:hover { background: #fdecea; }
+
+    /* ===== MESSAGES ===== */
+    .msg-item {
+      border: 1px solid var(--cream);
+      border-radius: 10px;
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+      transition: var(--trans);
+    }
+
+    .msg-item:hover { border-color: var(--gold); }
+
+    .msg-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+
+    .msg-name { font-weight: 600; color: var(--navy); }
+    .msg-subject { font-size: 0.8rem; color: var(--gold); font-weight: 600; }
+    .msg-date { font-size: 0.75rem; color: var(--muted); }
+    .msg-contact { font-size: 0.82rem; color: var(--muted); margin-bottom: 6px; }
+    .msg-body { font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+
+    /* ===== STATS ===== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.4rem;
+      text-align: center;
+      border-top: 4px solid var(--gold);
+    }
+
+    .stat-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+    .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--navy); font-weight: 700; }
+    .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ===== IMAGE UPLOAD ===== */
+    .img-preview {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--gold);
+      display: none;
+      margin-bottom: 8px;
+    }
+
+    .upload-progress {
+      height: 4px;
+      background: var(--cream);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .upload-bar {
+      height: 100%;
+      background: var(--gold);
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    @media (max-width: 640px) {
+      .admin-form .form-row { grid-template-columns: 1fr; }
+      .admin-tabs { padding: 0 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <img src="elvis.jpg" alt="Logo" class="login-logo">
+    <h2>Admin Panel</h2>
+    <p>Glory of Christ Church — Wakiso-Kayunga</p>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="loginEmail" placeholder="admin@gloryofchrist.org">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPassword" placeholder="••••••••">
+    </div>
+    <p class="login-error" id="loginError"></p>
+    <button class="btn btn-primary" id="loginBtn" style="width:100%; justify-content:center;">
+      Sign In 🔒
+    </button>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div class="dashboard" id="dashboard">
+
+  <!-- Header -->
+  <div class="admin-header">
+    <div class="admin-brand">
+      <img src="elvis.jpg" alt="Logo">
+      Admin Panel
+    </div>
+    <div class="admin-user">
+      <span id="adminEmail"></span>
+      <button class="logout-btn" id="logoutBtn">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="admin-tabs">
+    <button class="tab-btn active" data-tab="overview">📊 Overview</button>
+    <button class="tab-btn" data-tab="leaders">👥 Leaders</button>
+    <button class="tab-btn" data-tab="events">📅 Events</button>
+    <button class="tab-btn" data-tab="sermons">🎙️ Sermons</button>
+    <button class="tab-btn" data-tab="messages">✉️ Messages</button>
+  </div>
+
+  <div class="admin-body">
+
+    <!-- ===== OVERVIEW ===== -->
+    <div class="tab-panel active" id="tab-overview">
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-number" id="statLeaders">–</div><div class="stat-label">Leaders</div></div>
+        <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-number" id="statEvents">–</div><div class="stat-label">Events</div></div>
+        <div class="stat-card"><div class="stat-icon">🎙️</div><div class="stat-number" id="statSermons">–</div><div class="stat-label">Sermons</div></div>
+        <div class="stat-card"><div class="stat-icon">✉️</div><div class="stat-number" id="statMessages">–</div><div class="stat-label">Messages</div></div>
+      </div>
+      <div class="admin-card">
+        <div class="admin-card-header"><h3>🏠 Quick Links</h3></div>
+        <div style="display:flex; flex-wrap:wrap; gap:0.8rem;">
+          <a href="index.html" target="_blank" class="btn btn-outline">🏠 View Home</a>
+          <a href="about.html" target="_blank" class="btn btn-outline">✝️ View About</a>
+          <a href="services.html" target="_blank" class="btn btn-outline">🙏 View Services</a>
+          <a href="contact.html" target="_blank" class="btn btn-outline">📩 View Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== LEADERS ===== -->
+    <div class="tab-panel" id="tab-leaders">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>➕ Add Leader</h3>
+        </div>
+        <div class="admin-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" id="lName" placeholder="e.g. Pastor Harriet Ndagire">
+            </div>
+            <div class="form-group">
+              <label>Role *</label>
+              <input type="text" id="lRole" placeholder="e.g. Lead Pastor">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Short Bio</label>
+              <input type="text" id="lBio" placeholder="A brief description…">
+            </div>
+            <div class="form-group">
+              <label>Display Order</label>
+              <input type="number" id="lOrder" placeholder="1" value="1" min="1">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Photo</label>
+            <img id="lImgPreview" class="img-preview" alt="Preview">
+            <input type="file" id="lImage" accept="image/*">
+            <div class="upload-progress" id="lUploadProgress">
+              <div class="upload-bar" id="lUploadBar"></div>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="addLeaderBtn">Save Leader</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-header"><h3>👥 All Leaders</h3></div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Photo</th><th>Name</th><th>Role</th><th>Order</th><th>Action</th></tr>
+            </thead>
+            <tbody id="leadersTableBody">
+              <tr><td colspan="5" style="text-align:center; padding:2rem;"><div class="spinner"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== EVENTS ===== -->
+    <div class="tab-panel" id="tab-events">
+      <div class="admin-card">
+        <div class="admin-card-header"><h3>➕ Add Event</h3></div>
+        <div class="admin-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Event Title *</label>
+              <input type="text" id="eTitle" placeholder="e.g. Annual Thanksgiving Service">
+            </div>
+            <div class="form-group">
+              <label>Date *</label>
+              <input type="date" id="eDate">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Time</label>
+              <input type="time" id="eTime">
+            </div>
+            <div class="form-group">
+              <label>Location</label>
+              <input type="text" id="eLocation" placeholder="e.g. Main Sanctuary">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="eDesc" placeholder="Describe the event…"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Event Image (optional)</label>
+            <input type="file" id="eImage" accept="image/*">
+            <div class="upload-progress" id="eUploadProgress">
+              <div class="upload-bar" id="eUploadBar"></div>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="addEventBtn">Save Event</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-header"><h3>📅 All Events</h3></div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Title</th><th>Date</th><th>Time</th><th>Location</th><th>Action</th></tr>
+            </thead>
+            <tbody id="eventsTableBody">
+              <tr><td colspan="5" style="text-align:center; padding:2rem;"><div class="spinner"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SERMONS ===== -->
+    <div class="tab-panel" id="tab-sermons">
+      <div class="admin-card">
+        <div class="admin-card-header"><h3>➕ Add Sermon</h3></div>
+        <div class="admin-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Sermon Title *</label>
+              <input type="text" id="sTitle" placeholder="e.g. Walking in the Spirit">
+            </div>
+            <div class="form-group">
+              <label>Speaker</label>
+              <input type="text" id="sSpeaker" placeholder="e.g. Pastor Harriet">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Date *</label>
+              <input type="date" id="sDate">
+            </div>
+            <div class="form-group">
+              <label>Scripture Reference</label>
+              <input type="text" id="sScripture" placeholder="e.g. Galatians 5:16">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Audio / Video Link (YouTube, SoundCloud, etc.)</label>
+            <input type="url" id="sLink" placeholder="https://…">
+          </div>
+          <div class="form-group">
+            <label>Notes / Summary</label>
+            <textarea id="sNotes" placeholder="Brief sermon summary…"></textarea>
+          </div>
+          <button class="btn btn-primary" id="addSermonBtn">Save Sermon</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-header"><h3>🎙️ All Sermons</h3></div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Title</th><th>Speaker</th><th>Date</th><th>Scripture</th><th>Action</th></tr>
+            </thead>
+            <tbody id="sermonsTableBody">
+              <tr><td colspan="5" style="text-align:center; padding:2rem;"><div class="spinner"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MESSAGES ===== -->
+    <div class="tab-panel" id="tab-messages">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>✉️ Contact Messages</h3>
+          <button class="btn btn-outline" id="refreshMsgs" style="padding:6px 14px; font-size:0.82rem;">↻ Refresh</button>
+        </div>
+        <div id="messagesContainer">
+          <div style="text-align:center; padding:2rem;"><div class="spinner"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /admin-body -->
+
+  <!-- Lvis Technologies Credit -->
+  <div style="text-align:center; padding:1.5rem 2rem 2rem; border-top:1px solid rgba(255,255,255,0.06); margin-top:1rem;">
+    <div style="font-size:0.65rem; color:rgba(212,207,199,0.22); letter-spacing:0.1em; margin-bottom:4px;">WEBSITE &amp; APP DESIGNED &amp; BUILT BY</div>
+    <div style="font-size:1rem; font-weight:800; letter-spacing:0.18em; color:rgba(200,146,42,0.55); font-family:'DM Sans',sans-serif;">LVIS TECHNOLOGIES</div>
+  </div>
+
+</div><!-- /dashboard -->
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { auth, db } from './firebase.js';
+  import {
+    signInWithEmailAndPassword, signOut, onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import {
+    collection, addDoc, getDocs, deleteDoc, doc,
+    orderBy, query, serverTimestamp, Timestamp, limit
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  // Cloudinary config — replaces Firebase Storage
+  const CLOUDINARY_CLOUD  = 'droecocgs';
+  const CLOUDINARY_PRESET = 'GCC wakiso';
+
+  // ===== TOAST =====
+  function toast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `toast ${type} show`;
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  // ===== AUTH STATE =====
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      document.getElementById('adminEmail').textContent = user.email;
+      loadAll();
+    } else {
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('dashboard').style.display = 'none';
+    }
+  });
+
+  // ===== LOGIN =====
+  document.getElementById('loginBtn').addEventListener('click', async () => {
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errEl    = document.getElementById('loginError');
+    errEl.textContent = '';
+
+    if (!email || !password) { errEl.textContent = 'Please enter email and password.'; return; }
+
+    const btn = document.getElementById('loginBtn');
+    btn.textContent = 'Signing in…'; btn.disabled = true;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch(e) {
+      console.error('Login error:', e.code, e.message);
+      let msg = 'Login failed. ';
+      if (e.code === 'auth/user-not-found')        msg += 'No account found with that email.';
+      else if (e.code === 'auth/wrong-password')    msg += 'Wrong password. Try again.';
+      else if (e.code === 'auth/invalid-email')     msg += 'Invalid email address.';
+      else if (e.code === 'auth/too-many-requests') msg += 'Too many attempts. Wait a few minutes.';
+      else if (e.code === 'auth/unauthorized-domain') msg += 'Domain not authorized — fix below.';
+      else if (e.code === 'auth/invalid-credential') msg += 'Wrong email or password.';
+      else if (e.code === 'auth/network-request-failed') msg += 'No internet connection.';
+      else msg += e.message;
+      errEl.textContent = msg;
+      btn.textContent = 'Sign In 🔒'; btn.disabled = false;
+    }
+  });
+
+  // Allow Enter key on password field
+  document.getElementById('loginPassword').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('loginBtn').click();
+  });
+
+  // ===== LOGOUT =====
+  document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+
+  // ===== TABS =====
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ===== CLOUDINARY IMAGE UPLOAD =====
+  async function uploadImage(file, folder, progressBar, progressWrap) {
+    return new Promise((resolve, reject) => {
+      const url  = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`;
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', CLOUDINARY_PRESET);
+      data.append('folder', 'gcc-website/' + folder);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+      if (progressWrap) progressWrap.style.display = 'block';
+
+      xhr.upload.onprogress = e => {
+        if (e.lengthComputable && progressBar) {
+          progressBar.style.width = Math.round((e.loaded / e.total) * 100) + '%';
+        }
+      };
+
+      xhr.onload = () => {
+        if (progressWrap) progressWrap.style.display = 'none';
+        if (xhr.status === 200) {
+          resolve(JSON.parse(xhr.responseText).secure_url);
+        } else {
+          reject(new Error('Upload failed'));
+        }
+      };
+      xhr.onerror = () => reject(new Error('Network error'));
+      xhr.send(data);
+    });
+  }
+
+  // Preview image before upload
+  document.getElementById('lImage').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const prev = document.getElementById('lImgPreview');
+    prev.src = URL.createObjectURL(file);
+    prev.style.display = 'block';
+  });
+
+  // ===== LOAD ALL DATA =====
+  function loadAll() {
+    loadStats();
+    loadLeaders();
+    loadEvents();
+    loadSermons();
+    loadMessages();
+  }
+
+  // ===== STATS =====
+  async function loadStats() {
+    try {
+      const cols = ['leaders', 'events', 'sermons', 'messages'];
+      const ids  = ['statLeaders', 'statEvents', 'statSermons', 'statMessages'];
+      for (let i = 0; i < cols.length; i++) {
+        const snap = await getDocs(collection(db, cols[i]));
+        document.getElementById(ids[i]).textContent = snap.size;
+      }
+    } catch { /* Firebase not configured */ }
+  }
+
+  // ===== LEADERS =====
+  async function loadLeaders() {
+    const tbody = document.getElementById('leadersTableBody');
+    try {
+      const q = query(collection(db, 'leaders'), orderBy('order'));
+      const snap = await getDocs(q);
+      if (snap.empty) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--muted); padding:1.5rem;">No leaders yet. Add one above.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = snap.docs.map(d => {
+        const l = d.data();
+        return `<tr>
+          <td>${l.image ? `<img src="${l.image}" alt="${l.name}">` : '–'}</td>
+          <td><strong>${l.name}</strong></td>
+          <td>${l.role}</td>
+          <td>${l.order || '–'}</td>
+          <td><button class="tbl-del-btn" data-col="leaders" data-id="${d.id}">🗑 Delete</button></td>
+        </tr>`;
+      }).join('');
+      attachDeleteBtns();
+    } catch {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--muted); padding:1.5rem;">Configure Firebase to manage leaders.</td></tr>';
+    }
+  }
+
+  document.getElementById('addLeaderBtn').addEventListener('click', async () => {
+    const name  = document.getElementById('lName').value.trim();
+    const role  = document.getElementById('lRole').value.trim();
+    const bio   = document.getElementById('lBio').value.trim();
+    const order = parseInt(document.getElementById('lOrder').value) || 1;
+    const file  = document.getElementById('lImage').files[0];
+
+    if (!name || !role) { toast('Name and Role are required.', 'error'); return; }
+
+    const btn = document.getElementById('addLeaderBtn');
+    btn.textContent = 'Saving…'; btn.disabled = true;
+
+    try {
+      let image = '';
+      if (file) {
+        image = await uploadImage(file, 'leaders', document.getElementById('lUploadBar'), document.getElementById('lUploadProgress'));
+      }
+
+      await addDoc(collection(db, 'leaders'), {
+        name, role, bio, order, image, createdAt: serverTimestamp()
+      });
+
+      toast('Leader saved successfully! 🙌');
+      ['lName','lRole','lBio','lOrder'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('lImage').value = '';
+      document.getElementById('lImgPreview').style.display = 'none';
+      document.getElementById('lOrder').value = 1;
+      loadLeaders(); loadStats();
+    } catch (e) {
+      toast('Error saving leader. Check Firebase config.', 'error');
+    }
+
+    btn.textContent = 'Save Leader'; btn.disabled = false;
+  });
+
+  // ===== EVENTS =====
+  async function loadEvents() {
+    const tbody = document.getElementById('eventsTableBody');
+    try {
+      const q = query(collection(db, 'events'), orderBy('date'));
+      const snap = await getDocs(q);
+      if (snap.empty) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--muted); padding:1.5rem;">No events yet.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = snap.docs.map(d => {
+        const e = d.data();
+        const dateStr = e.date?.toDate ? e.date.toDate().toLocaleDateString('en-UG') : e.date || '–';
+        return `<tr>
+          <td><strong>${e.title}</strong></td>
+          <td>${dateStr}</td>
+          <td>${e.time || '–'}</td>
+          <td>${e.location || '–'}</td>
+          <td><button class="tbl-del-btn" data-col="events" data-id="${d.id}">🗑 Delete</button></td>
+        </tr>`;
+      }).join('');
+      attachDeleteBtns();
+    } catch {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--muted); padding:1.5rem;">Configure Firebase to manage events.</td></tr>';
+    }
+  }
+
+  document.getElementById('addEventBtn').addEventListener('click', async () => {
+    const title    = document.getElementById('eTitle').value.trim();
+    const dateVal  = document.getElementById('eDate').value;
+    const time     = document.getElementById('eTime').value;
+    const location = document.getElementById('eLocation').value.trim();
+    const desc     = document.getElementById('eDesc').value.trim();
+    const file     = document.getElementById('eImage').files[0];
+
+    if (!title || !dateVal) { toast('Title and date are required.', 'error'); return; }
+
+    const btn = document.getElementById('addEventBtn');
+    btn.textContent = 'Saving…'; btn.disabled = true;
+
+    try {
+      let image = '';
+      if (file) {
+        image = await uploadImage(file, 'events', document.getElementById('eUploadBar'), document.getElementById('eUploadProgress'));
+      }
+
+      await addDoc(collection(db, 'events'), {
+        title, date: Timestamp.fromDate(new Date(dateVal)),
+        time, location, description: desc, image,
+        createdAt: serverTimestamp()
+      });
+
+      toast('Event saved! 📅');
+      ['eTitle','eDate','eTime','eLocation','eDesc'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('eImage').value = '';
+      loadEvents(); loadStats();
+    } catch {
+      toast('Error saving event.', 'error');
+    }
+
+    btn.textContent = 'Save Event'; btn.disabled = false;
+  });
+
+  // ===== SERMONS =====
+  async function loadSermons() {
+    const tbody = document.getElementById('sermonsTableBody');
+    try {
+      const q = query(collection(db, 'sermons'), orderBy('date', 'desc'));
+      const snap = await getDocs(q);
+      if (snap.empty) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--muted); padding:1.5rem;">No sermons yet.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = snap.docs.map(d => {
+        const s = d.data();
+        const dateStr = s.date?.toDate ? s.date.toDate().toLocaleDateString('en-UG') : s.date || '–';
+        return `<tr>
+          <td><strong>${s.title}</strong>${s.link ? ` <a href="${s.link}" target="_blank" style="color:var(--gold); font-size:0.78rem;">▶</a>` : ''}</td>
+          <td>${s.speaker || '–'}</td>
+          <td>${dateStr}</td>
+          <td>${s.scripture || '–'}</td>
+          <td><button class="tbl-del-btn" data-col="sermons" data-id="${d.id}">🗑 Delete</button></td>
+        </tr>`;
+      }).join('');
+      attachDeleteBtns();
+    } catch {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--muted); padding:1.5rem;">Configure Firebase to manage sermons.</td></tr>';
+    }
+  }
+
+  document.getElementById('addSermonBtn').addEventListener('click', async () => {
+    const title    = document.getElementById('sTitle').value.trim();
+    const speaker  = document.getElementById('sSpeaker').value.trim();
+    const dateVal  = document.getElementById('sDate').value;
+    const scripture= document.getElementById('sScripture').value.trim();
+    const link     = document.getElementById('sLink').value.trim();
+    const notes    = document.getElementById('sNotes').value.trim();
+
+    if (!title || !dateVal) { toast('Title and date are required.', 'error'); return; }
+
+    const btn = document.getElementById('addSermonBtn');
+    btn.textContent = 'Saving…'; btn.disabled = true;
+
+    try {
+      await addDoc(collection(db, 'sermons'), {
+        title, speaker, scripture, link, notes,
+        date: Timestamp.fromDate(new Date(dateVal)),
+        createdAt: serverTimestamp()
+      });
+
+      toast('Sermon saved! 🎙️');
+      ['sTitle','sSpeaker','sDate','sScripture','sLink','sNotes'].forEach(id => document.getElementById(id).value = '');
+      loadSermons(); loadStats();
+    } catch {
+      toast('Error saving sermon.', 'error');
+    }
+
+    btn.textContent = 'Save Sermon'; btn.disabled = false;
+  });
+
+  // ===== MESSAGES =====
+  async function loadMessages() {
+    const container = document.getElementById('messagesContainer');
+    try {
+      const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'), limit(30));
+      const snap = await getDocs(q);
+
+      if (snap.empty) {
+        container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:2rem;">No messages yet.</p>';
+        return;
+      }
+
+      container.innerHTML = snap.docs.map(d => {
+        const m = d.data();
+        const date = m.createdAt?.toDate ? m.createdAt.toDate().toLocaleString('en-UG') : '';
+        return `
+          <div class="msg-item">
+            <div class="msg-header">
+              <div>
+                <span class="msg-name">${m.name}</span>
+                ${m.subject ? `<span class="msg-subject"> · ${m.subject}</span>` : ''}
+              </div>
+              <span class="msg-date">${date}</span>
+            </div>
+            ${m.contact ? `<div class="msg-contact">📞 ${m.contact}</div>` : ''}
+            <div class="msg-body">${m.message}</div>
+          </div>`;
+      }).join('');
+    } catch {
+      container.innerHTML = '<p style="text-align:center; color:var(--muted); padding:2rem;">Configure Firebase to view messages.</p>';
+    }
+  }
+
+  document.getElementById('refreshMsgs').addEventListener('click', loadMessages);
+
+  // ===== DELETE =====
+  function attachDeleteBtns() {
+    document.querySelectorAll('.tbl-del-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('Delete this item? This cannot be undone.')) return;
+        try {
+          await deleteDoc(doc(db, btn.dataset.col, btn.dataset.id));
+          toast('Deleted successfully.');
+          loadAll();
+        } catch {
+          toast('Error deleting item.', 'error');
+        }
+      });
+    });
+  }
+</script>
+</body>
+</html>
