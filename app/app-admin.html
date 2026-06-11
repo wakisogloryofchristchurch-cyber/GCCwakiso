@@ -1215,21 +1215,7 @@
                 <div class="a-card-body">
                   <p class="hint" style="margin-bottom:1rem;">These images display in the rotating banner at the top of the Home screen. Use high-quality church photos.</p>
                   <div id="slidesList">
-                    <div style="display:flex; align-items:center; gap:10px; padding:10px; background:var(--bg3); border-radius:8px; margin-bottom:8px;">
-                      <span style="font-size:1.2rem;">🖼️</span>
-                      <div style="flex:1; font-size:0.85rem;">prwrs.jpg <span class="badge badge-green">Active</span></div>
-                      <button class="btn btn-red btn-sm">Remove</button>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:10px; padding:10px; background:var(--bg3); border-radius:8px; margin-bottom:8px;">
-                      <span style="font-size:1.2rem;">🖼️</span>
-                      <div style="flex:1; font-size:0.85rem;">Pastor1.jpg <span class="badge badge-green">Active</span></div>
-                      <button class="btn btn-red btn-sm">Remove</button>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:10px; padding:10px; background:var(--bg3); border-radius:8px; margin-bottom:8px;">
-                      <span style="font-size:1.2rem;">🖼️</span>
-                      <div style="flex:1; font-size:0.85rem;">sh1.jpg <span class="badge badge-green">Active</span></div>
-                      <button class="btn btn-red btn-sm">Remove</button>
-                    </div>
+                    <div style="text-align:center; padding:1rem; color:var(--muted); font-size:0.82rem;">Loading slides…</div>
                   </div>
                   <div class="f-group" style="margin-top:1rem;">
                     <label>Upload New Slide Image</label>
@@ -1929,7 +1915,7 @@
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
         </div>
 
       </div><!-- /page-content -->
@@ -2032,6 +2018,7 @@
     loadMessages();
     loadNotifHistory();
     initVersesEditor();
+    loadSlides();
   }
 
   window.initDashboard = initDashboard;
@@ -2048,6 +2035,41 @@
   }
 
   window.loadStats = loadStats;
+
+  // ===== SLIDES =====
+  async function loadSlides() {
+    const el = document.getElementById('slidesList');
+    if (!el) return;
+    try {
+      const q = query(collection(db, 'app-slides'), orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      if (snap.empty) {
+        el.innerHTML = '<div style="color:var(--muted);font-size:0.82rem;padding:0.5rem;">No slides uploaded yet. Upload one below.</div>';
+        return;
+      }
+      el.innerHTML = snap.docs.map(d => {
+        const s = d.data();
+        return `<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg3);border-radius:8px;margin-bottom:8px;">
+          <img src="${s.url}" style="width:60px;height:40px;object-fit:cover;border-radius:6px;border:1px solid var(--gold-bdr);">
+          <div style="flex:1;font-size:0.82rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.name || 'Slide'} <span class="badge badge-green">Active</span></div>
+          <button class="btn btn-red btn-sm" onclick="deleteSlide('${d.id}')">🗑</button>
+        </div>`;
+      }).join('');
+    } catch(e) {
+      el.innerHTML = '<div style="color:var(--muted);font-size:0.82rem;">Could not load slides.</div>';
+    }
+  }
+
+  window.deleteSlide = async function(id) {
+    if (!confirm('Remove this slide?')) return;
+    try {
+      await deleteDoc(doc(db, 'app-slides', id));
+      toast('Slide removed ✅', 'success');
+      loadSlides();
+    } catch(e) {
+      toast('Error removing slide', 'error');
+    }
+  };
 
   // ===== SERMONS =====
   async function loadSermons() {
@@ -2162,7 +2184,8 @@
       const evtData = { title, date: Timestamp.fromDate(new Date(dateVal)), time, location, description: desc, type, image, createdAt: serverTimestamp() };
       await addDoc(collection(db,'events'), evtData);
       if (sendNotif) {
-        await addDoc(collection(db,'notifications'), { title: '📅 ' + title, body: `${dt} ${time ? 'at ' + time : ''} · ${location || 'Main Sanctuary'}`, sentAt: serverTimestamp(), type: 'event' });
+        const dateStr = new Date(dateVal).toLocaleDateString('en-UG', {weekday:'short', month:'short', day:'numeric'});
+        await addDoc(collection(db,'notifications'), { title: '📅 ' + title, body: dateStr + (time ? ' at ' + time : '') + ' · ' + (location || 'Main Sanctuary'), sentAt: serverTimestamp(), type: 'event' });
       }
       toast('Event published! 📅','success');
       ['eTitle','eDate','eTime','eLocation','eDesc'].forEach(id=>document.getElementById(id).value='');
@@ -2411,6 +2434,7 @@
       await addDoc(collection(db, 'app-slides'), { url, name: file.name, createdAt: serverTimestamp() });
       toast('Slide uploaded & saved! 🖼️', 'success');
       document.getElementById('slideImageFile').value = '';
+      loadSlides();
     } catch(e) {
       console.error(e);
       toast('Upload failed: ' + e.message, 'error');
