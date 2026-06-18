@@ -2,2552 +2,1304 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GCC App Admin — Glory of Christ Church</title>
-  <link rel="icon" href="elvis.jpg" type="image/jpeg">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="GCC Admin">
+  <meta name="theme-color" content="#0b1f3a">
+  <title>GCC App Admin</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ============================================================
-       DESIGN: Refined Dark Command Centre
-       Aesthetic: Editorial dark + sharp gold accents
-       Feels like a premium SaaS dashboard, not a church CMS
-    ============================================================ */
     :root {
-      --bg:       #080f1a;
-      --bg2:      #0d1929;
-      --bg3:      #111f33;
-      --bg4:      #162640;
-      --navy:     #0b1f3a;
-      --gold:     #c8922a;
-      --gold-lt:  #e8b84b;
-      --gold-dim: rgba(200,146,42,0.15);
-      --gold-bdr: rgba(200,146,42,0.22);
-      --white:    #ffffff;
-      --text:     #d4cfc7;
-      --muted:    rgba(212,207,199,0.45);
-      --border:   rgba(255,255,255,0.07);
-      --red:      #e74c3c;
-      --green:    #27ae60;
-      --blue:     #3b82f6;
-      --card:     rgba(255,255,255,0.04);
-      --card-bdr: rgba(255,255,255,0.07);
-      --radius:   12px;
-      --radius-lg:18px;
-      --shadow:   0 4px 32px rgba(0,0,0,0.35);
-      --trans:    0.22s ease;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 15px; }
-
-    body {
-      font-family: 'Syne', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
-    ul { list-style: none; }
-    button { font-family: inherit; cursor: pointer; }
-    input, textarea, select { font-family: inherit; }
-
-    /* ============================================================
-       LOGIN SCREEN
-    ============================================================ */
-    #loginScreen {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg);
-      position: relative;
-      overflow: hidden;
-    }
-
-    #loginScreen::before {
-      content: '';
-      position: absolute;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(200,146,42,0.08) 0%, transparent 70%);
-      top: -200px; right: -100px;
-      pointer-events: none;
-    }
-
-    #loginScreen::after {
-      content: '';
-      position: absolute;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(11,31,58,0.6) 0%, transparent 70%);
-      bottom: -100px; left: -100px;
-      pointer-events: none;
-    }
-
-    .login-wrap {
-      width: 100%;
-      max-width: 420px;
-      padding: 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .login-brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 2.5rem;
-    }
-
-    .login-brand img {
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      border: 2px solid var(--gold-bdr);
-      object-fit: cover;
-    }
-
-    .login-brand-text h1 {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--white);
-      line-height: 1.2;
-    }
-
-    .login-brand-text p {
-      font-size: 0.72rem;
-      color: var(--gold);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    .login-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2.2rem;
-      box-shadow: var(--shadow);
-    }
-
-    .login-card h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      color: var(--white);
-      margin-bottom: 0.3rem;
-    }
-
-    .login-card .login-sub {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-bottom: 1.8rem;
-    }
-
-    .login-error {
-      background: rgba(231,76,60,0.12);
-      border: 1px solid rgba(231,76,60,0.3);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 0.82rem;
-      color: #fca5a5;
-      margin-bottom: 1rem;
-      display: none;
-    }
-
-    /* ============================================================
-       LAYOUT: SIDEBAR + MAIN
-    ============================================================ */
-    #dashboard {
-      display: none;
-      min-height: 100vh;
-    }
-
-    .layout {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* ===== SIDEBAR ===== */
-    .sidebar {
-      width: 240px;
-      background: var(--bg2);
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 0; left: 0;
-      height: 100vh;
-      z-index: 100;
-      transition: transform var(--trans);
-    }
-
-    .sidebar-brand {
-      padding: 1.4rem 1.4rem 1rem;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .sidebar-brand img {
-      width: 38px; height: 38px;
-      border-radius: 10px;
-      border: 1.5px solid var(--gold-bdr);
-      object-fit: cover;
-    }
-
-    .sidebar-brand-text {
-      line-height: 1.2;
-    }
-
-    .sidebar-brand-name {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--white);
-    }
-
-    .sidebar-brand-sub {
-      font-size: 0.62rem;
-      color: var(--gold);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    .sidebar-nav {
-      flex: 1;
-      padding: 1rem 0.7rem;
-      overflow-y: auto;
-    }
-
-    .nav-section-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 0.6rem 0.8rem 0.4rem;
-      margin-top: 0.8rem;
-    }
-
-    .nav-section-label:first-child { margin-top: 0; }
-
-    .sidebar-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 12px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all var(--trans);
-      border: none;
-      background: none;
-      width: 100%;
-      text-align: left;
-    }
-
-    .sidebar-link:hover {
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-    }
-
-    .sidebar-link.active {
-      background: var(--gold-dim);
-      color: var(--gold-lt);
-      border: 1px solid var(--gold-bdr);
-    }
-
-    .sidebar-link .s-icon {
-      font-size: 1rem;
-      width: 20px;
-      text-align: center;
-    }
-
-    .sidebar-link .s-badge {
-      margin-left: auto;
-      background: var(--gold);
-      color: var(--bg);
-      font-size: 0.6rem;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 10px;
-    }
-
-    .sidebar-footer {
-      padding: 1rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .admin-user-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 0.8rem;
-    }
-
-    .admin-avatar {
-      width: 34px; height: 34px;
-      background: var(--gold-dim);
-      border: 1px solid var(--gold-bdr);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.9rem;
-      flex-shrink: 0;
-    }
-
-    .admin-name { font-size: 0.78rem; font-weight: 600; color: var(--text); }
-    .admin-role { font-size: 0.65rem; color: var(--muted); }
-
-    .logout-btn {
-      width: 100%;
-      padding: 9px;
-      background: rgba(231,76,60,0.1);
-      border: 1px solid rgba(231,76,60,0.2);
-      border-radius: 8px;
-      color: #fca5a5;
-      font-size: 0.8rem;
-      font-weight: 600;
-      transition: all var(--trans);
-    }
-
-    .logout-btn:hover {
-      background: rgba(231,76,60,0.2);
-      border-color: rgba(231,76,60,0.4);
-    }
-
-    /* ===== MAIN CONTENT ===== */
-    .main {
-      margin-left: 240px;
-      flex: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Top bar */
-    .topbar {
-      background: var(--bg2);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 90;
-    }
-
-    .topbar-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--white);
-    }
-
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .topbar-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.75rem;
-      color: var(--green);
-      background: rgba(39,174,96,0.12);
-      border: 1px solid rgba(39,174,96,0.2);
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-weight: 600;
-    }
-
-    .topbar-badge.offline {
-      color: #fca5a5;
-      background: rgba(231,76,60,0.1);
-      border-color: rgba(231,76,60,0.2);
-    }
-
-    .view-app-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--gold-dim);
-      border: 1px solid var(--gold-bdr);
-      color: var(--gold-lt);
-      padding: 7px 14px;
-      border-radius: 8px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      transition: all var(--trans);
-    }
-
-    .view-app-btn:hover { background: rgba(200,146,42,0.22); }
-
-    /* Page content */
-    .page-content {
-      padding: 2rem;
-      flex: 1;
-    }
-
-    /* ===== PANELS ===== */
-    .panel { display: none; }
-    .panel.active { display: block; }
-
-    /* ============================================================
-       SHARED COMPONENTS
-    ============================================================ */
-
-    /* Page Header */
-    .page-header {
-      margin-bottom: 2rem;
-    }
-
-    .page-header .tag {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 4px;
-    }
-
-    .page-header h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      color: var(--white);
-      font-weight: 700;
-    }
-
-    .page-header p {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    /* Stats Row */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .stat-box {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.2rem 1.4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stat-box::before {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      height: 2px;
-      width: 100%;
-      background: var(--gold);
-      opacity: 0.4;
-    }
-
-    .stat-box .s-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
-    .stat-box .s-num  { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; }
-    .stat-box .s-lbl  { font-size: 0.72rem; color: var(--muted); margin-top: 3px; letter-spacing: 0.06em; text-transform: uppercase; }
-
-    /* Two-column layout */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    .two-col-wide {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    /* Admin Card */
-    .a-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-    }
-
-    .a-card-head {
-      padding: 1.1rem 1.4rem;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .a-card-head h3 {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--white);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .a-card-body { padding: 1.4rem; }
-
-    /* Form fields */
-    .f-group {
-      margin-bottom: 1.1rem;
-    }
-
-    .f-group label {
-      display: block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .f-group input,
-    .f-group textarea,
-    .f-group select {
-      width: 100%;
-      background: var(--bg3);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 0.88rem;
-      padding: 10px 13px;
-      outline: none;
-      transition: border-color var(--trans);
-    }
-
-    .f-group input:focus,
-    .f-group textarea:focus,
-    .f-group select:focus {
-      border-color: var(--gold);
-      background: var(--bg4);
-    }
-
-    .f-group input::placeholder,
-    .f-group textarea::placeholder { color: rgba(212,207,199,0.25); }
-
-    .f-group select option { background: var(--bg2); }
-    .f-group textarea { min-height: 90px; resize: vertical; }
-
-    .f-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      padding: 10px 22px;
-      border-radius: 8px;
-      font-size: 0.84rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      transition: all var(--trans);
-      font-family: 'Syne', sans-serif;
-    }
-
-    .btn:active { transform: scale(0.97); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .btn-gold  { background: var(--gold); color: var(--bg); }
-    .btn-gold:hover:not(:disabled) { background: var(--gold-lt); }
-    .btn-ghost { background: var(--bg3); border: 1px solid var(--border); color: var(--text); }
-    .btn-ghost:hover { background: var(--bg4); }
-    .btn-red   { background: rgba(231,76,60,0.15); border: 1px solid rgba(231,76,60,0.25); color: #fca5a5; }
-    .btn-red:hover { background: rgba(231,76,60,0.25); }
-    .btn-green { background: rgba(39,174,96,0.15); border: 1px solid rgba(39,174,96,0.25); color: #6ee7b7; }
-    .btn-full  { width: 100%; }
-    .btn-sm    { padding: 7px 14px; font-size: 0.78rem; }
-
-    /* Table */
-    .a-table-wrap { overflow-x: auto; }
-
-    .a-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.84rem;
-    }
-
-    .a-table th {
-      background: var(--bg3);
-      color: var(--gold);
-      padding: 10px 14px;
-      text-align: left;
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 700;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .a-table td {
-      padding: 12px 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      color: var(--text);
-      vertical-align: middle;
-    }
-
-    .a-table tr:last-child td { border-bottom: none; }
-    .a-table tr:hover td { background: rgba(255,255,255,0.02); }
-
-    .a-table img {
-      width: 38px; height: 38px;
-      border-radius: 8px;
-      object-fit: cover;
-      border: 1px solid var(--gold-bdr);
-    }
-
-    .tbl-actions {
-      display: flex;
-      gap: 6px;
-    }
-
-    /* Badge */
-    .badge {
-      display: inline-block;
-      padding: 3px 9px;
-      border-radius: 20px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-    .badge-gold  { background: var(--gold-dim); color: var(--gold-lt); border: 1px solid var(--gold-bdr); }
-    .badge-blue  { background: rgba(59,130,246,0.15); color: #93c5fd; }
-    .badge-green { background: rgba(39,174,96,0.15);  color: #6ee7b7; }
-    .badge-red   { background: rgba(231,76,60,0.15);  color: #fca5a5; }
-
-    /* Toggle */
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.9rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .toggle-row:last-child { border-bottom: none; }
-
-    .toggle-info h4 { font-size: 0.88rem; font-weight: 600; color: var(--text); }
-    .toggle-info p  { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
-
-    .toggle {
-      width: 44px; height: 24px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 12px;
-      position: relative;
-      cursor: pointer;
-      transition: background 0.3s;
-      flex-shrink: 0;
-    }
-    .toggle::after {
-      content: '';
-      position: absolute;
-      width: 18px; height: 18px;
-      background: #fff;
-      border-radius: 50%;
-      top: 3px; left: 3px;
-      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-    }
-    .toggle.on { background: var(--gold); }
-    .toggle.on::after { transform: translateX(20px); }
-
-    /* Progress bar */
-    .upload-prog {
-      height: 3px;
-      background: var(--border);
-      border-radius: 2px;
-      margin-top: 6px;
-      overflow: hidden;
-      display: none;
-    }
-    .upload-prog-bar {
-      height: 100%;
-      background: var(--gold);
-      border-radius: 2px;
-      width: 0%;
-      transition: width 0.3s;
-    }
-
-    /* Image preview */
-    .img-prev {
-      width: 64px; height: 64px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 2px solid var(--gold-bdr);
-      display: none;
-      margin-bottom: 8px;
-    }
-
-    /* Empty state */
-    .empty-state {
-      text-align: center;
-      padding: 3rem 2rem;
-      color: var(--muted);
-    }
-    .empty-state .e-icon { font-size: 2.5rem; margin-bottom: 0.6rem; }
-    .empty-state p { font-size: 0.85rem; }
-
-    /* Divider */
-    .hdivider { height: 1px; background: var(--border); margin: 1.2rem 0; }
-
-    /* Color swatch picker */
-    .color-swatches {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 6px;
-    }
-
-    .swatch {
-      width: 32px; height: 32px;
-      border-radius: 8px;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all var(--trans);
-    }
-
-    .swatch.selected { border-color: var(--white); transform: scale(1.15); }
-
-    /* Phone mockup preview */
-    .phone-preview {
-      position: sticky;
-      top: 80px;
-    }
-
-    .phone-frame {
-      background: var(--bg2);
-      border: 2px solid var(--border);
-      border-radius: 36px;
-      padding: 12px;
-      max-width: 280px;
-      margin: 0 auto;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    }
-
-    .phone-screen {
-      background: #0b1f3a;
-      border-radius: 26px;
-      overflow: hidden;
-      height: 480px;
-      position: relative;
-    }
-
-    .phone-notch {
-      width: 80px; height: 20px;
-      background: var(--bg2);
-      border-radius: 0 0 14px 14px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    .preview-hero {
-      height: 140px;
-      background: linear-gradient(180deg, rgba(11,31,58,0.4) 0%, rgba(11,31,58,0.9) 100%),
-                  url('prwrs.jpg') center/cover;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 10px 12px;
-      margin-top: -20px;
-    }
-
-    .preview-verse {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem;
-      color: #fff;
-      font-style: italic;
-      line-height: 1.3;
-    }
-
-    .preview-body { padding: 10px 12px; }
-
-    .preview-next-svc {
-      background: rgba(200,146,42,0.15);
-      border: 1px solid rgba(200,146,42,0.3);
-      border-radius: 10px;
-      padding: 8px 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .pns-icon {
-      width: 32px; height: 32px;
-      background: var(--gold);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.9rem;
-    }
-
-    .pns-name { font-size: 0.68rem; font-weight: 700; color: #fff; }
-    .pns-time { font-size: 0.6rem; color: rgba(255,255,255,0.5); }
-
-    .preview-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(200,146,42,0.8); margin-bottom: 6px; }
-
-    .preview-event-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 8px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 8px;
-      margin-bottom: 5px;
-    }
-
-    .per-date {
-      width: 28px; height: 30px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 6px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-    }
-
-    .per-day   { font-size: 0.7rem; font-weight: 700; color: var(--gold-lt); line-height: 1; }
-    .per-mon   { font-size: 0.5rem; text-transform: uppercase; color: rgba(255,255,255,0.4); }
-    .per-title { font-size: 0.65rem; color: rgba(255,255,255,0.8); }
-
-    /* Push notification composer */
-    .notif-preview {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .notif-prev-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-
-    .notif-prev-icon {
-      width: 30px; height: 30px;
-      background: var(--gold-dim);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.9rem;
-    }
-
-    .notif-prev-app { font-size: 0.72rem; color: var(--muted); }
-    .notif-prev-time { font-size: 0.68rem; color: var(--muted); margin-left: auto; }
-    .notif-prev-title { font-size: 0.88rem; font-weight: 700; color: var(--white); }
-    .notif-prev-body  { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
-
-    /* Verse item */
-    .verse-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 0.9rem;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .verse-item:last-child { border-bottom: none; }
-    .verse-item-num {
-      width: 26px; height: 26px;
-      background: var(--gold-dim);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--gold-lt);
-      flex-shrink: 0;
-    }
-    .verse-item-text { flex: 1; font-size: 0.82rem; color: var(--text); font-style: italic; }
-    .verse-item-ref  { font-size: 0.72rem; color: var(--gold); margin-top: 2px; font-style: normal; }
-
-    /* ============================================================
-       TOAST
-    ============================================================ */
-    .toast {
-      position: fixed;
-      bottom: 24px; right: 24px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 0.84rem;
-      font-weight: 600;
-      z-index: 9999;
-      transform: translateY(80px);
-      opacity: 0;
-      transition: all 0.32s cubic-bezier(0.34,1.56,0.64,1);
-      max-width: 340px;
-      box-shadow: var(--shadow);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .toast.show { transform: translateY(0); opacity: 1; }
-    .toast.s-success { border-left: 3px solid var(--green); }
-    .toast.s-error   { border-left: 3px solid var(--red);   }
-    .toast.s-info    { border-left: 3px solid var(--gold);  }
-
-    /* ============================================================
-       MOBILE SIDEBAR TOGGLE
-    ============================================================ */
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text);
-      font-size: 1.3rem;
-      cursor: pointer;
-      margin-right: 12px;
-    }
-
-    @media (max-width: 900px) {
-      .sidebar { transform: translateX(-100%); }
-      .sidebar.open { transform: translateX(0); }
-      .main { margin-left: 0; }
-      .mobile-menu-btn { display: flex; align-items: center; }
-      .two-col, .two-col-wide, .f-row { grid-template-columns: 1fr; }
-      .phone-preview { display: none; }
-    }
-
-    /* Overlay */
-    .sidebar-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 99;
-    }
-    .sidebar-overlay.open { display: block; }
-
-    /* ============================================================
-       FORMS: COMMON INPUT STYLES
-    ============================================================ */
-    .char-count {
-      font-size: 0.68rem;
-      color: var(--muted);
-      text-align: right;
-      margin-top: 3px;
-    }
-
-    .hint {
-      font-size: 0.72rem;
-      color: var(--muted);
-      margin-top: 4px;
-    }
+      --navy:    #0b1f3a;
+      --navy2:   #0f2748;
+      --navy3:   #162f57;
+      --gold:    #c8922a;
+      --gold-lt: #e8b84b;
+      --gd:      rgba(200,146,42,0.15);
+      --gb:      rgba(200,146,42,0.25);
+      --white:   #ffffff;
+      --text:    #d4cfc7;
+      --muted:   rgba(212,207,199,0.5);
+      --border:  rgba(255,255,255,0.08);
+      --card:    rgba(255,255,255,0.04);
+      --red:     #ef4444;
+      --green:   #22c55e;
+      --r:       10px;
+      --safe-t:  env(safe-area-inset-top,0px);
+      --safe-b:  env(safe-area-inset-bottom,0px);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+    html,body{height:100%;font-family:'Inter',sans-serif;background:var(--navy);color:var(--text);-webkit-font-smoothing:antialiased;overflow:hidden;}
+    a{text-decoration:none;color:inherit;}
+    button{font-family:inherit;cursor:pointer;}
+    input,textarea,select{font-family:inherit;}
+    img{max-width:100%;display:block;}
+
+    /* ===== LOGIN ===== */
+    #loginScreen{
+      position:fixed;inset:0;
+      background:radial-gradient(ellipse at 30% 20%,rgba(200,146,42,0.1) 0%,transparent 60%),var(--navy);
+      display:flex;align-items:center;justify-content:center;
+      padding:1.5rem;z-index:1000;
+    }
+    .login-wrap{width:100%;max-width:380px;}
+    .login-brand{display:flex;align-items:center;gap:12px;margin-bottom:2rem;}
+    .login-brand img{width:48px;height:48px;border-radius:12px;border:2px solid var(--gb);object-fit:cover;}
+    .login-brand h1{font-size:0.95rem;font-weight:700;color:var(--white);line-height:1.3;}
+    .login-brand p{font-size:0.68rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;}
+    .login-card{background:var(--navy2);border:1px solid var(--border);border-radius:16px;padding:2rem;box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+    .login-card h2{font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:0.3rem;}
+    .login-card .sub{font-size:0.8rem;color:var(--muted);margin-bottom:1.5rem;}
+    .login-err{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:8px;padding:10px 14px;font-size:0.8rem;color:#fca5a5;margin-bottom:1rem;display:none;}
+    .lvis-credit{text-align:center;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border);}
+    .lvis-credit p{font-size:0.6rem;color:rgba(212,207,199,0.2);margin-bottom:2px;}
+    .lvis-credit span{font-size:0.75rem;font-weight:800;letter-spacing:0.14em;color:rgba(200,146,42,0.5);}
+
+    /* ===== APP SHELL ===== */
+    #app{display:none;position:fixed;inset:0;display:none;flex-direction:column;}
+    #app.visible{display:flex;}
+
+    /* ===== TOP BAR ===== */
+    .top-bar{
+      background:var(--navy2);
+      border-bottom:1px solid var(--border);
+      padding:calc(var(--safe-t) + 10px) 1rem 10px;
+      display:flex;align-items:center;justify-content:space-between;
+      flex-shrink:0;
+    }
+    .top-bar-brand{display:flex;align-items:center;gap:8px;}
+    .top-bar-brand img{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--gb);object-fit:cover;}
+    .top-bar-title{font-size:0.9rem;font-weight:700;color:var(--white);}
+    .top-bar-sub{font-size:0.6rem;color:var(--gold);letter-spacing:0.08em;}
+    .top-bar-right{display:flex;align-items:center;gap:8px;}
+    .logout-btn{background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.2);color:#fca5a5;padding:6px 12px;border-radius:7px;font-size:0.75rem;font-weight:600;}
+
+    /* ===== SCREENS ===== */
+    #screens{flex:1;overflow:hidden;position:relative;}
+    .screen{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity 0.2s,transform 0.2s;}
+    .screen::-webkit-scrollbar{display:none;}
+    .screen.active{opacity:1;pointer-events:all;transform:translateY(0);}
+    .screen-inner{padding:1rem 1rem calc(80px + var(--safe-b)) 1rem;}
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav{
+      background:rgba(10,18,35,0.97);
+      border-top:1px solid var(--border);
+      display:flex;align-items:flex-start;justify-content:space-around;
+      padding:8px 0 calc(8px + var(--safe-b));
+      flex-shrink:0;
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+    }
+    .nav-btn{
+      display:flex;flex-direction:column;align-items:center;gap:3px;
+      cursor:pointer;padding:4px 8px;border-radius:10px;
+      border:none;background:none;min-width:52px;
+      transition:all 0.2s;
+    }
+    .nav-btn .ni{font-size:1.3rem;transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1);}
+    .nav-btn .nl{font-size:0.58rem;font-weight:600;color:var(--muted);letter-spacing:0.03em;}
+    .nav-btn.active .ni{transform:scale(1.2) translateY(-2px);}
+    .nav-btn.active .nl{color:var(--gold-lt);}
+    .nav-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:0;transition:opacity 0.2s;}
+    .nav-btn.active .nav-dot{opacity:1;}
+
+    /* ===== CARDS ===== */
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:1rem;}
+    .card-head{padding:0.9rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .card-head h3{font-size:0.85rem;font-weight:700;color:var(--white);display:flex;align-items:center;gap:6px;}
+    .card-body{padding:1rem;}
+
+    /* ===== FORMS ===== */
+    .fg{margin-bottom:0.9rem;}
+    .fg label{display:block;font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+    .fg input,.fg textarea,.fg select{
+      width:100%;background:rgba(255,255,255,0.06);
+      border:1.5px solid var(--border);border-radius:8px;
+      color:var(--white);font-size:0.88rem;padding:10px 12px;
+      outline:none;transition:border-color 0.2s;
+    }
+    .fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--gold);}
+    .fg input::placeholder,.fg textarea::placeholder{color:var(--muted);}
+    .fg select option{background:var(--navy2);}
+    .fg textarea{min-height:80px;resize:vertical;}
+    .fg .hint{font-size:0.68rem;color:var(--muted);margin-top:4px;}
+    .frow{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+
+    /* ===== BUTTONS ===== */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 20px;border-radius:9px;font-size:0.84rem;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;font-family:inherit;}
+    .btn:active{transform:scale(0.97);}
+    .btn:disabled{opacity:0.5;cursor:not-allowed;}
+    .btn-gold{background:var(--gold);color:var(--navy);}
+    .btn-gold:hover:not(:disabled){background:var(--gold-lt);}
+    .btn-ghost{background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);}
+    .btn-red{background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.2);color:#fca5a5;}
+    .btn-sm{padding:7px 13px;font-size:0.76rem;}
+    .btn-full{width:100%;}
+
+    /* ===== TABLE ===== */
+    .tbl-wrap{overflow-x:auto;}
+    .tbl{width:100%;border-collapse:collapse;font-size:0.82rem;}
+    .tbl th{background:var(--navy3);color:var(--gold);padding:9px 12px;text-align:left;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;border-bottom:1px solid var(--border);}
+    .tbl td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text);vertical-align:middle;}
+    .tbl tr:last-child td{border-bottom:none;}
+    .tbl tr:hover td{background:rgba(255,255,255,0.02);}
+    .tbl img{width:38px;height:38px;border-radius:7px;object-fit:cover;border:1px solid var(--gb);}
+
+    /* ===== BADGE ===== */
+    .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:0.65rem;font-weight:700;}
+    .bg-gold{background:var(--gd);color:var(--gold-lt);border:1px solid var(--gb);}
+    .bg-green{background:rgba(34,197,94,0.12);color:#86efac;}
+
+    /* ===== UPLOAD PROGRESS ===== */
+    .uprog{height:3px;background:var(--border);border-radius:2px;margin-top:6px;overflow:hidden;display:none;}
+    .uprog-bar{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width 0.3s;}
+
+    /* ===== IMG PREVIEW ===== */
+    .img-prev{width:60px;height:60px;border-radius:8px;object-fit:cover;border:2px solid var(--gb);display:none;margin-bottom:6px;}
+
+    /* ===== EMPTY STATE ===== */
+    .empty{text-align:center;padding:2.5rem;color:var(--muted);}
+    .empty .ei{font-size:2rem;margin-bottom:0.5rem;}
+
+    /* ===== STATS ===== */
+    .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.7rem;margin-bottom:1rem;}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem;border-bottom:2px solid var(--gold);}
+    .stat-card .si{font-size:1.2rem;margin-bottom:4px;}
+    .stat-card .sn{font-size:1.6rem;font-weight:700;color:var(--white);line-height:1;}
+    .stat-card .sl{font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px;}
+
+    /* ===== BIBLE SEARCH ===== */
+    .verse-result{
+      background:var(--gd);border:1px solid var(--gb);
+      border-radius:8px;padding:0.9rem;margin-bottom:0.6rem;
+      cursor:pointer;transition:all 0.2s;
+    }
+    .verse-result:hover{border-color:var(--gold);}
+    .verse-result.selected{border-color:var(--gold);background:rgba(200,146,42,0.2);}
+    .verse-ref{font-size:0.72rem;font-weight:700;color:var(--gold);margin-bottom:4px;letter-spacing:0.08em;}
+    .verse-text{font-size:0.85rem;color:var(--white);line-height:1.5;font-style:italic;}
+
+    /* ===== SLIDES GRID ===== */
+    .slides-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem;margin-bottom:1rem;}
+    .slide-item{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:var(--navy3);}
+    .slide-item img{width:100%;height:100%;object-fit:cover;}
+    .slide-del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.7);border:none;color:#fca5a5;font-size:0.7rem;padding:3px 7px;border-radius:5px;cursor:pointer;}
+
+    /* ===== TOAST ===== */
+    .toast{position:fixed;top:calc(var(--safe-t) + 12px);left:50%;transform:translateX(-50%) translateY(-80px);background:var(--navy2);border:1px solid var(--border);color:var(--text);padding:10px 18px;border-radius:20px;font-size:0.82rem;font-weight:600;z-index:9999;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+    .toast.show{transform:translateX(-50%) translateY(0);}
+    .toast.s-success{border-left:3px solid var(--green);}
+    .toast.s-error{border-left:3px solid var(--red);}
+    .toast.s-info{border-left:3px solid var(--gold);}
+
+    /* ===== TOGGLE ===== */
+    .tog{width:40px;height:22px;background:rgba(255,255,255,0.1);border-radius:11px;position:relative;cursor:pointer;flex-shrink:0;transition:background 0.3s;}
+    .tog::after{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 1px 4px rgba(0,0,0,0.3);}
+    .tog.on{background:var(--gold);}
+    .tog.on::after{transform:translateX(18px);}
+    .tog-row{display:flex;align-items:center;justify-content:space-between;padding:0.8rem 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+    .tog-row:last-child{border-bottom:none;}
+    .tog-info h4{font-size:0.86rem;font-weight:600;color:var(--text);}
+    .tog-info p{font-size:0.72rem;color:var(--muted);}
+
+    /* Section label */
+    .sec-label{font-size:0.62rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin:1.2rem 0 0.5rem;}
   </style>
 </head>
 <body>
 
-<!-- ============================================================
-     LOGIN
-============================================================ -->
+<!-- ===== LOGIN ===== -->
 <div id="loginScreen">
   <div class="login-wrap">
     <div class="login-brand">
-      <img src="elvis.jpg" alt="GCC Logo" onerror="this.style.display='none'">
-      <div class="login-brand-text">
+      <img src="elvis.jpg" alt="GCC" onerror="this.style.display='none'">
+      <div>
         <h1>Glory of Christ Church</h1>
         <p>App Admin Panel</p>
       </div>
     </div>
-
     <div class="login-card">
       <h2>Welcome back</h2>
-      <p class="login-sub">Sign in to manage the church app content</p>
-
-      <div class="login-error" id="loginErr"></div>
-
-      <div class="f-group">
-        <label>Admin Email</label>
+      <p class="sub">Sign in to manage the church app</p>
+      <div class="login-err" id="loginErr"></div>
+      <div class="fg">
+        <label>Email</label>
         <input type="email" id="loginEmail" placeholder="admin@gloryofchristchurch.org" autocomplete="email">
       </div>
-
-      <div class="f-group">
+      <div class="fg">
         <label>Password</label>
         <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
       </div>
-
-      <button class="btn btn-gold btn-full" id="loginBtn" style="margin-top:0.5rem;">
-        Sign In →
-      </button>
-
-      <div style="margin-top:1.2rem; text-align:center; font-size:0.75rem; color:var(--muted);">
-        Demo: use your Firebase Auth credentials
-      </div>
-      <div style="margin-top:1.4rem; padding-top:1rem; border-top:1px solid var(--border); text-align:center;">
-        <div style="font-size:0.62rem; color:rgba(212,207,199,0.22); margin-bottom:3px; letter-spacing:0.06em;">POWERED BY</div>
-        <div style="font-size:0.82rem; font-weight:800; letter-spacing:0.14em; color:rgba(200,146,42,0.55);">LVIS TECHNOLOGIES</div>
+      <button class="btn btn-gold btn-full" id="loginBtn" style="margin-top:0.3rem;">Sign In →</button>
+      <div class="lvis-credit">
+        <p>Powered by</p>
+        <span>LVIS TECHNOLOGIES</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ============================================================
-     DASHBOARD
-============================================================ -->
-<div id="dashboard">
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+<!-- ===== APP SHELL ===== -->
+<div id="app">
 
-  <div class="layout">
-
-    <!-- ===== SIDEBAR ===== -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-brand">
-        <img src="elvis.jpg" alt="GCC" onerror="this.style.display='none'">
-        <div class="sidebar-brand-text">
-          <div class="sidebar-brand-name">GCC App Admin</div>
-          <div class="sidebar-brand-sub">Church Management</div>
-        </div>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-brand">
+      <img src="elvis.jpg" alt="GCC" onerror="this.style.display='none'">
+      <div>
+        <div class="top-bar-title" id="topTitle">Dashboard</div>
+        <div class="top-bar-sub">GCC App Admin</div>
       </div>
+    </div>
+    <div class="top-bar-right">
+      <a href="index.html" target="_blank">
+        <button class="btn btn-ghost btn-sm">📱 View App</button>
+      </a>
+      <button class="logout-btn" id="logoutBtn">Sign Out</button>
+    </div>
+  </div>
 
-      <nav class="sidebar-nav">
-        <div class="nav-section-label">Overview</div>
-        <button class="sidebar-link active" data-panel="overview" onclick="switchPanel('overview', this)">
-          <span class="s-icon">📊</span> Dashboard
-        </button>
+  <!-- Screens -->
+  <div id="screens">
 
-        <div class="nav-section-label">App Content</div>
-        <button class="sidebar-link" data-panel="home-screen" onclick="switchPanel('home-screen', this)">
-          <span class="s-icon">🏠</span> Home Screen
-        </button>
-        <button class="sidebar-link" data-panel="sermons" onclick="switchPanel('sermons', this)">
-          <span class="s-icon">🎙️</span> Sermons
-        </button>
-        <button class="sidebar-link" data-panel="events" onclick="switchPanel('events', this)">
-          <span class="s-icon">📅</span> Events
-        </button>
-        <button class="sidebar-link" data-panel="verses" onclick="switchPanel('verses', this)">
-          <span class="s-icon">📖</span> Daily Verses
-        </button>
-        <button class="sidebar-link" data-panel="giving" onclick="switchPanel('giving', this)">
-          <span class="s-icon">💛</span> Giving Info
-        </button>
-
-        <div class="nav-section-label">Engagement</div>
-        <button class="sidebar-link" data-panel="notifications" onclick="switchPanel('notifications', this)">
-          <span class="s-icon">🔔</span> Push Notifications
-          <span class="s-badge">NEW</span>
-        </button>
-        <button class="sidebar-link" data-panel="messages" onclick="switchPanel('messages', this)">
-          <span class="s-icon">✉️</span> Messages
-        </button>
-
-        <div class="nav-section-label">App Settings</div>
-        <button class="sidebar-link" data-panel="appearance" onclick="switchPanel('appearance', this)">
-          <span class="s-icon">🎨</span> Appearance
-        </button>
-        <button class="sidebar-link" data-panel="settings" onclick="switchPanel('settings', this)">
-          <span class="s-icon">⚙️</span> App Settings
-        </button>
-      </nav>
-
-      <div class="sidebar-footer">
-        <div class="admin-user-row">
-          <div class="admin-avatar">✝️</div>
-          <div>
-            <div class="admin-name" id="adminName">Admin</div>
-            <div class="admin-role">Super Administrator</div>
-          </div>
+    <!-- ===== DASHBOARD ===== -->
+    <div class="screen active" id="s-dashboard">
+      <div class="screen-inner">
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card"><div class="si">🎙️</div><div class="sn" id="st-sermons">–</div><div class="sl">Sermons</div></div>
+          <div class="stat-card"><div class="si">📅</div><div class="sn" id="st-events">–</div><div class="sl">Events</div></div>
+          <div class="stat-card"><div class="si">✉️</div><div class="sn" id="st-messages">–</div><div class="sl">Messages</div></div>
+          <div class="stat-card"><div class="si">👥</div><div class="sn" id="st-leaders">–</div><div class="sl">Leaders</div></div>
         </div>
-        <button class="logout-btn" id="logoutBtn">Sign Out</button>
-        <div style="margin-top:1rem; text-align:center; font-size:0.62rem; color:rgba(212,207,199,0.22); line-height:1.8;">
-          Powered by<br>
-          <span style="color:rgba(200,146,42,0.5); font-weight:700; letter-spacing:0.08em; font-size:0.68rem;">LVIS TECHNOLOGIES</span>
-        </div>
-      </div>
-    </aside>
 
-    <!-- ===== MAIN ===== -->
-    <div class="main">
-      <!-- Top bar -->
-      <div class="topbar">
-        <div style="display:flex; align-items:center;">
-          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-          <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        <div class="sec-label">Quick Actions</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:1rem;">
+          <button class="btn btn-gold" onclick="goTo('sermons')">🎙️ Add Sermon</button>
+          <button class="btn btn-ghost" onclick="goTo('events')">📅 Add Event</button>
+          <button class="btn btn-ghost" onclick="goTo('leaders')">👥 Add Leader</button>
+          <button class="btn btn-ghost" onclick="goTo('notifs')">🔔 Send Push</button>
         </div>
-        <div class="topbar-right">
-          <div class="topbar-badge" id="fbStatus">
-            <span>●</span> Firebase Connected
-          </div>
-          <a href="https://wakisogloryofchristchurch-cyber.github.io/GCCwakiso/app/" target="_blank" rel="noopener noreferrer" class="view-app-btn">
-            📱 Preview App
+
+        <div class="sec-label">Recent Messages</div>
+        <div class="card" id="dashMessages">
+          <div class="empty"><div class="ei">✉️</div><p>No messages yet</p></div>
+        </div>
+
+        <div class="sec-label">Website</div>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <a href="https://wakisogloryofchristchurch-cyber.github.io/GCCwakiso/" target="_blank">
+            <button class="btn btn-ghost btn-full">🌐 Open Website</button>
           </a>
         </div>
       </div>
+    </div>
 
-      <!-- Page Content -->
-      <div class="page-content">
+    <!-- ===== HERO SLIDES ===== -->
+    <div class="screen" id="s-slides">
+      <div class="screen-inner">
+        <div class="sec-label">Hero Slides</div>
+        <p style="font-size:0.8rem;color:var(--muted);margin-bottom:1rem;">These images display in the rotating banner at the top of the app home screen.</p>
 
-        <!-- ====================================================
-             PANEL: OVERVIEW
-        ==================================================== -->
-        <div class="panel active" id="panel-overview">
-          <div class="page-header">
-            <div class="tag">Admin Dashboard</div>
-            <h2>Good to see you 🙏</h2>
-            <p>Manage all content for the Glory of Christ Church mobile app</p>
-          </div>
-
-          <div class="stats-row" id="statsRow">
-            <div class="stat-box"><div class="s-icon">🎙️</div><div class="s-num" id="st-sermons">–</div><div class="s-lbl">Sermons</div></div>
-            <div class="stat-box"><div class="s-icon">📅</div><div class="s-num" id="st-events">–</div><div class="s-lbl">Events</div></div>
-            <div class="stat-box"><div class="s-icon">✉️</div><div class="s-num" id="st-messages">–</div><div class="s-lbl">Messages</div></div>
-            <div class="stat-box"><div class="s-icon">🔔</div><div class="s-num" id="st-notifs">–</div><div class="s-lbl">Notifications Sent</div></div>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <div class="a-card">
-                <div class="a-card-head"><h3>🚀 Quick Actions</h3></div>
-                <div class="a-card-body" style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
-                  <button class="btn btn-gold" onclick="switchPanel('sermons', null)">➕ Add Sermon</button>
-                  <button class="btn btn-ghost" onclick="switchPanel('events', null)">📅 Add Event</button>
-                  <button class="btn btn-ghost" onclick="switchPanel('notifications', null)">🔔 Send Push</button>
-                  <button class="btn btn-ghost" onclick="switchPanel('verses', null)">📖 Edit Verses</button>
-                </div>
-              </div>
-
-              <div class="a-card">
-                <div class="a-card-head"><h3>📱 App Status</h3></div>
-                <div class="a-card-body">
-                  <div class="toggle-row">
-                    <div class="toggle-info"><h4>App Live</h4><p>App is accessible to church members</p></div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="toggle-row">
-                    <div class="toggle-info"><h4>Daily Verse</h4><p>Show rotating Bible verse on home screen</p></div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="toggle-row">
-                    <div class="toggle-info"><h4>Sermon Audio</h4><p>Enable audio player in Sermons tab</p></div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="toggle-row">
-                    <div class="toggle-info"><h4>Giving Section</h4><p>Show Give tab in bottom navigation</p></div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Phone Preview -->
-            <div class="phone-preview">
-              <div style="text-align:center; margin-bottom:1rem;">
-                <div class="tag">Live App Preview</div>
-              </div>
-              <div class="phone-frame">
-                <div class="phone-screen">
-                  <div class="phone-notch"></div>
-                  <div class="preview-hero">
-                    <p class="preview-verse" id="previewVerse">"For God so loved the world…"</p>
-                    <p style="font-size:0.55rem; color:rgba(255,255,255,0.4); margin-top:3px;">— John 3:16</p>
-                  </div>
-                  <div class="preview-body">
-                    <div class="preview-next-svc">
-                      <div class="pns-icon">🙌</div>
-                      <div>
-                        <div class="pns-name" id="previewNextSvc">Sunday Worship Service</div>
-                        <div class="pns-time">Sunday · 9:00 AM</div>
-                      </div>
-                    </div>
-                    <div class="preview-label">Upcoming Events</div>
-                    <div id="previewEvents">
-                      <div class="preview-event-row">
-                        <div class="per-date"><div class="per-day">15</div><div class="per-mon">Jun</div></div>
-                        <div class="per-title">Annual Thanksgiving</div>
-                      </div>
-                      <div class="preview-event-row">
-                        <div class="per-date"><div class="per-day">21</div><div class="per-mon">Jun</div></div>
-                        <div class="per-title">Youth Camp 2025</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div style="text-align:center; margin-top:1rem; font-size:0.72rem; color:var(--muted);">
-                Auto-updates as you edit content
-              </div>
+        <div class="card">
+          <div class="card-head"><h3>🖼️ Current Slides</h3><button class="btn btn-ghost btn-sm" onclick="loadSlides()">↻</button></div>
+          <div class="card-body">
+            <div class="slides-grid" id="slidesGrid">
+              <div class="empty" style="grid-column:1/-1;"><div class="ei">🖼️</div><p>No slides yet</p></div>
             </div>
           </div>
         </div>
 
-        <!-- ====================================================
-             PANEL: HOME SCREEN
-        ==================================================== -->
-        <div class="panel" id="panel-home-screen">
-          <div class="page-header">
-            <div class="tag">App Content</div>
-            <h2>Home Screen</h2>
-            <p>Edit what members see when they open the app</p>
-          </div>
-
-          <div class="two-col-wide">
-            <div>
-              <!-- Hero Slides -->
-              <div class="a-card">
-                <div class="a-card-head">
-                  <h3>🖼️ Hero Image Slides</h3>
-                  <button class="btn btn-gold btn-sm" id="addSlideBtn">+ Add Slide</button>
-                </div>
-                <div class="a-card-body">
-                  <p class="hint" style="margin-bottom:1rem;">These images display in the rotating banner at the top of the Home screen. Use high-quality church photos.</p>
-                  <div id="slidesList">
-                    <div style="text-align:center; padding:1rem; color:var(--muted); font-size:0.82rem;">Loading slides…</div>
-                  </div>
-                  <div class="f-group" style="margin-top:1rem;">
-                    <label>Upload New Slide Image</label>
-                    <input type="file" id="slideImageFile" accept="image/*">
-                    <div class="upload-prog" id="slideUploadProg"><div class="upload-prog-bar" id="slideUploadBar"></div></div>
-                  </div>
-                  <button class="btn btn-gold" onclick="uploadSlide()">Upload & Add Slide</button>
-                </div>
-              </div>
-
-              <!-- Welcome Text -->
-              <div class="a-card">
-                <div class="a-card-head"><h3>✏️ Welcome / Vision Text</h3></div>
-                <div class="a-card-body">
-                  <div class="f-group">
-                    <label>Vision Statement (shown on hero)</label>
-                    <textarea id="visionText" oninput="document.getElementById('previewVerse').textContent = this.value.slice(0,60) + '…'">Our Vision is to Reveal the Glory of Christ and His Finished Work on the Cross</textarea>
-                  </div>
-                  <div class="f-group">
-                    <label>Welcome Message (About section)</label>
-                    <textarea id="welcomeText">Welcome to Glory of Christ Church Wakiso-Kayunga, a Christ-centered church all about knowing Christ and making Him known by the Grace of God.</textarea>
-                  </div>
-                  <button class="btn btn-gold" onclick="saveSection('home-text')">Save Changes</button>
-                </div>
-              </div>
-
-              <!-- Service Times -->
-              <div class="a-card">
-                <div class="a-card-head"><h3>🕐 Service Times</h3></div>
-                <div class="a-card-body">
-                  <div id="serviceTimesEditor">
-                    <div style="margin-bottom:1rem; padding:1rem; background:var(--bg3); border-radius:8px;">
-                      <div class="f-row">
-                        <div class="f-group"><label>Day</label><input type="text" value="Sunday"></div>
-                        <div class="f-group"><label>Time</label><input type="text" value="9:00 AM"></div>
-                      </div>
-                      <div class="f-group"><label>Service Name</label><input type="text" value="Sunday Worship Service"></div>
-                    </div>
-                    <div style="margin-bottom:1rem; padding:1rem; background:var(--bg3); border-radius:8px;">
-                      <div class="f-row">
-                        <div class="f-group"><label>Day</label><input type="text" value="Tuesday"></div>
-                        <div class="f-group"><label>Time</label><input type="text" value="3:00 PM"></div>
-                      </div>
-                      <div class="f-group"><label>Service Name</label><input type="text" value="Prayer Meeting"></div>
-                    </div>
-                    <div style="margin-bottom:1rem; padding:1rem; background:var(--bg3); border-radius:8px;">
-                      <div class="f-row">
-                        <div class="f-group"><label>Day</label><input type="text" value="Wednesday"></div>
-                        <div class="f-group"><label>Time</label><input type="text" value="5:00 PM"></div>
-                      </div>
-                      <div class="f-group"><label>Service Name</label><input type="text" value="Bible Study"></div>
-                    </div>
-                    <div style="padding:1rem; background:var(--bg3); border-radius:8px;">
-                      <div class="f-row">
-                        <div class="f-group"><label>Day</label><input type="text" value="Friday"></div>
-                        <div class="f-group"><label>Time</label><input type="text" value="9:00 PM"></div>
-                      </div>
-                      <div class="f-group"><label>Service Name</label><input type="text" value="Overnight Prayers"></div>
-                    </div>
-                  </div>
-                  <button class="btn btn-gold" style="margin-top:1rem;" onclick="saveSection('service-times')">Save Service Times</button>
-                </div>
-              </div>
+        <div class="card">
+          <div class="card-head"><h3>➕ Add New Slide</h3></div>
+          <div class="card-body">
+            <div class="fg">
+              <label>Select Image</label>
+              <img id="slidePreview" class="img-prev" alt="Preview" style="width:100%;height:120px;border-radius:8px;">
+              <input type="file" id="slideFile" accept="image/*" onchange="previewSlide(this)">
+              <div class="hint">Use landscape photos (16:9). JPG or PNG, max 5MB.</div>
+              <div class="uprog" id="slideUprogWrap"><div class="uprog-bar" id="slideUprogBar"></div></div>
             </div>
+            <div class="fg">
+              <label>Slide Caption (optional)</label>
+              <input type="text" id="slideCaption" placeholder="e.g. Sunday Worship Service">
+            </div>
+            <button class="btn btn-gold btn-full" id="addSlideBtn" onclick="addSlide()">Upload Slide 🖼️</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <!-- Phone Preview -->
-            <div class="phone-preview">
-              <div style="text-align:center; margin-bottom:1rem;"><div class="tag">Preview</div></div>
-              <div class="phone-frame">
-                <div class="phone-screen">
-                  <div class="phone-notch"></div>
-                  <div class="preview-hero">
-                    <p class="preview-verse" id="prevHeroVerse">"Our Vision is to Reveal the Glory of Christ…"</p>
-                  </div>
-                  <div class="preview-body">
-                    <div class="preview-next-svc">
-                      <div class="pns-icon">🙌</div>
-                      <div>
-                        <div class="pns-name">Sunday Worship Service</div>
-                        <div class="pns-time">Sunday · 9:00 AM</div>
-                      </div>
-                    </div>
-                    <div class="preview-label">Service Times</div>
-                    <div style="font-size:0.62rem; color:rgba(255,255,255,0.55); line-height:2;">
-                      🙌 Sunday — 9:00 AM<br>
-                      🕊️ Tuesday — 3:00 PM<br>
-                      📖 Wednesday — 5:00 PM<br>
-                      🌙 Friday — 9:00 PM
-                    </div>
-                  </div>
-                </div>
+    <!-- ===== SERMONS ===== -->
+    <div class="screen" id="s-sermons">
+      <div class="screen-inner">
+        <div class="card">
+          <div class="card-head"><h3>➕ Add Sermon</h3></div>
+          <div class="card-body">
+            <div class="fg"><label>Title *</label><input type="text" id="sTitle" placeholder="e.g. Walking in the Spirit"></div>
+            <div class="fg">
+              <label>Speaker</label>
+              <select id="sSpeaker">
+                <option>Pastor Harriet Ndagire Bagonza</option>
+                <option>Pastor Rogers Lukwago</option>
+                <option>Mr & Mrs Kaate Godfrey</option>
+                <option>Pastor Sharif Muwanguzi</option>
+                <option>Guest Speaker</option>
+              </select>
+            </div>
+            <div class="frow">
+              <div class="fg"><label>Date *</label><input type="date" id="sDate"></div>
+              <div class="fg"><label>Scripture</label><input type="text" id="sScripture" placeholder="e.g. John 3:16"></div>
+            </div>
+            <div class="fg">
+              <label>Audio File 🎵</label>
+              <input type="file" id="sAudio" accept="audio/*,.mp3,.m4a,.wav,.aac" onchange="previewAudio(this)">
+              <div class="uprog" id="sUprogWrap"><div class="uprog-bar" id="sUprogBar"></div></div>
+              <div id="sAudioPrev" style="display:none;margin-top:8px;">
+                <audio id="sAudioPlayer" controls style="width:100%;border-radius:6px;"></audio>
               </div>
+              <div class="hint">MP3, M4A, WAV, AAC. Uploaded to Cloudinary.</div>
+            </div>
+            <div class="fg"><label>Notes / Summary</label><textarea id="sNotes" placeholder="Brief description…"></textarea></div>
+            <button class="btn btn-gold btn-full" id="addSermonBtn" onclick="addSermon()">Publish Sermon 🎙️</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>🎙️ All Sermons</h3><button class="btn btn-ghost btn-sm" onclick="loadSermons()">↻</button></div>
+          <div id="sermonsList"><div class="empty"><div class="ei">🎙️</div><p>No sermons yet</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== EVENTS ===== -->
+    <div class="screen" id="s-events">
+      <div class="screen-inner">
+        <div class="card">
+          <div class="card-head"><h3>➕ Add Event</h3></div>
+          <div class="card-body">
+            <div class="fg"><label>Title *</label><input type="text" id="eTitle" placeholder="e.g. Annual Thanksgiving Service"></div>
+            <div class="frow">
+              <div class="fg"><label>Date *</label><input type="date" id="eDate"></div>
+              <div class="fg"><label>Time</label><input type="time" id="eTime"></div>
+            </div>
+            <div class="fg"><label>Location</label><input type="text" id="eLocation" placeholder="e.g. Main Sanctuary"></div>
+            <div class="fg"><label>Description</label><textarea id="eDesc" placeholder="Describe the event…"></textarea></div>
+            <div class="fg">
+              <label>Event Image (optional)</label>
+              <img id="eImgPrev" class="img-prev" alt="Preview">
+              <input type="file" id="eImg" accept="image/*" onchange="prevImg(this,'eImgPrev')">
+              <div class="uprog" id="eUprogWrap"><div class="uprog-bar" id="eUprogBar"></div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem;">
+              <div class="tog on" id="eSendNotif" onclick="this.classList.toggle('on')"></div>
+              <span style="font-size:0.82rem;">Send push notification to app users</span>
+            </div>
+            <button class="btn btn-gold btn-full" id="addEventBtn" onclick="addEvent()">Publish Event 📅</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>📅 All Events</h3><button class="btn btn-ghost btn-sm" onclick="loadEvents()">↻</button></div>
+          <div id="eventsList"><div class="empty"><div class="ei">📅</div><p>No events yet</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== LEADERS ===== -->
+    <div class="screen" id="s-leaders">
+      <div class="screen-inner">
+        <div class="card">
+          <div class="card-head"><h3>➕ Add Leader</h3></div>
+          <div class="card-body">
+            <div class="fg"><label>Full Name *</label><input type="text" id="lName" placeholder="e.g. Pastor Harriet Ndagire"></div>
+            <div class="fg"><label>Role *</label><input type="text" id="lRole" placeholder="e.g. Lead Pastor"></div>
+            <div class="fg"><label>Bio</label><input type="text" id="lBio" placeholder="Brief description…"></div>
+            <div class="fg"><label>Display Order</label><input type="number" id="lOrder" value="1" min="1"></div>
+            <div class="fg">
+              <label>Photo</label>
+              <img id="lImgPrev" class="img-prev" alt="Preview">
+              <input type="file" id="lImg" accept="image/*" onchange="prevImg(this,'lImgPrev')">
+              <div class="uprog" id="lUprogWrap"><div class="uprog-bar" id="lUprogBar"></div></div>
+            </div>
+            <button class="btn btn-gold btn-full" id="addLeaderBtn" onclick="addLeader()">Save Leader 👥</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>👥 All Leaders</h3><button class="btn btn-ghost btn-sm" onclick="loadLeaders()">↻</button></div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>Photo</th><th>Name</th><th>Role</th><th></th></tr></thead>
+              <tbody id="leadersTbody"><tr><td colspan="4" style="text-align:center;padding:1.5rem;color:var(--muted);">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== DAILY VERSE ===== -->
+    <div class="screen" id="s-verses">
+      <div class="screen-inner">
+        <div class="card">
+          <div class="card-head"><h3>🔍 Search Bible Verses</h3></div>
+          <div class="card-body">
+            <div class="fg">
+              <label>Search by keyword or reference</label>
+              <input type="text" id="bibleSearch" placeholder="e.g. faith, John 3, strength, peace…" oninput="searchBible(this.value)">
+            </div>
+            <div id="bibleResults" style="max-height:300px;overflow-y:auto;">
+              <p style="font-size:0.8rem;color:var(--muted);text-align:center;padding:1rem;">Type to search 98 key Bible verses…</p>
             </div>
           </div>
         </div>
 
-        <!-- ====================================================
-             PANEL: SERMONS
-        ==================================================== -->
-        <div class="panel" id="panel-sermons">
-          <div class="page-header">
-            <div class="tag">App Content</div>
-            <h2>Sermons</h2>
-            <p>Add and manage sermon recordings shown in the app</p>
+        <div class="card" id="selectedVerseCard" style="display:none;">
+          <div class="card-head"><h3>✅ Selected Verse</h3></div>
+          <div class="card-body">
+            <div style="background:var(--gd);border:1px solid var(--gb);border-radius:8px;padding:1rem;margin-bottom:1rem;">
+              <div class="verse-ref" id="selVerseRef"></div>
+              <div class="verse-text" id="selVerseText"></div>
+            </div>
+            <div class="fg">
+              <label>Assign to Day</label>
+              <select id="verseDay">
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+              </select>
+            </div>
+            <button class="btn btn-gold btn-full" onclick="saveVerse()">Save as Daily Verse 📖</button>
           </div>
+        </div>
 
-          <div class="two-col-wide">
-            <div>
-              <!-- Add Sermon -->
-              <div class="a-card">
-                <div class="a-card-head"><h3>➕ Add New Sermon</h3></div>
-                <div class="a-card-body">
-                  <div class="f-row">
-                    <div class="f-group">
-                      <label>Sermon Title *</label>
-                      <input type="text" id="sTitle" placeholder="e.g. Walking in the Spirit">
-                    </div>
-                    <div class="f-group">
-                      <label>Speaker *</label>
-                      <select id="sSpeaker">
-                        <option>Pastor Harriet Ndagire Bagonza</option>
-                        <option>Pastor Rogers Lukwago</option>
-                        <option>Mr & Mrs Kaate Godfrey</option>
-                        <option>Pastor Sharif Muwanguzi</option>
-                        <option>Guest Speaker</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="f-row">
-                    <div class="f-group">
-                      <label>Date *</label>
-                      <input type="date" id="sDate">
-                    </div>
-                    <div class="f-group">
-                      <label>Scripture Reference</label>
-                      <input type="text" id="sScripture" placeholder="e.g. Galatians 5:16">
-                    </div>
-                  </div>
-                  <div class="f-group">
-                    <label>Upload Audio File 🎵</label>
-                    <input type="file" id="sAudioFile" accept="audio/*,.mp3,.m4a,.wav,.ogg,.aac">
-                    <div class="hint">MP3, M4A, WAV, AAC supported. Max ~100MB via Cloudinary.</div>
-                    <div class="upload-prog" id="sAudioProg"><div class="upload-prog-bar" id="sAudioBar"></div></div>
-                    <div id="sAudioPreview" style="display:none; margin-top:8px;">
-                      <audio id="sAudioPlayer" controls style="width:100%; border-radius:8px; margin-top:6px;"></audio>
-                      <div id="sAudioName" style="font-size:0.75rem; color:var(--muted); margin-top:4px;"></div>
-                    </div>
-                  </div>
-                  <div class="f-group">
-                    <label>Sermon Notes / Summary</label>
-                    <textarea id="sNotes" placeholder="Brief description of the sermon message…"></textarea>
-                  </div>
-                  <div class="f-group">
-                    <label>Category</label>
-                    <select id="sCategory">
-                      <option>General</option>
-                      <option>Prayer</option>
-                      <option>Faith</option>
-                      <option>Healing</option>
-                      <option>Grace</option>
-                      <option>Youth</option>
-                      <option>Prophecy</option>
-                    </select>
-                  </div>
-                  <button class="btn btn-gold" id="saveSermonBtn" onclick="saveSermon()">Save Sermon 🎙️</button>
+        <div class="card">
+          <div class="card-head"><h3>📖 Current Daily Verses (7 days)</h3><button class="btn btn-ghost btn-sm" onclick="loadVerses()">↻</button></div>
+          <div id="versesList" style="padding:0;">
+            <div class="empty"><div class="ei">📖</div><p>No verses set yet</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== NOTIFICATIONS ===== -->
+    <div class="screen" id="s-notifs">
+      <div class="screen-inner">
+        <div class="card">
+          <div class="card-head"><h3>📤 Send Push Notification</h3></div>
+          <div class="card-body">
+            <div class="fg">
+              <label>Title *</label>
+              <input type="text" id="nTitle" placeholder="e.g. Service starts in 1 hour!" maxlength="60" oninput="updateNotifPreview()">
+            </div>
+            <div class="fg">
+              <label>Message *</label>
+              <textarea id="nBody" placeholder="Your message…" maxlength="140" oninput="updateNotifPreview()"></textarea>
+            </div>
+            <div class="fg">
+              <label>Opens screen on tap</label>
+              <select id="nLink">
+                <option value="home">🏠 Home</option>
+                <option value="events">📅 Events</option>
+                <option value="sermons">🎙️ Sermons</option>
+                <option value="give">💛 Give</option>
+              </select>
+            </div>
+            <div class="card" style="margin-bottom:1rem;background:rgba(255,255,255,0.03);">
+              <div class="card-body" style="padding:0.8rem;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                  <div style="width:28px;height:28px;background:var(--gd);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;">⛪</div>
+                  <span style="font-size:0.7rem;color:var(--muted);">GCC Church</span>
+                  <span style="font-size:0.65rem;color:var(--muted);margin-left:auto;">now</span>
                 </div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--white);" id="prevNTitle">Notification title</div>
+                <div style="font-size:0.78rem;color:var(--muted);" id="prevNBody">Your message…</div>
               </div>
             </div>
+            <button class="btn btn-gold btn-full" id="sendNotifBtn" onclick="sendNotif()">Send Notification 🔔</button>
+          </div>
+        </div>
 
-            <!-- Sermons list -->
-            <div>
-              <div class="a-card">
-                <div class="a-card-head">
-                  <h3>🎙️ Published Sermons</h3>
-                  <button class="btn btn-ghost btn-sm" onclick="loadSermons()">↻ Refresh</button>
-                </div>
-                <div class="a-card-body" style="padding:0;">
-                  <div id="sermonsList">
-                    <div class="empty-state"><div class="e-icon">🎙️</div><p>Sermons will appear here</p></div>
-                  </div>
-                </div>
-              </div>
+        <div class="card">
+          <div class="card-head"><h3>📋 Sent Notifications</h3><button class="btn btn-ghost btn-sm" onclick="loadNotifs()">↻</button></div>
+          <div id="notifsList"><div class="empty"><div class="ei">🔔</div><p>No notifications sent yet</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== GIVING INFO ===== -->
+    <div class="screen" id="s-giving">
+      <div class="screen-inner">
+        <div class="card">
+          <div class="card-head"><h3>🏦 Bank Transfer</h3></div>
+          <div class="card-body">
+            <div class="fg"><label>Bank Name</label><input type="text" id="gBank" value="Centenary Bank"></div>
+            <div class="fg"><label>Account Name</label><input type="text" id="gAccName" value="Glory of Christ Church"></div>
+            <div class="fg"><label>Account Number</label><input type="text" id="gAccNum" value="200210030471"></div>
+            <div class="frow">
+              <div class="fg"><label>Branch</label><input type="text" id="gBranch" value="Wakiso"></div>
+              <div class="fg"><label>Swift</label><input type="text" id="gSwift" value="CERBUGKA"></div>
             </div>
           </div>
         </div>
 
-        <!-- ====================================================
-             PANEL: EVENTS
-        ==================================================== -->
-        <div class="panel" id="panel-events">
-          <div class="page-header">
-            <div class="tag">App Content</div>
-            <h2>Events</h2>
-            <p>Manage special events and announcements in the app calendar</p>
-          </div>
-
-          <div class="two-col">
-            <!-- Add Event -->
-            <div class="a-card">
-              <div class="a-card-head"><h3>➕ Add Event</h3></div>
-              <div class="a-card-body">
-                <div class="f-group">
-                  <label>Event Title *</label>
-                  <input type="text" id="eTitle" placeholder="e.g. Annual Thanksgiving Service">
-                </div>
-                <div class="f-row">
-                  <div class="f-group">
-                    <label>Date *</label>
-                    <input type="date" id="eDate">
-                  </div>
-                  <div class="f-group">
-                    <label>Time</label>
-                    <input type="time" id="eTime">
-                  </div>
-                </div>
-                <div class="f-group">
-                  <label>Location</label>
-                  <input type="text" id="eLocation" placeholder="e.g. Main Sanctuary">
-                </div>
-                <div class="f-group">
-                  <label>Description</label>
-                  <textarea id="eDesc" placeholder="Describe the event for app users…"></textarea>
-                </div>
-                <div class="f-group">
-                  <label>Event Type</label>
-                  <select id="eType">
-                    <option>Special Service</option>
-                    <option>Youth Event</option>
-                    <option>Outreach</option>
-                    <option>Conference</option>
-                    <option>Prayer Night</option>
-                    <option>Celebration</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-                <div class="f-group">
-                  <label>Event Image (optional)</label>
-                  <img id="eImgPreview" class="img-prev" alt="Preview">
-                  <input type="file" id="eImage" accept="image/*" onchange="previewImg(this, 'eImgPreview')">
-                  <div class="upload-prog" id="eUploadProg"><div class="upload-prog-bar" id="eUploadBar"></div></div>
-                </div>
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:1rem;">
-                  <div class="toggle on" id="eSendNotif" onclick="this.classList.toggle('on')"></div>
-                  <span style="font-size:0.82rem; color:var(--text);">Send push notification to all app users</span>
-                </div>
-                <button class="btn btn-gold" onclick="saveEvent()">Publish Event 📅</button>
-              </div>
+        <div class="card">
+          <div class="card-head"><h3>📱 Mobile Money</h3></div>
+          <div class="card-body">
+            <div class="frow">
+              <div class="fg"><label>MTN Number</label><input type="text" id="gMtn" value="+256 700 592 303"></div>
+              <div class="fg"><label>MTN Dial</label><input type="text" id="gMtnDial" value="*165#"></div>
             </div>
-
-            <!-- Events List -->
-            <div class="a-card">
-              <div class="a-card-head">
-                <h3>📅 Upcoming Events</h3>
-                <button class="btn btn-ghost btn-sm" onclick="loadEvents()">↻ Refresh</button>
-              </div>
-              <div class="a-card-body" style="padding:0;">
-                <div id="eventsList">
-                  <div class="empty-state"><div class="e-icon">📅</div><p>Events will appear here</p></div>
-                </div>
-              </div>
+            <div class="frow">
+              <div class="fg"><label>Airtel Number</label><input type="text" id="gAirtel" value="+256 774 458 786"></div>
+              <div class="fg"><label>Airtel Dial</label><input type="text" id="gAirtelDial" value="*185#"></div>
             </div>
+            <div class="fg"><label>Centenary Dial</label><input type="text" id="gCentre" value="*236#"></div>
           </div>
         </div>
 
-        <!-- ====================================================
-             PANEL: DAILY VERSES
-        ==================================================== -->
-        <div class="panel" id="panel-verses">
-          <div class="page-header">
-            <div class="tag">App Content</div>
-            <h2>Daily Bible Verses</h2>
-            <p>These verses rotate by day of the week on the app home screen</p>
-          </div>
-
-          <div class="two-col">
-            <div class="a-card">
-              <div class="a-card-head"><h3>📖 Edit Verses (7 days)</h3></div>
-              <div class="a-card-body">
-                <p class="hint" style="margin-bottom:1.2rem;">One verse per day. Day 0 = Sunday, Day 6 = Saturday. These are shown on the home screen hero.</p>
-                <div id="versesEditor">
-                  <!-- Populated by JS -->
-                </div>
-                <button class="btn btn-gold" style="margin-top:0.5rem;" onclick="saveVerses()">Save All Verses 📖</button>
-              </div>
-            </div>
-
-            <div>
-              <div class="a-card">
-                <div class="a-card-head"><h3>👁 Current Verses</h3></div>
-                <div class="a-card-body" style="padding:0;">
-                  <div id="versesList"></div>
-                </div>
-              </div>
-            </div>
+        <div class="card">
+          <div class="card-head"><h3>✏️ Give Section Text</h3></div>
+          <div class="card-body">
+            <div class="fg"><label>Title</label><input type="text" id="gTitle" value="Your Gift Matters"></div>
+            <div class="fg"><label>Description</label><textarea id="gDesc">Every contribution helps us worship, serve, and reach more lives with the Gospel of Christ in Wakiso-Kayunga and beyond.</textarea></div>
           </div>
         </div>
 
-        <!-- ====================================================
-             PANEL: GIVING INFO
-        ==================================================== -->
-        <div class="panel" id="panel-giving">
-          <div class="page-header">
-            <div class="tag">App Content</div>
-            <h2>Giving Information</h2>
-            <p>Edit the donation details shown in the Give tab of the app</p>
-          </div>
+        <button class="btn btn-gold btn-full" id="saveGivingBtn" onclick="saveGiving()">Save Giving Info 💛</button>
+      </div>
+    </div>
 
-          <div class="two-col">
-            <div>
-              <div class="a-card">
-                <div class="a-card-head"><h3>🏦 Bank Transfer Details</h3></div>
-                <div class="a-card-body">
-                  <div class="f-group"><label>Bank Name</label><input type="text" id="gBank" value="Centenary Bank"></div>
-                  <div class="f-group"><label>Account Name</label><input type="text" id="gAccName" value="Glory of Christ Church"></div>
-                  <div class="f-group"><label>Account Number</label><input type="text" id="gAccNum" value="200210030471"></div>
-                  <div class="f-row">
-                    <div class="f-group"><label>Branch</label><input type="text" id="gBranch" value="Wakiso"></div>
-                    <div class="f-group"><label>Swift Code</label><input type="text" id="gSwift" value="CERBUGKA"></div>
-                  </div>
-                </div>
-              </div>
+    <!-- ===== MESSAGES ===== -->
+    <div class="screen" id="s-messages">
+      <div class="screen-inner">
+        <div class="card">
+          <div class="card-head"><h3>✉️ Contact Messages</h3><button class="btn btn-ghost btn-sm" onclick="loadMessages()">↻</button></div>
+          <div id="messagesList"><div class="empty"><div class="ei">✉️</div><p>No messages yet</p></div></div>
+        </div>
+      </div>
+    </div>
 
-              <div class="a-card">
-                <div class="a-card-head"><h3>📱 Mobile Money Numbers</h3></div>
-                <div class="a-card-body">
-                  <div class="f-row">
-                    <div class="f-group"><label>MTN MoMo Number</label><input type="text" id="gMtn" value="+256 700 592 303"></div>
-                    <div class="f-group"><label>MTN Dial Code</label><input type="text" id="gMtnDial" value="*165#"></div>
-                  </div>
-                  <div class="f-row">
-                    <div class="f-group"><label>Airtel Money Number</label><input type="text" id="gAirtel" value="+256 774 458 786"></div>
-                    <div class="f-group"><label>Airtel Dial Code</label><input type="text" id="gAirtelDial" value="*185#"></div>
-                  </div>
-                  <div class="f-group"><label>Centenary Mobile Dial Code</label><input type="text" id="gCentre" value="*236#"></div>
-                </div>
-              </div>
-
-              <div class="a-card">
-                <div class="a-card-head"><h3>✏️ Giving Tagline</h3></div>
-                <div class="a-card-body">
-                  <div class="f-group">
-                    <label>Give Section Title</label>
-                    <input type="text" id="gTitle" value="Your Gift Matters">
-                  </div>
-                  <div class="f-group">
-                    <label>Give Section Description</label>
-                    <textarea id="gDesc">Every contribution helps us worship, serve, and reach more lives with the Gospel of Christ in Wakiso-Kayunga and beyond.</textarea>
-                  </div>
-                  <div class="f-group">
-                    <label>Scripture Verse (shown below giving options)</label>
-                    <input type="text" id="gVerse" value="2 Corinthians 9:7 — God loves a cheerful giver.">
-                  </div>
-                </div>
-              </div>
-
-              <button class="btn btn-gold" onclick="saveSection('giving')">Save Giving Info 💛</button>
-            </div>
-
-            <!-- Preview -->
-            <div class="phone-preview">
-              <div style="text-align:center; margin-bottom:1rem;"><div class="tag">Give Screen Preview</div></div>
-              <div class="phone-frame">
-                <div class="phone-screen">
-                  <div class="phone-notch"></div>
-                  <div style="padding:12px;">
-                    <div style="font-size:0.58rem; color:rgba(200,146,42,0.8); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:3px;">Support the Ministry</div>
-                    <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:#fff; margin-bottom:8px;">Give</div>
-                    <div style="background:rgba(200,146,42,0.12); border:1px solid rgba(200,146,42,0.25); border-radius:10px; padding:10px; text-align:center; margin-bottom:8px;">
-                      <div style="font-size:1.2rem; margin-bottom:3px;">💛</div>
-                      <div style="font-size:0.75rem; color:#fff; font-weight:700;">Your Gift Matters</div>
-                      <div style="font-size:0.6rem; color:rgba(255,255,255,0.5); margin-top:3px;">Every contribution helps us serve…</div>
-                    </div>
-                    <div style="font-size:0.62rem; color:rgba(200,146,42,0.8); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:5px;">Choose a Method</div>
-                    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:8px; display:flex; align-items:center; gap:8px; margin-bottom:5px;">
-                      <div style="font-size:1rem;">🏦</div>
-                      <div><div style="font-size:0.68rem; color:#fff; font-weight:600;">Bank Transfer</div><div style="font-size:0.58rem; color:rgba(255,255,255,0.4);">Centenary Bank · Wakiso</div></div>
-                    </div>
-                    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:8px; display:flex; align-items:center; gap:8px;">
-                      <div style="font-size:1rem;">📱</div>
-                      <div><div style="font-size:0.68rem; color:#fff; font-weight:600;">MTN Mobile Money</div><div style="font-size:0.58rem; color:rgba(255,255,255,0.4);">Dial *165# · +256 700 592 303</div></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <!-- ===== SETTINGS ===== -->
+    <div class="screen" id="s-settings">
+      <div class="screen-inner">
+        <div class="card">
+          <div class="card-head"><h3>⚙️ App Features</h3></div>
+          <div class="card-body">
+            <div class="tog-row"><div class="tog-info"><h4>📅 Events Tab</h4><p>Show events in app</p></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="tog-row"><div class="tog-info"><h4>🎙️ Sermons Tab</h4><p>Show sermon audio player</p></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="tog-row"><div class="tog-info"><h4>🔔 Reminders Tab</h4><p>Allow user reminders</p></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="tog-row"><div class="tog-info"><h4>💛 Give Tab</h4><p>Show donation options</p></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="tog-row"><div class="tog-info"><h4>📖 Daily Verse</h4><p>Show rotating verse on home</p></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
           </div>
         </div>
 
-        <!-- ====================================================
-             PANEL: PUSH NOTIFICATIONS
-        ==================================================== -->
-        <div class="panel" id="panel-notifications">
-          <div class="page-header">
-            <div class="tag">Engagement</div>
-            <h2>Push Notifications</h2>
-            <p>Send announcements directly to all app users' phones</p>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <div class="a-card">
-                <div class="a-card-head"><h3>📤 Compose Notification</h3></div>
-                <div class="a-card-body">
-                  <div class="f-group">
-                    <label>Notification Title *</label>
-                    <input type="text" id="notifTitle" placeholder="e.g. Healing Night Tonight!" maxlength="60" oninput="updateNotifPreview()">
-                    <div class="char-count" id="notifTitleCount">0/60</div>
-                  </div>
-                  <div class="f-group">
-                    <label>Message Body *</label>
-                    <textarea id="notifBody" placeholder="Join us this Friday at 6PM for a powerful healing service…" maxlength="140" oninput="updateNotifPreview()"></textarea>
-                    <div class="char-count" id="notifBodyCount">0/140</div>
-                  </div>
-                  <div class="f-group">
-                    <label>Deep Link (open screen on tap)</label>
-                    <select id="notifLink">
-                      <option value="home">🏠 Home Screen</option>
-                      <option value="events">📅 Events</option>
-                      <option value="sermons">🎙️ Sermons</option>
-                      <option value="reminders">🔔 Reminders</option>
-                      <option value="give">💛 Give</option>
-                    </select>
-                  </div>
-                  <div class="f-group">
-                    <label>Schedule (optional — leave blank to send now)</label>
-                    <input type="datetime-local" id="notifSchedule">
-                  </div>
-                  <div class="f-group">
-                    <label>Target Audience</label>
-                    <select id="notifAudience">
-                      <option>All App Users</option>
-                      <option>Android Only</option>
-                      <option>iOS Only</option>
-                    </select>
-                  </div>
-                  <button class="btn btn-gold" onclick="sendNotification()">Send Notification 🔔</button>
-                </div>
-              </div>
-
-              <!-- Recent Notifications -->
-              <div class="a-card">
-                <div class="a-card-head"><h3>📋 Sent Notifications</h3></div>
-                <div class="a-card-body" style="padding:0;" id="notifHistory">
-                  <div class="empty-state"><div class="e-icon">🔔</div><p>Sent notifications will appear here</p></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Notification Preview -->
-            <div>
-              <div class="a-card">
-                <div class="a-card-head"><h3>👁 Live Preview</h3></div>
-                <div class="a-card-body">
-                  <p class="hint" style="margin-bottom:1rem;">This is how the notification will appear on users' phones:</p>
-                  <div class="notif-preview">
-                    <div class="notif-prev-header">
-                      <div class="notif-prev-icon">⛪</div>
-                      <span class="notif-prev-app">GCC Church</span>
-                      <span class="notif-prev-time">now</span>
-                    </div>
-                    <div class="notif-prev-title" id="prevNotifTitle">Your notification title here</div>
-                    <div class="notif-prev-body" id="prevNotifBody">Your message will appear here…</div>
-                  </div>
-
-                  <div class="hdivider"></div>
-
-                  <div style="font-size:0.8rem; color:var(--muted); line-height:1.8;">
-                    <strong style="color:var(--text);">💡 Tips for great notifications:</strong><br>
-                    • Keep titles short and specific<br>
-                    • Include a clear call-to-action<br>
-                    • Use event-specific emojis 🙌🎉🙏<br>
-                    • Best times: 8–10 AM or 5–7 PM<br>
-                    • Don't send more than 2–3/week
-                  </div>
-                </div>
-              </div>
-
-              <div class="a-card">
-                <div class="a-card-head"><h3>📊 Notification Stats</h3></div>
-                <div class="a-card-body">
-                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; text-align:center;">
-                    <div style="padding:1rem; background:var(--bg3); border-radius:8px;">
-                      <div style="font-size:1.4rem; font-family:'Cormorant Garamond',serif; color:var(--white);" id="notifSent">0</div>
-                      <div style="font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em;">Sent</div>
-                    </div>
-                    <div style="padding:1rem; background:var(--bg3); border-radius:8px;">
-                      <div style="font-size:1.4rem; font-family:'Cormorant Garamond',serif; color:var(--gold-lt);" id="notifOpened">0</div>
-                      <div style="font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em;">Opened</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="card">
+          <div class="card-head"><h3>🔗 Quick Links</h3></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:0.6rem;">
+            <a href="index.html" target="_blank"><button class="btn btn-ghost btn-full">📱 Open App</button></a>
+            <a href="https://wakisogloryofchristchurch-cyber.github.io/GCCwakiso/" target="_blank"><button class="btn btn-ghost btn-full">🌐 Open Website</button></a>
+            <a href="https://console.firebase.google.com" target="_blank"><button class="btn btn-ghost btn-full">🔥 Firebase Console</button></a>
+            <a href="https://cloudinary.com" target="_blank"><button class="btn btn-ghost btn-full">☁️ Cloudinary</button></a>
           </div>
         </div>
 
-        <!-- ====================================================
-             PANEL: MESSAGES
-        ==================================================== -->
-        <div class="panel" id="panel-messages">
-          <div class="page-header">
-            <div class="tag">Engagement</div>
-            <h2>Contact Messages</h2>
-            <p>Messages submitted through the app contact form</p>
-          </div>
-          <div class="a-card">
-            <div class="a-card-head">
-              <h3>✉️ Inbox</h3>
-              <button class="btn btn-ghost btn-sm" onclick="loadMessages()">↻ Refresh</button>
-            </div>
-            <div class="a-card-body" style="padding:0;" id="msgInbox">
-              <div class="empty-state"><div class="e-icon">✉️</div><p>Messages will load here once Firebase is connected</p></div>
-            </div>
+        <div class="card">
+          <div class="card-head"><h3>👤 Admin Account</h3></div>
+          <div class="card-body">
+            <p style="font-size:0.84rem;color:var(--text);margin-bottom:0.5rem;">Signed in as: <strong id="adminEmailDisplay" style="color:var(--gold-lt);"></strong></p>
+            <button class="btn btn-red btn-full" id="logoutBtn2">Sign Out</button>
           </div>
         </div>
 
-        <!-- ====================================================
-             PANEL: APPEARANCE
-        ==================================================== -->
-        <div class="panel" id="panel-appearance">
-          <div class="page-header">
-            <div class="tag">App Settings</div>
-            <h2>Appearance</h2>
-            <p>Customise how the app looks for church members</p>
-          </div>
-
-          <div class="two-col">
-            <div>
-              <div class="a-card">
-                <div class="a-card-head"><h3>🎨 Theme Colors</h3></div>
-                <div class="a-card-body">
-                  <p class="hint" style="margin-bottom:1rem;">Primary accent color — used for highlights, buttons, and active states.</p>
-                  <div class="f-group">
-                    <label>Primary Color</label>
-                    <div class="color-swatches">
-                      <div class="swatch selected" style="background:#c8922a;" title="Gold" onclick="selectSwatch(this)"></div>
-                      <div class="swatch" style="background:#3b82f6;" title="Blue" onclick="selectSwatch(this)"></div>
-                      <div class="swatch" style="background:#8b5cf6;" title="Purple" onclick="selectSwatch(this)"></div>
-                      <div class="swatch" style="background:#10b981;" title="Green" onclick="selectSwatch(this)"></div>
-                      <div class="swatch" style="background:#ef4444;" title="Red" onclick="selectSwatch(this)"></div>
-                      <div class="swatch" style="background:#f59e0b;" title="Amber" onclick="selectSwatch(this)"></div>
-                    </div>
-                    <input type="color" id="customColor" value="#c8922a" style="margin-top:8px; width:60px; height:32px; border-radius:6px; border:none; cursor:pointer; background:none;">
-                  </div>
-                  <div class="hdivider"></div>
-                  <div class="f-group">
-                    <label>App Theme</label>
-                    <select id="appTheme">
-                      <option value="dark">Dark (Navy) — Default</option>
-                      <option value="black">Black (AMOLED)</option>
-                      <option value="deep-blue">Deep Blue</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="a-card">
-                <div class="a-card-head"><h3>🖼️ App Icon & Name</h3></div>
-                <div class="a-card-body">
-                  <div class="f-group">
-                    <label>App Short Name (shown under icon)</label>
-                    <input type="text" id="appShortName" value="GCC Church" maxlength="12">
-                    <div class="hint">Keep under 12 characters for best display</div>
-                  </div>
-                  <div class="f-group">
-                    <label>App Full Name</label>
-                    <input type="text" id="appFullName" value="Glory of Christ Church">
-                  </div>
-                  <div class="f-group">
-                    <label>App Icon Image</label>
-                    <img id="iconPreview" src="elvis.jpg" style="width:64px; height:64px; border-radius:14px; border:2px solid var(--gold-bdr); object-fit:cover; margin-bottom:8px;" onerror="this.style.display='none'">
-                    <input type="file" id="appIconFile" accept="image/*" onchange="previewImg(this, 'iconPreview')">
-                    <div class="hint">Square image, min 512×512px. Used as app icon on home screen.</div>
-                  </div>
-                  <button class="btn btn-gold" onclick="saveSection('appearance')">Save Appearance</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="phone-preview">
-              <div style="text-align:center; margin-bottom:1rem;"><div class="tag">Theme Preview</div></div>
-              <div class="phone-frame">
-                <div class="phone-screen">
-                  <div class="phone-notch"></div>
-                  <div class="preview-hero">
-                    <p class="preview-verse">"To know Christ and make Him known."</p>
-                  </div>
-                  <div class="preview-body">
-                    <div class="preview-next-svc">
-                      <div class="pns-icon">🙌</div>
-                      <div><div class="pns-name">Sunday Worship</div><div class="pns-time">Sunday · 9:00 AM</div></div>
-                    </div>
-                    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-top:8px;">
-                      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:6px 2px; text-align:center;">
-                        <div style="font-size:1rem;">📅</div><div style="font-size:0.5rem; color:rgba(255,255,255,0.4);">Events</div>
-                      </div>
-                      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:6px 2px; text-align:center;">
-                        <div style="font-size:1rem;">🎙️</div><div style="font-size:0.5rem; color:rgba(255,255,255,0.4);">Sermons</div>
-                      </div>
-                      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:6px 2px; text-align:center;">
-                        <div style="font-size:1rem;">🔔</div><div style="font-size:0.5rem; color:rgba(255,255,255,0.4);">Remind</div>
-                      </div>
-                      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:6px 2px; text-align:center;">
-                        <div style="font-size:1rem;">💛</div><div style="font-size:0.5rem; color:rgba(255,255,255,0.4);">Give</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div style="text-align:center;padding:1rem 0;font-size:0.65rem;color:rgba(212,207,199,0.2);">
+          GCC Church App Admin v2.0<br>
+          <span style="color:rgba(200,146,42,0.4);font-weight:700;letter-spacing:0.1em;">LVIS TECHNOLOGIES</span>
         </div>
+      </div>
+    </div>
 
-        <!-- ====================================================
-             PANEL: SETTINGS
-        ==================================================== -->
-        <div class="panel" id="panel-settings">
-          <div class="page-header">
-            <div class="tag">Configuration</div>
-            <h2>App Settings</h2>
-            <p>Firebase configuration and general app settings</p>
-          </div>
+  </div><!-- /screens -->
 
-          <div class="two-col">
-            <div>
-              <div class="a-card">
-                <div class="a-card-head"><h3>🔥 Firebase Configuration</h3></div>
-                <div class="a-card-body">
-                  <p class="hint" style="margin-bottom:1rem; color:rgba(200,146,42,0.8);">⚠️ Edit <code style="background:var(--bg3); padding:2px 6px; border-radius:4px; font-family:'DM Mono',monospace;">firebase.js</code> directly with these values from your Firebase Console.</p>
-                  <div class="f-group"><label>API Key</label><input type="text" id="fbApiKey" placeholder="AIzaSy…" spellcheck="false"></div>
-                  <div class="f-group"><label>Auth Domain</label><input type="text" id="fbAuthDomain" placeholder="your-project.firebaseapp.com" spellcheck="false"></div>
-                  <div class="f-group"><label>Project ID</label><input type="text" id="fbProjectId" placeholder="your-project-id" spellcheck="false"></div>
-                  <div class="f-group"><label>Storage Bucket</label><input type="text" id="fbStorage" placeholder="your-project.appspot.com" spellcheck="false"></div>
-                  <div class="f-row">
-                    <div class="f-group"><label>Messaging Sender ID</label><input type="text" id="fbSenderId" placeholder="123456789" spellcheck="false"></div>
-                    <div class="f-group"><label>App ID</label><input type="text" id="fbAppId" placeholder="1:123:web:abc" spellcheck="false"></div>
-                  </div>
-                  <button class="btn btn-gold" onclick="copyFirebaseConfig()">📋 Copy Config Snippet</button>
-                </div>
-              </div>
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-screen="dashboard" onclick="goTo('dashboard')">
+      <span class="ni">📊</span><span class="nl">Home</span><div class="nav-dot"></div>
+    </button>
+    <button class="nav-btn" data-screen="slides" onclick="goTo('slides')">
+      <span class="ni">🖼️</span><span class="nl">Slides</span><div class="nav-dot"></div>
+    </button>
+    <button class="nav-btn" data-screen="sermons" onclick="goTo('sermons')">
+      <span class="ni">🎙️</span><span class="nl">Sermons</span><div class="nav-dot"></div>
+    </button>
+    <button class="nav-btn" data-screen="events" onclick="goTo('events')">
+      <span class="ni">📅</span><span class="nl">Events</span><div class="nav-dot"></div>
+    </button>
+    <button class="nav-btn" data-screen="leaders" onclick="goTo('leaders')">
+      <span class="ni">👥</span><span class="nl">Leaders</span><div class="nav-dot"></div>
+    </button>
+    <button class="nav-btn" data-screen="verses" onclick="goTo('verses')">
+      <span class="ni">📖</span><span class="nl">Verses</span><div class="nav-dot"></div>
+    </button>
+    <button class="nav-btn" data-screen="notifs" onclick="goTo('notifs')">
+      <span class="ni">🔔</span><span class="nl">Push</span><div class="nav-dot"></div>
+    </button>
+    <button class="nav-btn" data-screen="giving" onclick="goTo('giving')">
+      <span class="ni">💛</span><span class="nl">Giving</span><div class="nav-dot"></div>
+    </button>
+    <button class="nav-btn" data-screen="messages" onclick="goTo('messages')">
+      <span class="ni">✉️</span><span class="nl">Messages</span><div class="nav-dot"></div>
+    </button>
+    <button class="nav-btn" data-screen="settings" onclick="goTo('settings')">
+      <span class="ni">⚙️</span><span class="nl">Settings</span><div class="nav-dot"></div>
+    </button>
+  </nav>
 
-              <div class="a-card">
-                <div class="a-card-head"><h3>🏛️ Church Information</h3></div>
-                <div class="a-card-body">
-                  <div class="f-group"><label>Church Name</label><input type="text" id="chName" value="Glory of Christ Church"></div>
-                  <div class="f-group"><label>Tagline</label><input type="text" id="chTagline" value="Knowing Christ and Making Him Known"></div>
-                  <div class="f-group"><label>Location</label><input type="text" id="chLocation" value="Wakiso-Kayunga, Nayasa Road, Uganda"></div>
-                  <div class="f-row">
-                    <div class="f-group"><label>Primary Phone</label><input type="text" id="chPhone1" value="+256 700 592 303"></div>
-                    <div class="f-group"><label>Secondary Phone</label><input type="text" id="chPhone2" value="+256 774 458 786"></div>
-                  </div>
-                  <div class="f-group"><label>Email</label><input type="email" id="chEmail" value="wakisogloryofchristchurch@gmail.com"></div>
-                  <div class="f-group"><label>Website URL</label><input type="url" id="chWebsite" value="https://gloryofchristchurch.org"></div>
-                  <button class="btn btn-gold" onclick="saveSection('church-info')">Save Church Info</button>
-                </div>
-              </div>
-            </div>
+</div><!-- /app -->
 
-            <div>
-              <div class="a-card">
-                <div class="a-card-head"><h3>⚙️ Feature Toggles</h3></div>
-                <div class="a-card-body">
-                  <div class="toggle-row">
-                    <div class="toggle-info"><h4>🏠 Home Screen</h4><p>Show the Home tab in navigation</p></div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="toggle-row">
-                    <div class="toggle-info"><h4>📅 Events Tab</h4><p>Show Events & Calendar screen</p></div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="toggle-row">
-                    <div class="toggle-info"><h4>🎙️ Sermons Tab</h4><p>Show Sermons audio player</p></div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="toggle-row">
-                    <div class="toggle-info"><h4>🔔 Reminders Tab</h4><p>Allow custom reminders</p></div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="toggle-row">
-                    <div class="toggle-info"><h4>💛 Give Tab</h4><p>Show donation options</p></div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                  <div class="toggle-row">
-                    <div class="toggle-info"><h4>👤 Profile Tab</h4><p>Show Profile & Settings screen</p></div>
-                    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="a-card">
-                <div class="a-card-head"><h3>🔗 Quick Links</h3></div>
-                <div class="a-card-body" style="display:flex; flex-direction:column; gap:0.6rem;">
-                  <a href="https://wakisogloryofchristchurch-cyber.github.io/GCCwakiso/app/" target="_blank" rel="noopener noreferrer"><button class="btn btn-ghost btn-full">📱 Open App</button></a>
-                  <a href="https://wakisogloryofchristchurch-cyber.github.io/GCCwakiso/admin.html" target="_blank" rel="noopener noreferrer"><button class="btn btn-ghost btn-full">🌐 Website Admin</button></a>
-                  <a href="https://console.firebase.google.com" target="_blank" rel="noopener noreferrer"><button class="btn btn-ghost btn-full">🔥 Firebase Console</button></a>
-                  <a href="https://app.netlify.com" target="_blank" rel="noopener noreferrer"><button class="btn btn-ghost btn-full">🚀 Netlify Deploy</button></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /page-content -->
-    </div><!-- /main -->
-  </div><!-- /layout -->
-</div><!-- /dashboard -->
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- ============================================================
-     FIREBASE + APP SCRIPT
-============================================================ -->
-<script type="module">
-  import { auth, db } from './firebase.js';
-  import {
-    signInWithEmailAndPassword, signOut, onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import {
-    collection, addDoc, getDocs, deleteDoc, doc,
-    orderBy, query, serverTimestamp, Timestamp, limit, where, setDoc, getDoc
-  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  // ============================================================
-  //  CLOUDINARY CONFIG — droecocgs / GCC wakiso preset
-  // ============================================================
-  window.CLOUDINARY_CLOUD  = 'droecocgs';
-  window.CLOUDINARY_PRESET = 'GCC wakiso';
+<script>
+// ===== BIBLE VERSES DATA =====
+const BIBLE_VERSES = [{"ref": "Genesis 1:1", "text": "In the beginning God created the heavens and the earth."}, {"ref": "Genesis 1:27", "text": "So God created mankind in his own image, in the image of God he created them; male and female he created them."}, {"ref": "Genesis 28:15", "text": "I am with you and will watch over you wherever you go, and I will bring you back to this land. I will not leave you until I have done what I have promised you."}, {"ref": "Exodus 14:14", "text": "The Lord will fight for you; you need only to be still."}, {"ref": "Exodus 20:3", "text": "You shall have no other gods before me."}, {"ref": "Deuteronomy 31:6", "text": "Be strong and courageous. Do not be afraid or terrified because of them, for the Lord your God goes with you; he will never leave you nor forsake you."}, {"ref": "Deuteronomy 31:8", "text": "The Lord himself goes before you and will be with you; he will never leave you nor forsake you. Do not be afraid; do not be discouraged."}, {"ref": "Joshua 1:9", "text": "Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go."}, {"ref": "Joshua 24:15", "text": "But as for me and my household, we will serve the Lord."}, {"ref": "1 Samuel 16:7", "text": "The Lord does not look at the things people look at. People look at the outward appearance, but the Lord looks at the heart."}, {"ref": "2 Chronicles 7:14", "text": "If my people, who are called by my name, will humble themselves and pray and seek my face and turn from their wicked ways, then I will hear from heaven, and I will forgive their sin and will heal their land."}, {"ref": "Psalm 1:1", "text": "Blessed is the one who does not walk in step with the wicked or stand in the way that sinners take or sit in the company of mockers."}, {"ref": "Psalm 23:1", "text": "The Lord is my shepherd, I lack nothing."}, {"ref": "Psalm 23:4", "text": "Even though I walk through the darkest valley, I will fear no evil, for you are with me; your rod and your staff, they comfort me."}, {"ref": "Psalm 27:1", "text": "The Lord is my light and my salvation \u2014 whom shall I fear? The Lord is the stronghold of my life \u2014 of whom shall I be afraid?"}, {"ref": "Psalm 34:18", "text": "The Lord is close to the brokenhearted and saves those who are crushed in spirit."}, {"ref": "Psalm 37:4", "text": "Take delight in the Lord, and he will give you the desires of your heart."}, {"ref": "Psalm 46:1", "text": "God is our refuge and strength, an ever-present help in trouble."}, {"ref": "Psalm 46:10", "text": "He says, Be still, and know that I am God; I will be exalted among the nations, I will be exalted in the earth."}, {"ref": "Psalm 91:1", "text": "Whoever dwells in the shelter of the Most High will rest in the shadow of the Almighty."}, {"ref": "Psalm 118:24", "text": "This is the day the Lord has made; we will rejoice and be glad in it."}, {"ref": "Psalm 119:105", "text": "Your word is a lamp for my feet, a light on my path."}, {"ref": "Psalm 121:1-2", "text": "I lift up my eyes to the mountains \u2014 where does my help come from? My help comes from the Lord, the Maker of heaven and earth."}, {"ref": "Psalm 139:14", "text": "I praise you because I am fearfully and wonderfully made; your works are wonderful, I know that full well."}, {"ref": "Proverbs 3:5", "text": "Trust in the Lord with all your heart and lean not on your own understanding."}, {"ref": "Proverbs 3:6", "text": "In all your ways submit to him, and he will make your paths straight."}, {"ref": "Proverbs 16:3", "text": "Commit to the Lord whatever you do, and he will establish your plans."}, {"ref": "Proverbs 18:10", "text": "The name of the Lord is a fortified tower; the righteous run to it and are safe."}, {"ref": "Proverbs 31:25", "text": "She is clothed with strength and dignity; she can laugh at the days to come."}, {"ref": "Isaiah 40:29", "text": "He gives strength to the weary and increases the power of the weak."}, {"ref": "Isaiah 40:31", "text": "But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint."}, {"ref": "Isaiah 41:10", "text": "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand."}, {"ref": "Isaiah 43:2", "text": "When you pass through the waters, I will be with you; and when you pass through the rivers, they will not sweep over you."}, {"ref": "Isaiah 53:5", "text": "But he was pierced for our transgressions, he was crushed for our iniquities; the punishment that brought us peace was on him, and by his wounds we are healed."}, {"ref": "Jeremiah 29:11", "text": "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future."}, {"ref": "Jeremiah 33:3", "text": "Call to me and I will answer you and tell you great and unsearchable things you do not know."}, {"ref": "Lamentations 3:22-23", "text": "Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness."}, {"ref": "Zephaniah 3:17", "text": "The Lord your God is with you, the Mighty Warrior who saves. He will take great delight in you; in his love he will no longer rebuke you, but will rejoice over you with singing."}, {"ref": "Matthew 5:14", "text": "You are the light of the world. A town built on a hill cannot be hidden."}, {"ref": "Matthew 6:33", "text": "But seek first his kingdom and his righteousness, and all these things will be given to you as well."}, {"ref": "Matthew 11:28", "text": "Come to me, all you who are weary and burdened, and I will give you rest."}, {"ref": "Matthew 11:29", "text": "Take my yoke upon you and learn from me, for I am gentle and humble in heart, and you will find rest for your souls."}, {"ref": "Matthew 19:26", "text": "Jesus looked at them and said, With man this is impossible, but with God all things are possible."}, {"ref": "Matthew 28:19", "text": "Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit."}, {"ref": "Matthew 28:20", "text": "And teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age."}, {"ref": "Mark 10:27", "text": "Jesus looked at them and said, With man this is impossible, but not with God; all things are possible with God."}, {"ref": "Mark 11:24", "text": "Therefore I tell you, whatever you ask for in prayer, believe that you have received it, and it will be yours."}, {"ref": "John 3:16", "text": "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."}, {"ref": "John 3:17", "text": "For God did not send his Son into the world to condemn the world, but to save the world through him."}, {"ref": "John 4:24", "text": "God is spirit, and his worshipers must worship in the Spirit and in truth."}, {"ref": "John 8:32", "text": "Then you will know the truth, and the truth will set you free."}, {"ref": "John 10:10", "text": "The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full."}, {"ref": "John 13:34", "text": "A new command I give you: Love one another. As I have loved you, so you must love one another."}, {"ref": "John 14:6", "text": "Jesus answered, I am the way and the truth and the life. No one comes to the Father except through me."}, {"ref": "John 14:27", "text": "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid."}, {"ref": "John 15:5", "text": "I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing."}, {"ref": "John 16:33", "text": "I have told you these things, so that in me you may have peace. In this world you will have trouble. But take heart! I have overcome the world."}, {"ref": "Acts 1:8", "text": "But you will receive power when the Holy Spirit comes on you; and you will be my witnesses in Jerusalem, and in all Judea and Samaria, and to the ends of the earth."}, {"ref": "Romans 5:8", "text": "But God demonstrates his own love for us in this: While we were still sinners, Christ died for us."}, {"ref": "Romans 8:1", "text": "Therefore, there is now no condemnation for those who are in Christ Jesus."}, {"ref": "Romans 8:28", "text": "And we know that in all things God works for the good of those who love him, who have been called according to his purpose."}, {"ref": "Romans 8:38-39", "text": "For I am convinced that neither death nor life, neither angels nor demons, neither the present nor the future, nor any powers, neither height nor depth, nor anything else in all creation, will be able to separate us from the love of God that is in Christ Jesus our Lord."}, {"ref": "Romans 10:9", "text": "If you declare with your mouth, Jesus is Lord, and believe in your heart that God raised him from the dead, you will be saved."}, {"ref": "Romans 12:2", "text": "Do not conform to the pattern of this world, but be transformed by the renewing of your mind."}, {"ref": "1 Corinthians 10:13", "text": "No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear."}, {"ref": "1 Corinthians 13:4", "text": "Love is patient, love is kind. It does not envy, it does not boast, it is not proud."}, {"ref": "1 Corinthians 13:13", "text": "And now these three remain: faith, hope and love. But the greatest of these is love."}, {"ref": "2 Corinthians 5:17", "text": "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!"}, {"ref": "2 Corinthians 9:7", "text": "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver."}, {"ref": "2 Corinthians 12:9", "text": "But he said to me, My grace is sufficient for you, for my power is made perfect in weakness."}, {"ref": "Galatians 2:20", "text": "I have been crucified with Christ and I no longer live, but Christ lives in me."}, {"ref": "Galatians 5:22-23", "text": "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control."}, {"ref": "Ephesians 2:8", "text": "For it is by grace you have been saved, through faith \u2014 and this is not from yourselves, it is the gift of God."}, {"ref": "Ephesians 2:10", "text": "For we are God's handiwork, created in Christ Jesus to do good works, which God prepared in advance for us to do."}, {"ref": "Ephesians 3:20", "text": "Now to him who is able to do immeasurably more than all we ask or imagine, according to his power that is at work within us."}, {"ref": "Ephesians 6:10", "text": "Finally, be strong in the Lord and in his mighty power."}, {"ref": "Ephesians 6:11", "text": "Put on the full armor of God, so that you can take your stand against the devil's schemes."}, {"ref": "Philippians 4:6", "text": "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God."}, {"ref": "Philippians 4:7", "text": "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."}, {"ref": "Philippians 4:13", "text": "I can do all this through him who gives me strength."}, {"ref": "Philippians 4:19", "text": "And my God will meet all your needs according to the riches of his glory in Christ Jesus."}, {"ref": "Colossians 3:2", "text": "Set your minds on things above, not on earthly things."}, {"ref": "Colossians 3:23", "text": "Whatever you do, work at it with all your heart, as working for the Lord, not for human masters."}, {"ref": "1 Thessalonians 5:16-18", "text": "Rejoice always, pray continually, give thanks in all circumstances; for this is God's will for you in Christ Jesus."}, {"ref": "2 Timothy 1:7", "text": "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline."}, {"ref": "2 Timothy 3:16", "text": "All Scripture is God-breathed and is useful for teaching, rebuking, correcting and training in righteousness."}, {"ref": "Hebrews 11:1", "text": "Now faith is confidence in what we hope for and assurance about what we do not see."}, {"ref": "Hebrews 11:6", "text": "And without faith it is impossible to please God, because anyone who comes to him must believe that he exists and that he rewards those who earnestly seek him."}, {"ref": "Hebrews 13:8", "text": "Jesus Christ is the same yesterday and today and forever."}, {"ref": "James 1:2-3", "text": "Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds, because you know that the testing of your faith produces perseverance."}, {"ref": "James 4:7", "text": "Submit yourselves, then, to God. Resist the devil, and he will flee from you."}, {"ref": "James 5:16", "text": "Therefore confess your sins to each other and pray for each other so that you may be healed. The prayer of a righteous person is powerful and effective."}, {"ref": "1 Peter 5:7", "text": "Cast all your anxiety on him because he cares for you."}, {"ref": "1 John 1:9", "text": "If we confess our sins, he is faithful and just and will forgive us our sins and purify us from all unrighteousness."}, {"ref": "1 John 4:4", "text": "You, dear children, are from God and have overcome them, because the one who is in you is greater than the one who is in the world."}, {"ref": "1 John 4:19", "text": "We love because he first loved us."}, {"ref": "Revelation 3:20", "text": "Here I am! I stand at the door and knock. If anyone hears my voice and opens the door, I will come in and eat with that person, and they with me."}, {"ref": "Revelation 21:4", "text": "He will wipe every tear from their eyes. There will be no more death or mourning or crying or pain, for the old order of things has passed away."}];
 
-  // Expose globals needed by inline onclick handlers
-  window._db = db; window._auth = auth;
-  window._addDoc = addDoc; window._getDocs = getDocs; window._deleteDoc = deleteDoc;
-  window._doc = doc; window._query = query; window._collection = collection;
-  window._orderBy = orderBy; window._serverTimestamp = serverTimestamp;
-  window._Timestamp = Timestamp; window._limit = limit; window._where = where;
-  window._setDoc = setDoc; window._getDoc = getDoc;
+// ===== NAVIGATION =====
+const SCREEN_TITLES = {
+  dashboard:'Dashboard', slides:'Hero Slides', sermons:'Sermons',
+  events:'Events', leaders:'Leaders', verses:'Daily Verses',
+  notifs:'Push Notifications', giving:'Giving Info',
+  messages:'Messages', settings:'Settings'
+};
+
+var selectedVerse = null;
+
+window.goTo = function(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('s-' + id).classList.add('active');
+  const btn = document.querySelector('.nav-btn[data-screen="' + id + '"]');
+  if (btn) btn.classList.add('active');
+  document.getElementById('topTitle').textContent = SCREEN_TITLES[id] || id;
+  if (id === 'sermons')   loadSermons();
+  if (id === 'events')    loadEvents();
+  if (id === 'leaders')   loadLeaders();
+  if (id === 'slides')    loadSlides();
+  if (id === 'messages')  loadMessages();
+  if (id === 'notifs')    loadNotifs();
+  if (id === 'verses')    loadVerses();
+  if (id === 'giving')    loadGiving();
+  if (id === 'dashboard') loadDash();
+};
+
+// ===== TOAST =====
+window.showToast = function(msg, type) {
+  type = type || 'info';
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast s-' + type + ' show';
+  setTimeout(function() { t.classList.remove('show'); }, 2800);
+};
+
+// ===== IMAGE PREVIEW =====
+window.prevImg = function(input, id) {
+  var file = input.files[0];
+  if (!file) return;
+  var el = document.getElementById(id);
+  el.src = URL.createObjectURL(file);
+  el.style.display = 'block';
+};
+
+window.previewSlide = function(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var el = document.getElementById('slidePreview');
+  el.src = URL.createObjectURL(file);
+  el.style.display = 'block';
+};
+
+window.previewAudio = function(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var p = document.getElementById('sAudioPlayer');
+  p.src = URL.createObjectURL(file);
+  document.getElementById('sAudioPrev').style.display = 'block';
+};
+
+// ===== NOTIFICATION PREVIEW =====
+window.updateNotifPreview = function() {
+  var t = document.getElementById('nTitle').value || 'Notification title';
+  var b = document.getElementById('nBody').value || 'Your message…';
+  document.getElementById('prevNTitle').textContent = t;
+  document.getElementById('prevNBody').textContent = b;
+};
+
+// ===== BIBLE SEARCH =====
+window.searchBible = function(query) {
+  var results = document.getElementById('bibleResults');
+  if (!query || query.length < 2) {
+    results.innerHTML = '<p style="font-size:0.8rem;color:var(--muted);text-align:center;padding:1rem;">Type to search ' + BIBLE_VERSES.length + ' key Bible verses…</p>';
+    return;
+  }
+  var q = query.toLowerCase();
+  var matches = BIBLE_VERSES.filter(function(v) {
+    return v.ref.toLowerCase().includes(q) || v.text.toLowerCase().includes(q);
+  });
+  if (!matches.length) {
+    results.innerHTML = '<p style="font-size:0.8rem;color:var(--muted);text-align:center;padding:1rem;">No verses found for "' + query + '"</p>';
+    return;
+  }
+  results.innerHTML = matches.map(function(v, i) {
+    return '<div class="verse-result" onclick="selectVerse(' + i + ',this)" data-ref="' + v.ref + '" data-text="' + v.text.replace(/"/g, '&quot;') + '">' +
+      '<div class="verse-ref">' + v.ref + '</div>' +
+      '<div class="verse-text">&ldquo;' + v.text + '&rdquo;</div>' +
+    '</div>';
+  }).join('');
+};
+
+window.selectVerse = function(i, el) {
+  document.querySelectorAll('.verse-result').forEach(function(r) { r.classList.remove('selected'); });
+  el.classList.add('selected');
+  var ref  = el.dataset.ref;
+  var text = el.dataset.text;
+  selectedVerse = { ref: ref, text: text };
+  document.getElementById('selVerseRef').textContent  = ref;
+  document.getElementById('selVerseText').textContent = text;
+  document.getElementById('selectedVerseCard').style.display = 'block';
+  document.getElementById('selectedVerseCard').scrollIntoView({ behavior:'smooth' });
+};
+</script>
+
+<script type="module">
+(async function() {
+
+  // ===== FIREBASE =====
+  var db = null, auth = null;
+  var collection, getDocs, addDoc, deleteDoc, docFn, orderBy, query,
+      serverTimestamp, Timestamp, limit, where, setDoc, getDoc;
+  var signInFn, signOutFn, onAuthStateChanged;
+
+  try {
+    var [fb, fs, fa] = await Promise.all([
+      import('./firebase.js'),
+      import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js'),
+      import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js')
+    ]);
+    db   = fb.db;
+    auth = fb.auth;
+    collection      = fs.collection;
+    getDocs         = fs.getDocs;
+    addDoc          = fs.addDoc;
+    deleteDoc       = fs.deleteDoc;
+    docFn           = fs.doc;
+    orderBy         = fs.orderBy;
+    query           = fs.query;
+    serverTimestamp = fs.serverTimestamp;
+    Timestamp       = fs.Timestamp;
+    limit           = fs.limit;
+    where           = fs.where;
+    setDoc          = fs.setDoc;
+    getDoc          = fs.getDoc;
+    signInFn        = fa.signInWithEmailAndPassword;
+    signOutFn       = fa.signOut;
+    onAuthStateChanged = fa.onAuthStateChanged;
+    console.log('[Admin] Firebase ready');
+  } catch(e) {
+    console.error('[Admin] Firebase failed:', e);
+  }
+
+  // ===== CLOUDINARY =====
+  const CLD_CLOUD  = 'droecocgs';
+  const CLD_PRESET = 'GCC wakiso';
+
+  async function uploadCLD(file, barId, wrapId, folder, isAudio) {
+    return new Promise((resolve, reject) => {
+      var type = isAudio ? 'video' : 'image';
+      var url  = 'https://api.cloudinary.com/v1_1/' + CLD_CLOUD + '/' + type + '/upload';
+      var data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', CLD_PRESET);
+      data.append('folder', 'gcc-church/' + folder);
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+      if (wrapId) document.getElementById(wrapId).style.display = 'block';
+      xhr.upload.onprogress = function(e) {
+        if (e.lengthComputable && barId) {
+          document.getElementById(barId).style.width = Math.round(e.loaded/e.total*100)+'%';
+        }
+      };
+      xhr.onload = function() {
+        if (wrapId) document.getElementById(wrapId).style.display = 'none';
+        if (xhr.status === 200) { resolve(JSON.parse(xhr.responseText).secure_url); }
+        else { reject(new Error('Upload failed: ' + xhr.responseText)); }
+      };
+      xhr.onerror = function() { reject(new Error('Network error')); };
+      xhr.send(data);
+    });
+  }
 
   // ===== AUTH STATE =====
-  onAuthStateChanged(auth, user => {
-    if (user) {
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
-      document.getElementById('adminName').textContent = user.email.split('@')[0];
-      document.getElementById('fbStatus').innerHTML = '<span>●</span> Firebase Connected';
-      document.getElementById('fbStatus').classList.remove('offline');
-      initDashboard();
-    } else {
-      document.getElementById('loginScreen').style.display = 'flex';
-      document.getElementById('dashboard').style.display = 'none';
-    }
-  });
+  if (onAuthStateChanged && auth) {
+    onAuthStateChanged(auth, function(user) {
+      if (user) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('app').classList.add('visible');
+        var el = document.getElementById('adminEmailDisplay');
+        if (el) el.textContent = user.email;
+        initDash();
+      } else {
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('app').classList.remove('visible');
+      }
+    });
+  }
 
   // ===== LOGIN =====
-  document.getElementById('loginBtn').addEventListener('click', async () => {
-    const email = document.getElementById('loginEmail').value.trim();
-    const pass  = document.getElementById('loginPass').value;
-    const errEl = document.getElementById('loginErr');
+  document.getElementById('loginBtn').addEventListener('click', async function() {
+    var email = document.getElementById('loginEmail').value.trim();
+    var pass  = document.getElementById('loginPass').value;
+    var errEl = document.getElementById('loginErr');
     errEl.style.display = 'none';
-    if (!email || !pass) {
-      errEl.textContent = 'Please enter email and password.';
-      errEl.style.display = 'block'; return;
-    }
-    const btn = document.getElementById('loginBtn');
-    btn.textContent = 'Signing in…'; btn.disabled = true;
+    if (!email || !pass) { errEl.textContent='Enter email and password.'; errEl.style.display='block'; return; }
+    var btn = document.getElementById('loginBtn');
+    btn.textContent='Signing in…'; btn.disabled=true;
     try {
-      await signInWithEmailAndPassword(auth, email, pass);
+      await signInFn(auth, email, pass);
     } catch(e) {
-      console.error('Login error:', e.code, e.message);
-      let msg = 'Login failed. ';
-      if (e.code === 'auth/user-not-found')      msg += 'No account with that email.';
-      else if (e.code === 'auth/wrong-password')  msg += 'Wrong password.';
-      else if (e.code === 'auth/invalid-email')   msg += 'Invalid email address.';
-      else if (e.code === 'auth/too-many-requests') msg += 'Too many attempts. Try later.';
-      else if (e.code === 'auth/network-request-failed') msg += 'Network error. Check connection.';
-      else if (e.code === 'auth/unauthorized-domain') msg += 'Domain not authorized — see fix below.';
-      else if (e.code === 'auth/invalid-credential') msg += 'Wrong email or password.';
-      else msg += e.message;
-      errEl.textContent = msg;
-      errEl.style.display = 'block';
-      btn.textContent = 'Sign In →'; btn.disabled = false;
+      var codes = {
+        'auth/user-not-found':'No account with that email.',
+        'auth/wrong-password':'Wrong password.',
+        'auth/invalid-credential':'Wrong email or password.',
+        'auth/invalid-email':'Invalid email address.',
+        'auth/too-many-requests':'Too many attempts. Try later.',
+        'auth/unauthorized-domain':'Domain not authorized in Firebase Console.',
+        'auth/network-request-failed':'Network error.',
+      };
+      errEl.textContent = (codes[e.code] || e.message) + ' [' + e.code + ']';
+      errEl.style.display='block';
+      btn.textContent='Sign In →'; btn.disabled=false;
     }
   });
 
-  // Allow Enter key
-  document.getElementById('loginPass').addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('loginBtn').click();
-  });
-
-  document.getElementById('loginPass').addEventListener('keydown', e => {
+  document.getElementById('loginPass').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') document.getElementById('loginBtn').click();
   });
 
   // ===== LOGOUT =====
-  document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
-
-  // ===== INIT =====
-  async function initDashboard() {
-    loadStats();
-    loadSermons();
-    loadEvents();
-    loadMessages();
-    loadNotifHistory();
-    initVersesEditor();
-    loadSlides();
-  }
-
-  window.initDashboard = initDashboard;
+  function doLogout() { if (signOutFn && auth) signOutFn(auth); }
+  document.getElementById('logoutBtn').addEventListener('click', doLogout);
+  document.getElementById('logoutBtn2').addEventListener('click', doLogout);
 
   // ===== STATS =====
   async function loadStats() {
+    if (!db) return;
     try {
-      const cols = [['sermons','st-sermons'],['events','st-events'],['messages','st-messages'],['notifications','st-notifs']];
-      for (const [col, id] of cols) {
-        const snap = await getDocs(collection(db, col));
-        document.getElementById(id).textContent = snap.size;
+      var cols = [['sermons','st-sermons'],['events','st-events'],['messages','st-messages'],['leaders','st-leaders']];
+      for (var c of cols) {
+        var snap = await getDocs(collection(db, c[0]));
+        var el   = document.getElementById(c[1]);
+        if (el) el.textContent = snap.size;
       }
-    } catch { /* not configured */ }
+    } catch(e) { console.warn('Stats:', e); }
   }
 
-  window.loadStats = loadStats;
+  async function initDash() { loadStats(); loadDash(); }
+
+  // ===== DASHBOARD MESSAGES =====
+  window.loadDash = async function() {
+    if (!db) return;
+    try {
+      var q    = query(collection(db,'messages'), orderBy('createdAt','desc'), limit(3));
+      var snap = await getDocs(q);
+      var el   = document.getElementById('dashMessages');
+      if (!el) return;
+      if (snap.empty) { el.innerHTML = '<div class="empty"><div class="ei">✉️</div><p>No messages yet</p></div>'; return; }
+      el.innerHTML = snap.docs.map(function(d) {
+        var m = d.data();
+        return '<div style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);">' +
+          '<div style="font-size:0.85rem;font-weight:600;color:var(--white);">' + m.name + '</div>' +
+          '<div style="font-size:0.75rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + m.message + '</div>' +
+        '</div>';
+      }).join('');
+    } catch(e) { console.warn(e); }
+    loadStats();
+  };
 
   // ===== SLIDES =====
-  async function loadSlides() {
-    const el = document.getElementById('slidesList');
-    if (!el) return;
+  window.loadSlides = async function() {
+    var grid = document.getElementById('slidesGrid');
+    if (!grid || !db) return;
     try {
-      const q = query(collection(db, 'app-slides'), orderBy('createdAt', 'desc'));
-      const snap = await getDocs(q);
+      var q    = query(collection(db,'app-slides'), orderBy('createdAt','desc'));
+      var snap = await getDocs(q);
       if (snap.empty) {
-        el.innerHTML = '<div style="color:var(--muted);font-size:0.82rem;padding:0.5rem;">No slides uploaded yet. Upload one below.</div>';
+        grid.innerHTML = '<div class="empty" style="grid-column:1/-1;"><div class="ei">🖼️</div><p>No slides yet. Add one below.</p></div>';
         return;
       }
-      el.innerHTML = snap.docs.map(d => {
-        const s = d.data();
-        return `<div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg3);border-radius:8px;margin-bottom:8px;">
-          <img src="${s.url}" style="width:60px;height:40px;object-fit:cover;border-radius:6px;border:1px solid var(--gold-bdr);">
-          <div style="flex:1;font-size:0.82rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.name || 'Slide'} <span class="badge badge-green">Active</span></div>
-          <button class="btn btn-red btn-sm" onclick="deleteSlide('${d.id}')">🗑</button>
-        </div>`;
+      grid.innerHTML = snap.docs.map(function(d) {
+        var s = d.data();
+        return '<div class="slide-item">' +
+          '<img src="' + s.url + '" alt="' + (s.caption||'Slide') + '" onerror="this.src='elvis.jpg'">' +
+          '<button class="slide-del" onclick="delDoc('app-slides','' + d.id + '',window.loadSlides)">✕</button>' +
+          (s.caption ? '<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.6);font-size:0.6rem;color:#fff;padding:4px 6px;">' + s.caption + '</div>' : '') +
+        '</div>';
       }).join('');
-    } catch(e) {
-      el.innerHTML = '<div style="color:var(--muted);font-size:0.82rem;">Could not load slides.</div>';
-    }
-  }
+    } catch(e) { grid.innerHTML = '<div class="empty" style="grid-column:1/-1;"><p>' + e.message + '</p></div>'; }
+  };
 
-  window.deleteSlide = async function(id) {
-    if (!confirm('Remove this slide?')) return;
+  window.addSlide = async function() {
+    var file    = document.getElementById('slideFile').files[0];
+    var caption = document.getElementById('slideCaption').value.trim();
+    if (!file) { showToast('Select an image first.', 'error'); return; }
+    var btn = document.getElementById('addSlideBtn');
+    btn.disabled=true; btn.textContent='Uploading…';
     try {
-      await deleteDoc(doc(db, 'app-slides', id));
-      toast('Slide removed ✅', 'success');
-      loadSlides();
-    } catch(e) {
-      toast('Error removing slide', 'error');
-    }
+      var url = await uploadCLD(file, 'slideUprogBar', 'slideUprogWrap', 'slides', false);
+      await addDoc(collection(db,'app-slides'), { url, caption, name:file.name, createdAt:serverTimestamp() });
+      showToast('Slide added! 🖼️', 'success');
+      document.getElementById('slideFile').value='';
+      document.getElementById('slideCaption').value='';
+      document.getElementById('slidePreview').style.display='none';
+      window.loadSlides();
+    } catch(e) { showToast('Error: '+e.message,'error'); }
+    btn.disabled=false; btn.textContent='Upload Slide 🖼️';
   };
 
   // ===== SERMONS =====
-  async function loadSermons() {
-    const el = document.getElementById('sermonsList');
+  window.loadSermons = async function() {
+    var el = document.getElementById('sermonsList');
+    if (!el || !db) return;
     try {
-      const q = query(collection(db, 'sermons'), orderBy('date','desc'), limit(20));
-      const snap = await getDocs(q);
-      if (snap.empty) { el.innerHTML = '<div class="empty-state"><div class="e-icon">🎙️</div><p>No sermons yet</p></div>'; return; }
-      el.innerHTML = snap.docs.map(d => {
-        const s = d.data();
-        const dt = s.date?.toDate ? s.date.toDate().toLocaleDateString('en-UG',{year:'numeric',month:'short',day:'numeric'}) : '';
-        return `<div style="display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.04);">
-          <div style="width:36px; height:36px; background:var(--gold-dim); border-radius:8px; display:flex;align-items:center;justify-content:center; font-size:1rem; flex-shrink:0;">🎙️</div>
-          <div style="flex:1; min-width:0;">
-            <div style="font-size:0.85rem; font-weight:600; color:var(--white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.title}</div>
-            <div style="font-size:0.72rem; color:var(--muted);">${s.speaker || ''} · ${dt}</div>
-          </div>
-          ${s.audioUrl ? `<audio controls src="${s.audioUrl}" style="height:28px; max-width:140px;"></audio>` : '<span style="color:var(--muted);font-size:0.75rem;">No audio</span>'}
-          <button class="btn btn-red btn-sm" onclick="deleteFBDoc('sermons','${d.id}',loadSermons)">🗑</button>
-        </div>`;
+      var q    = query(collection(db,'sermons'), orderBy('date','desc'), limit(20));
+      var snap = await getDocs(q);
+      if (snap.empty) { el.innerHTML='<div class="empty"><div class="ei">🎙️</div><p>No sermons yet</p></div>'; return; }
+      el.innerHTML = snap.docs.map(function(d) {
+        var s  = d.data();
+        var dt = s.date && s.date.toDate ? s.date.toDate().toLocaleDateString('en-UG',{month:'short',day:'numeric',year:'numeric'}) : '';
+        return '<div style="padding:12px;border-bottom:1px solid rgba(255,255,255,0.04);">' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">' +
+            '<div style="flex:1;">' +
+              '<div style="font-size:0.88rem;font-weight:600;color:var(--white);">' + s.title + '</div>' +
+              '<div style="font-size:0.72rem;color:var(--muted);">' + (s.speaker||'') + (dt ? ' · '+dt : '') + '</div>' +
+            '</div>' +
+            '<button class="btn btn-red btn-sm" onclick="delDoc('sermons','' + d.id + '',window.loadSermons)">🗑</button>' +
+          '</div>' +
+          (s.audioUrl ? '<audio controls src="' + s.audioUrl + '" style="width:100%;height:28px;border-radius:5px;"></audio>' : '<span style="font-size:0.72rem;color:var(--muted);">No audio uploaded</span>') +
+        '</div>';
       }).join('');
-    } catch { el.innerHTML = '<div class="empty-state"><div class="e-icon">🎙️</div><p>Connect Firebase to load sermons</p></div>'; }
-  }
+    } catch(e) { el.innerHTML='<div class="empty"><p>'+e.message+'</p></div>'; }
+  };
 
-  window.loadSermons = loadSermons;
-
-  window.saveSermon = async function() {
-    const title    = document.getElementById('sTitle').value.trim();
-    const speaker  = document.getElementById('sSpeaker').value;
-    const dateVal  = document.getElementById('sDate').value;
-    const scripture= document.getElementById('sScripture').value.trim();
-    const notes    = document.getElementById('sNotes').value.trim();
-    const category = document.getElementById('sCategory').value;
-    const audioFile= document.getElementById('sAudioFile').files[0];
-
-    if (!title || !dateVal) { toast('Title and date are required', 'error'); return; }
-
-    const btn = document.getElementById('saveSermonBtn');
-    btn.disabled = true; btn.textContent = 'Uploading…';
-
+  window.addSermon = async function() {
+    var title    = document.getElementById('sTitle').value.trim();
+    var speaker  = document.getElementById('sSpeaker').value;
+    var dateV    = document.getElementById('sDate').value;
+    var scripture= document.getElementById('sScripture').value.trim();
+    var notes    = document.getElementById('sNotes').value.trim();
+    var file     = document.getElementById('sAudio').files[0];
+    if (!title || !dateV) { showToast('Title and date required.','error'); return; }
+    var btn = document.getElementById('addSermonBtn');
+    btn.disabled=true; btn.textContent='Saving…';
     try {
-      let audioUrl = '';
-      let audioDuration = '';
-
-      if (audioFile) {
-        toast('Uploading audio to Cloudinary… please wait 🎵', 'info');
-        audioUrl = await uploadAudioToCloudinary(
-          audioFile,
-          'sAudioBar',
-          'sAudioProg'
-        );
-        toast('Audio uploaded! Saving sermon…', 'info');
+      var audioUrl = '';
+      if (file) {
+        showToast('Uploading audio… please wait 🎵','info');
+        btn.textContent='Uploading…';
+        audioUrl = await uploadCLD(file,'sUprogBar','sUprogWrap','sermons',true);
       }
-
       await addDoc(collection(db,'sermons'), {
-        title, speaker, scripture, notes, category,
-        audioUrl,
-        fileName: audioFile ? audioFile.name : '',
-        date: Timestamp.fromDate(new Date(dateVal)),
+        title, speaker, scripture, notes, audioUrl,
+        fileName: file ? file.name : '',
+        date: Timestamp.fromDate(new Date(dateV)),
         createdAt: serverTimestamp()
       });
-
-      toast('Sermon published! 🎙️', 'success');
-      ['sTitle','sDate','sScripture','sNotes'].forEach(id => document.getElementById(id).value='');
-      document.getElementById('sAudioFile').value = '';
-      document.getElementById('sAudioPreview').style.display = 'none';
-      loadSermons(); loadStats();
-    } catch(e) {
-      console.error(e);
-      toast('Error: ' + e.message, 'error');
-    }
-
-    btn.disabled = false; btn.textContent = 'Save Sermon 🎙️';
+      showToast('Sermon published! 🎙️','success');
+      ['sTitle','sDate','sScripture','sNotes'].forEach(function(id) { document.getElementById(id).value=''; });
+      document.getElementById('sAudio').value='';
+      document.getElementById('sAudioPrev').style.display='none';
+      window.loadSermons(); loadStats();
+    } catch(e) { showToast('Error: '+e.message,'error'); }
+    btn.disabled=false; btn.textContent='Publish Sermon 🎙️';
   };
 
   // ===== EVENTS =====
-  async function loadEvents() {
-    const el = document.getElementById('eventsList');
+  window.loadEvents = async function() {
+    var el = document.getElementById('eventsList');
+    if (!el || !db) return;
     try {
-      const q = query(collection(db,'events'), orderBy('date'), limit(20));
-      const snap = await getDocs(q);
-      if (snap.empty) { el.innerHTML = '<div class="empty-state"><div class="e-icon">📅</div><p>No events yet</p></div>'; return; }
-      el.innerHTML = snap.docs.map(d => {
-        const e = d.data();
-        const dt = e.date?.toDate ? e.date.toDate().toLocaleDateString('en-UG',{weekday:'short',month:'short',day:'numeric'}) : '';
-        return `<div style="display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.04);">
-          <div style="flex:1;">
-            <div style="font-size:0.85rem; font-weight:600; color:var(--white);">${e.title}</div>
-            <div style="font-size:0.72rem; color:var(--muted);">${dt} ${e.time ? '· '+e.time : ''} ${e.location ? '· '+e.location : ''}</div>
-          </div>
-          <button class="btn btn-red btn-sm" onclick="deleteFBDoc('events','${d.id}',loadEvents)">🗑</button>
-        </div>`;
+      var q    = query(collection(db,'events'), orderBy('date'));
+      var snap = await getDocs(q);
+      if (snap.empty) { el.innerHTML='<div class="empty"><div class="ei">📅</div><p>No events yet</p></div>'; return; }
+      el.innerHTML = snap.docs.map(function(d) {
+        var e  = d.data();
+        var dt = e.date && e.date.toDate ? e.date.toDate().toLocaleDateString('en-UG',{weekday:'short',month:'short',day:'numeric'}) : '';
+        return '<div style="display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid rgba(255,255,255,0.04);">' +
+          '<div style="flex:1;">' +
+            '<div style="font-size:0.88rem;font-weight:600;color:var(--white);">' + e.title + '</div>' +
+            '<div style="font-size:0.72rem;color:var(--muted);">' + dt + (e.time ? ' · '+e.time : '') + (e.location ? ' · '+e.location : '') + '</div>' +
+          '</div>' +
+          '<button class="btn btn-red btn-sm" onclick="delDoc('events','' + d.id + '',window.loadEvents)">🗑</button>' +
+        '</div>';
       }).join('');
-    } catch { el.innerHTML = '<div class="empty-state"><div class="e-icon">📅</div><p>Connect Firebase to load events</p></div>'; }
-  }
+    } catch(e) { el.innerHTML='<div class="empty"><p>'+e.message+'</p></div>'; }
+  };
 
-  window.loadEvents = loadEvents;
-
-  window.saveEvent = async function() {
-    const title = document.getElementById('eTitle').value.trim();
-    const dateVal = document.getElementById('eDate').value;
-    const time = document.getElementById('eTime').value;
-    const location = document.getElementById('eLocation').value.trim();
-    const desc = document.getElementById('eDesc').value.trim();
-    const type = document.getElementById('eType').value;
-    const file = document.getElementById('eImage').files[0];
-    const sendNotif = document.getElementById('eSendNotif').classList.contains('on');
-    if (!title || !dateVal) { toast('Title and date are required','error'); return; }
+  window.addEvent = async function() {
+    var title = document.getElementById('eTitle').value.trim();
+    var dateV = document.getElementById('eDate').value;
+    var time  = document.getElementById('eTime').value;
+    var loc   = document.getElementById('eLocation').value.trim();
+    var desc  = document.getElementById('eDesc').value.trim();
+    var file  = document.getElementById('eImg').files[0];
+    var notif = document.getElementById('eSendNotif').classList.contains('on');
+    if (!title || !dateV) { showToast('Title and date required.','error'); return; }
+    var btn = document.getElementById('addEventBtn');
+    btn.disabled=true; btn.textContent='Publishing…';
     try {
-      let image = '';
-      if (file) image = await uploadToCloudinary(file, 'eUploadBar', 'eUploadProg', 'gcc-church/events');
-      const evtData = { title, date: Timestamp.fromDate(new Date(dateVal)), time, location, description: desc, type, image, createdAt: serverTimestamp() };
-      await addDoc(collection(db,'events'), evtData);
-      if (sendNotif) {
-        const dateStr = new Date(dateVal).toLocaleDateString('en-UG', {weekday:'short', month:'short', day:'numeric'});
-        await addDoc(collection(db,'notifications'), { title: '📅 ' + title, body: dateStr + (time ? ' at ' + time : '') + ' · ' + (location || 'Main Sanctuary'), sentAt: serverTimestamp(), type: 'event' });
+      var image = '';
+      if (file) image = await uploadCLD(file,'eUprogBar','eUprogWrap','events',false);
+      var dateStr = new Date(dateV).toLocaleDateString('en-UG',{weekday:'short',month:'short',day:'numeric'});
+      await addDoc(collection(db,'events'), {
+        title, date: Timestamp.fromDate(new Date(dateV)),
+        time, location:loc, description:desc, image, createdAt:serverTimestamp()
+      });
+      if (notif) {
+        await addDoc(collection(db,'notifications'), {
+          title: '📅 ' + title,
+          body: dateStr + (time ? ' at ' + time : '') + ' · ' + (loc || 'Main Sanctuary'),
+          sentAt: serverTimestamp(), type:'event'
+        });
       }
-      toast('Event published! 📅','success');
-      ['eTitle','eDate','eTime','eLocation','eDesc'].forEach(id=>document.getElementById(id).value='');
-      document.getElementById('eImage').value=''; document.getElementById('eImgPreview').style.display='none';
-      loadEvents(); loadStats();
-    } catch { toast('Error saving event.','error'); }
+      showToast('Event published! 📅','success');
+      ['eTitle','eDate','eTime','eLocation','eDesc'].forEach(function(id){ document.getElementById(id).value=''; });
+      document.getElementById('eImg').value='';
+      document.getElementById('eImgPrev').style.display='none';
+      window.loadEvents(); loadStats();
+    } catch(e) { showToast('Error: '+e.message,'error'); }
+    btn.disabled=false; btn.textContent='Publish Event 📅';
+  };
+
+  // ===== LEADERS =====
+  window.loadLeaders = async function() {
+    var tbody = document.getElementById('leadersTbody');
+    if (!tbody || !db) return;
+    try {
+      var q    = query(collection(db,'leaders'), orderBy('order'));
+      var snap = await getDocs(q);
+      if (snap.empty) { tbody.innerHTML='<tr><td colspan="4" style="text-align:center;padding:1.5rem;color:var(--muted);">No leaders yet.</td></tr>'; return; }
+      tbody.innerHTML = snap.docs.map(function(d) {
+        var l = d.data();
+        return '<tr>' +
+          '<td>' + (l.image ? '<img src="'+l.image+'" alt="'+l.name+'">' : '–') + '</td>' +
+          '<td><strong style="color:var(--white)">' + l.name + '</strong>' + (l.bio ? '<br><span style="font-size:0.72rem;color:var(--muted);">'+l.bio+'</span>' : '') + '</td>' +
+          '<td><span class="badge bg-gold">' + l.role + '</span></td>' +
+          '<td><button class="btn btn-red btn-sm" onclick="delDoc('leaders','' + d.id + '',window.loadLeaders)">🗑</button></td>' +
+        '</tr>';
+      }).join('');
+    } catch(e) { tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);">'+e.message+'</td></tr>'; }
+  };
+
+  window.addLeader = async function() {
+    var name  = document.getElementById('lName').value.trim();
+    var role  = document.getElementById('lRole').value.trim();
+    var bio   = document.getElementById('lBio').value.trim();
+    var order = parseInt(document.getElementById('lOrder').value) || 1;
+    var file  = document.getElementById('lImg').files[0];
+    if (!name || !role) { showToast('Name and role required.','error'); return; }
+    var btn = document.getElementById('addLeaderBtn');
+    btn.disabled=true; btn.textContent='Saving…';
+    try {
+      var image = '';
+      if (file) image = await uploadCLD(file,'lUprogBar','lUprogWrap','leaders',false);
+      await addDoc(collection(db,'leaders'), { name, role, bio, order, image, createdAt:serverTimestamp() });
+      showToast('Leader saved! 👥','success');
+      ['lName','lRole','lBio'].forEach(function(id){ document.getElementById(id).value=''; });
+      document.getElementById('lOrder').value='1';
+      document.getElementById('lImg').value='';
+      document.getElementById('lImgPrev').style.display='none';
+      window.loadLeaders(); loadStats();
+    } catch(e) { showToast('Error: '+e.message,'error'); }
+    btn.disabled=false; btn.textContent='Save Leader 👥';
+  };
+
+  // ===== DAILY VERSES =====
+  window.loadVerses = async function() {
+    var el = document.getElementById('versesList');
+    if (!el || !db) return;
+    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    try {
+      var snap = await getDoc(docFn(db,'app-config','daily-verses'));
+      if (!snap.exists()) { el.innerHTML='<div class="empty"><div class="ei">📖</div><p>No verses set yet. Search above.</p></div>'; return; }
+      var data = snap.data();
+      var vs   = data.verses || [];
+      if (!vs.length) { el.innerHTML='<div class="empty"><div class="ei">📖</div><p>No verses set yet.</p></div>'; return; }
+      el.innerHTML = vs.map(function(v) {
+        var day = days[v.day !== undefined ? v.day : 0];
+        return '<div style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:10px;align-items:flex-start;">' +
+          '<div style="min-width:70px;font-size:0.68rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em;padding-top:2px;">' + day + '</div>' +
+          '<div style="flex:1;">' +
+            '<div style="font-size:0.72rem;font-weight:700;color:var(--gold-lt);">' + v.ref + '</div>' +
+            '<div style="font-size:0.8rem;color:var(--text);font-style:italic;margin-top:2px;">"' + v.text + '"</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    } catch(e) { el.innerHTML='<div class="empty"><p>'+e.message+'</p></div>'; }
+  };
+
+  window.saveVerse = async function() {
+    if (!selectedVerse) { showToast('Select a verse first.','error'); return; }
+    var day = parseInt(document.getElementById('verseDay').value);
+    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    try {
+      var snap = await getDoc(docFn(db,'app-config','daily-verses'));
+      var verses = (snap.exists() && snap.data().verses) ? snap.data().verses : Array(7).fill(null).map(function(_,i){ return {day:i,ref:'',text:''}; });
+      verses[day] = { day, ref: selectedVerse.ref, text: selectedVerse.text };
+      await setDoc(docFn(db,'app-config','daily-verses'), { verses, updatedAt:serverTimestamp() });
+      showToast('Verse set for ' + days[day] + '! 📖','success');
+      document.getElementById('selectedVerseCard').style.display='none';
+      document.getElementById('bibleSearch').value='';
+      document.getElementById('bibleResults').innerHTML='<p style="font-size:0.8rem;color:var(--muted);text-align:center;padding:1rem;">Search for another verse…</p>';
+      selectedVerse = null;
+      window.loadVerses();
+    } catch(e) { showToast('Error: '+e.message,'error'); }
+  };
+
+  // ===== NOTIFICATIONS =====
+  window.loadNotifs = async function() {
+    var el = document.getElementById('notifsList');
+    if (!el || !db) return;
+    try {
+      var q    = query(collection(db,'notifications'), orderBy('sentAt','desc'), limit(10));
+      var snap = await getDocs(q);
+      if (snap.empty) { el.innerHTML='<div class="empty"><div class="ei">🔔</div><p>No notifications sent yet</p></div>'; return; }
+      el.innerHTML = snap.docs.map(function(d) {
+        var n  = d.data();
+        var dt = n.sentAt && n.sentAt.toDate ? n.sentAt.toDate().toLocaleString('en-UG') : '';
+        return '<div style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;gap:8px;align-items:flex-start;">' +
+          '<div style="font-size:1.1rem;">🔔</div>' +
+          '<div style="flex:1;">' +
+            '<div style="font-size:0.85rem;font-weight:600;color:var(--white);">' + n.title + '</div>' +
+            '<div style="font-size:0.75rem;color:var(--muted);">' + n.body + '</div>' +
+            '<div style="font-size:0.65rem;color:var(--muted);margin-top:2px;">' + dt + '</div>' +
+          '</div>' +
+          '<button class="btn btn-red btn-sm" onclick="delDoc('notifications','' + d.id + '',window.loadNotifs)">🗑</button>' +
+        '</div>';
+      }).join('');
+    } catch(e) { el.innerHTML='<div class="empty"><p>'+e.message+'</p></div>'; }
+  };
+
+  window.sendNotif = async function() {
+    var title = document.getElementById('nTitle').value.trim();
+    var body  = document.getElementById('nBody').value.trim();
+    var link  = document.getElementById('nLink').value;
+    if (!title || !body) { showToast('Title and message required.','error'); return; }
+    var btn = document.getElementById('sendNotifBtn');
+    btn.disabled=true; btn.textContent='Sending…';
+    try {
+      await addDoc(collection(db,'notifications'), { title, body, link, sentAt:serverTimestamp() });
+      if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+        new Notification(title, { body, icon:'icons/icon-192.png' });
+      }
+      showToast('Notification sent! 🔔','success');
+      document.getElementById('nTitle').value='';
+      document.getElementById('nBody').value='';
+      window.loadNotifs();
+    } catch(e) { showToast('Error: '+e.message,'error'); }
+    btn.disabled=false; btn.textContent='Send Notification 🔔';
+  };
+
+  // ===== GIVING — save to Firestore so app reads it live =====
+  window.saveGiving = async function() {
+    var btn = document.getElementById('saveGivingBtn');
+    btn.disabled=true; btn.textContent='Saving…';
+    try {
+      var data = {
+        bank:     document.getElementById('gBank').value.trim(),
+        accName:  document.getElementById('gAccName').value.trim(),
+        accNum:   document.getElementById('gAccNum').value.trim(),
+        branch:   document.getElementById('gBranch').value.trim(),
+        swift:    document.getElementById('gSwift').value.trim(),
+        mtn:      document.getElementById('gMtn').value.trim(),
+        mtnDial:  document.getElementById('gMtnDial').value.trim(),
+        airtel:   document.getElementById('gAirtel').value.trim(),
+        airtelDial:document.getElementById('gAirtelDial').value.trim(),
+        centre:   document.getElementById('gCentre').value.trim(),
+        title:    document.getElementById('gTitle').value.trim(),
+        desc:     document.getElementById('gDesc').value.trim(),
+        updatedAt: serverTimestamp()
+      };
+      await setDoc(docFn(db,'app-config','giving'), data);
+      showToast('Giving info saved! App will update live 💛','success');
+    } catch(e) { showToast('Error: '+e.message,'error'); }
+    btn.disabled=false; btn.textContent='Save Giving Info 💛';
+  };
+
+  window.loadGiving = async function() {
+    if (!db) return;
+    try {
+      var snap = await getDoc(docFn(db,'app-config','giving'));
+      if (!snap.exists()) return;
+      var d = snap.data();
+      var fields = ['gBank','gAccName','gAccNum','gBranch','gSwift','gMtn','gMtnDial','gAirtel','gAirtelDial','gCentre','gTitle','gDesc'];
+      var keys   = ['bank','accName','accNum','branch','swift','mtn','mtnDial','airtel','airtelDial','centre','title','desc'];
+      fields.forEach(function(id,i) {
+        var el = document.getElementById(id);
+        if (el && d[keys[i]]) el.value = d[keys[i]];
+      });
+    } catch(e) { console.warn('loadGiving:', e); }
   };
 
   // ===== MESSAGES =====
-  async function loadMessages() {
-    const el = document.getElementById('msgInbox');
+  window.loadMessages = async function() {
+    var el = document.getElementById('messagesList');
+    if (!el || !db) return;
     try {
-      const q = query(collection(db,'messages'), orderBy('createdAt','desc'), limit(30));
-      const snap = await getDocs(q);
-      if (snap.empty) { el.innerHTML = '<div class="empty-state"><div class="e-icon">✉️</div><p>No messages yet</p></div>'; return; }
-      el.innerHTML = snap.docs.map(d => {
-        const m = d.data();
-        const dt = m.createdAt?.toDate ? m.createdAt.toDate().toLocaleString('en-UG') : '';
-        return `<div style="padding:14px; border-bottom:1px solid rgba(255,255,255,0.04);">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px;">
-            <div style="font-size:0.88rem; font-weight:700; color:var(--white);">${m.name} ${m.subject ? `<span style="color:var(--gold); font-weight:600; font-size:0.75rem;">· ${m.subject}</span>` : ''}</div>
-            <div style="font-size:0.7rem; color:var(--muted); white-space:nowrap; margin-left:8px;">${dt}</div>
-          </div>
-          ${m.contact ? `<div style="font-size:0.75rem; color:var(--muted); margin-bottom:4px;">📞 ${m.contact}</div>` : ''}
-          <div style="font-size:0.84rem; color:var(--text);">${m.message}</div>
-          <div style="margin-top:8px; display:flex; gap:6px;">
-            <a href="mailto:?subject=Re: ${m.subject||'Your message'}&body=Dear ${m.name},%0D%0A%0D%0A">
-              <button class="btn btn-ghost btn-sm">↩ Reply</button>
-            </a>
-            <button class="btn btn-red btn-sm" onclick="deleteFBDoc('messages','${d.id}',loadMessages)">🗑</button>
-          </div>
-        </div>`;
+      var q    = query(collection(db,'messages'), orderBy('createdAt','desc'), limit(30));
+      var snap = await getDocs(q);
+      if (snap.empty) { el.innerHTML='<div class="empty"><div class="ei">✉️</div><p>No messages yet</p></div>'; return; }
+      el.innerHTML = snap.docs.map(function(d) {
+        var m  = d.data();
+        var dt = m.createdAt && m.createdAt.toDate ? m.createdAt.toDate().toLocaleString('en-UG') : '';
+        return '<div style="padding:12px;border-bottom:1px solid rgba(255,255,255,0.04);">' +
+          '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">' +
+            '<div>' +
+              '<span style="font-size:0.88rem;font-weight:700;color:var(--white);">' + m.name + '</span>' +
+              (m.subject ? '<span style="font-size:0.72rem;color:var(--gold);margin-left:6px;">' + m.subject + '</span>' : '') +
+            '</div>' +
+            '<span style="font-size:0.65rem;color:var(--muted);">' + dt + '</span>' +
+          '</div>' +
+          (m.contact ? '<div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px;">📞 ' + m.contact + '</div>' : '') +
+          '<div style="font-size:0.84rem;color:var(--text);margin-bottom:8px;">' + m.message + '</div>' +
+          '<div style="display:flex;gap:6px;">' +
+            '<a href="mailto:' + (m.contact||'') + '?subject=Re: ' + (m.subject||'Your message') + '&body=Dear ' + m.name + ',">' +
+              '<button class="btn btn-ghost btn-sm">↩ Reply</button>' +
+            '</a>' +
+            '<button class="btn btn-red btn-sm" onclick="delDoc('messages','' + d.id + '',window.loadMessages)">🗑</button>' +
+          '</div>' +
+        '</div>';
       }).join('');
-    } catch { el.innerHTML = '<div class="empty-state"><div class="e-icon">✉️</div><p>Connect Firebase to load messages</p></div>'; }
-  }
-
-  window.loadMessages = loadMessages;
-
-  // ===== NOTIFICATIONS =====
-  window.sendNotification = async function() {
-    const title    = document.getElementById('notifTitle').value.trim();
-    const body     = document.getElementById('notifBody').value.trim();
-    const link     = document.getElementById('notifLink').value;
-    const schedule = document.getElementById('notifSchedule').value;
-    const audience = document.getElementById('notifAudience').value;
-    if (!title || !body) { toast('Title and body are required','error'); return; }
-    try {
-      await addDoc(collection(db,'notifications'), {
-        title, body, link, audience,
-        scheduledFor: schedule ? Timestamp.fromDate(new Date(schedule)) : null,
-        sentAt: serverTimestamp()
-      });
-      // Also fire a local test notification if browser allows
-      if (Notification.permission === 'granted') {
-        new Notification(title, { body, icon: 'icons/icon-192.png' });
-      }
-      toast('Notification queued! 🔔','success');
-      document.getElementById('notifTitle').value = '';
-      document.getElementById('notifBody').value  = '';
-      updateNotifPreview();
-      loadNotifHistory(); loadStats();
-    } catch { toast('Error sending. Check Firebase config.','error'); }
+    } catch(e) { el.innerHTML='<div class="empty"><p>'+e.message+'</p></div>'; }
   };
 
-  async function loadNotifHistory() {
-    const el = document.getElementById('notifHistory');
+  // ===== DELETE DOC =====
+  window.delDoc = async function(col, id, reloadFn) {
+    if (!confirm('Delete this item? Cannot be undone.')) return;
     try {
-      const q = query(collection(db,'notifications'), orderBy('sentAt','desc'), limit(10));
-      const snap = await getDocs(q);
-      if (snap.empty) { el.innerHTML = '<div class="empty-state"><div class="e-icon">🔔</div><p>No notifications sent yet</p></div>'; return; }
-      let sent = 0;
-      el.innerHTML = snap.docs.map(d => {
-        const n = d.data(); sent++;
-        const dt = n.sentAt?.toDate ? n.sentAt.toDate().toLocaleString('en-UG') : '';
-        return `<div style="padding:12px 14px; border-bottom:1px solid rgba(255,255,255,0.04); display:flex; gap:10px; align-items:flex-start;">
-          <div style="font-size:1rem; flex-shrink:0;">🔔</div>
-          <div style="flex:1;">
-            <div style="font-size:0.84rem; font-weight:700; color:var(--white);">${n.title}</div>
-            <div style="font-size:0.75rem; color:var(--muted);">${n.body}</div>
-            <div style="font-size:0.68rem; color:var(--muted); margin-top:3px;">${dt} · ${n.audience||'All Users'}</div>
-          </div>
-          <button class="btn btn-red btn-sm" onclick="deleteFBDoc('notifications','${d.id}',loadNotifHistory)">🗑</button>
-        </div>`;
-      }).join('');
-      document.getElementById('notifSent').textContent  = sent;
-      document.getElementById('notifOpened').textContent = Math.floor(sent * 0.68);
-    } catch { el.innerHTML = '<div class="empty-state"><div class="e-icon">🔔</div><p>Connect Firebase to load history</p></div>'; }
-  }
-
-  window.loadNotifHistory = loadNotifHistory;
-
-  // ===== VERSES EDITOR =====
-  const DEFAULT_VERSES = [
-    { text: 'For God so loved the world that He gave His one and only Son.', ref: 'John 3:16' },
-    { text: 'I can do all things through Christ who strengthens me.', ref: 'Philippians 4:13' },
-    { text: 'Trust in the Lord with all your heart and lean not on your own understanding.', ref: 'Proverbs 3:5' },
-    { text: 'The Lord is my shepherd; I shall not want.', ref: 'Psalm 23:1' },
-    { text: 'Be strong and courageous. Do not be afraid; do not be discouraged.', ref: 'Joshua 1:9' },
-    { text: 'Come to me, all you who are weary and burdened, and I will give you rest.', ref: 'Matthew 11:28' },
-    { text: 'The Lord your God is with you, the Mighty Warrior who saves.', ref: 'Zephaniah 3:17' },
-  ];
-  const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
-  function initVersesEditor() {
-    const ed = document.getElementById('versesEditor');
-    const list = document.getElementById('versesList');
-    ed.innerHTML = DEFAULT_VERSES.map((v,i) => `
-      <div style="margin-bottom:1rem; padding:1rem; background:var(--bg3); border-radius:8px;">
-        <div style="font-size:0.72rem; font-weight:700; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:6px;">${DAYS[i]}</div>
-        <div class="f-group" style="margin-bottom:0.6rem;">
-          <label>Verse Text</label>
-          <textarea id="verse-text-${i}" rows="2">${v.text}</textarea>
-        </div>
-        <div class="f-group" style="margin:0;">
-          <label>Reference</label>
-          <input type="text" id="verse-ref-${i}" value="${v.ref}">
-        </div>
-      </div>
-    `).join('');
-
-    list.innerHTML = DEFAULT_VERSES.map((v,i) => `
-      <div class="verse-item">
-        <div class="verse-item-num">${DAYS[i].slice(0,3)}</div>
-        <div>
-          <div class="verse-item-text">"${v.text}"</div>
-          <div class="verse-item-ref">— ${v.ref}</div>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  window.saveVerses = async function() {
-    const verses = DEFAULT_VERSES.map((_,i) => ({
-      text: document.getElementById(`verse-text-${i}`).value.trim(),
-      ref:  document.getElementById(`verse-ref-${i}`).value.trim(),
-      day:  i
-    }));
-    try {
-      await setDoc(doc(db,'app-config','daily-verses'), { verses, updatedAt: serverTimestamp() });
-      toast('Daily verses saved! 📖','success');
-    } catch { toast('Saved locally. Connect Firebase to persist.','info'); }
-  };
-
-  // ===== SAVE SECTION (generic) =====
-  window.saveSection = async function(section) {
-    try {
-      const data = { section, updatedAt: serverTimestamp() };
-      await setDoc(doc(db,'app-config', section), data, { merge: true });
-      toast('Changes saved! ✅','success');
-    } catch { toast('Saved! (Configure Firebase to persist)','info'); }
-  };
-
-  // ===== CLOUDINARY UPLOAD =====
-  // Uses unsigned upload preset — no backend needed
-  async function uploadToCloudinary(file, barId, wrapId, folder = 'gcc-church') {
-    return new Promise((resolve, reject) => {
-      const url  = `https://api.cloudinary.com/v1_1/${window.CLOUDINARY_CLOUD}/image/upload`;
-      const data = new FormData();
-      data.append('file', file);
-      data.append('upload_preset', window.CLOUDINARY_PRESET);
-      data.append('folder', folder);
-
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', url);
-
-      // Show progress bar
-      if (wrapId) document.getElementById(wrapId).style.display = 'block';
-
-      xhr.upload.onprogress = e => {
-        if (e.lengthComputable && barId) {
-          const pct = Math.round((e.loaded / e.total) * 100);
-          document.getElementById(barId).style.width = pct + '%';
-        }
-      };
-
-      xhr.onload = () => {
-        if (wrapId) document.getElementById(wrapId).style.display = 'none';
-        if (xhr.status === 200) {
-          const res = JSON.parse(xhr.responseText);
-          resolve(res.secure_url);
-        } else {
-          reject(new Error('Cloudinary upload failed: ' + xhr.responseText));
-        }
-      };
-
-      xhr.onerror = () => reject(new Error('Network error during upload'));
-      xhr.send(data);
-    });
-  }
-
-  // ===== CLOUDINARY AUDIO UPLOAD =====
-  async function uploadAudioToCloudinary(file, barId, wrapId) {
-    return new Promise((resolve, reject) => {
-      const url  = `https://api.cloudinary.com/v1_1/${window.CLOUDINARY_CLOUD}/video/upload`;
-      const data = new FormData();
-      data.append('file', file);
-      data.append('upload_preset', window.CLOUDINARY_PRESET);
-      data.append('folder', 'gcc-church/sermons');
-      data.append('resource_type', 'video'); // Cloudinary uses 'video' for audio too
-
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', url);
-      if (wrapId) document.getElementById(wrapId).style.display = 'block';
-
-      xhr.upload.onprogress = e => {
-        if (e.lengthComputable && barId) {
-          const pct = Math.round((e.loaded / e.total) * 100);
-          document.getElementById(barId).style.width = pct + '%';
-          document.getElementById('saveSermonBtn').textContent = `Uploading ${pct}%…`;
-        }
-      };
-
-      xhr.onload = () => {
-        if (wrapId) document.getElementById(wrapId).style.display = 'none';
-        if (xhr.status === 200) {
-          resolve(JSON.parse(xhr.responseText).secure_url);
-        } else {
-          reject(new Error('Audio upload failed: ' + xhr.responseText));
-        }
-      };
-
-      xhr.onerror = () => reject(new Error('Network error during audio upload'));
-      xhr.send(data);
-    });
-  }
-
-  // Preview audio before upload
-  document.getElementById('sAudioFile').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const preview  = document.getElementById('sAudioPreview');
-    const player   = document.getElementById('sAudioPlayer');
-    const nameEl   = document.getElementById('sAudioName');
-    player.src = URL.createObjectURL(file);
-    nameEl.textContent = '🎵 ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(1) + ' MB)';
-    preview.style.display = 'block';
-  });
-
-  window.uploadSlide = async function() {
-    const file = document.getElementById('slideImageFile').files[0];
-    if (!file) { toast('Select an image first', 'error'); return; }
-    try {
-      toast('Uploading slide...', 'info');
-      const url = await uploadToCloudinary(file, 'slideUploadBar', 'slideUploadProg', 'gcc-church/slides');
-      // Save slide URL to Firestore
-      await addDoc(collection(db, 'app-slides'), { url, name: file.name, createdAt: serverTimestamp() });
-      toast('Slide uploaded & saved! 🖼️', 'success');
-      document.getElementById('slideImageFile').value = '';
-      loadSlides();
-    } catch(e) {
-      console.error(e);
-      toast('Upload failed: ' + e.message, 'error');
-    }
-  };
-
-  // ===== DELETE =====
-  window.deleteFBDoc = async function(col, id, reloadFn) {
-    if (!confirm('Delete this item? This cannot be undone.')) return;
-    try {
-      await deleteDoc(doc(db, col, id));
-      toast('Deleted.','success');
-      reloadFn();
+      await deleteDoc(docFn(db, col, id));
+      showToast('Deleted.','success');
+      if (reloadFn) reloadFn();
       loadStats();
-    } catch { toast('Error deleting.','error'); }
+    } catch(e) { showToast('Error: '+e.message,'error'); }
   };
 
-  // ===== FIREBASE CONFIG COPY =====
-  window.copyFirebaseConfig = function() {
-    const cfg = {
-      apiKey:            document.getElementById('fbApiKey').value,
-      authDomain:        document.getElementById('fbAuthDomain').value,
-      projectId:         document.getElementById('fbProjectId').value,
-      storageBucket:     document.getElementById('fbStorage').value,
-      messagingSenderId: document.getElementById('fbSenderId').value,
-      appId:             document.getElementById('fbAppId').value,
-    };
-    const snippet = `const firebaseConfig = ${JSON.stringify(cfg, null, 2)};`;
-    navigator.clipboard.writeText(snippet).then(() => toast('Config copied to clipboard! 📋','success'));
-  };
-</script>
-
-<script>
-  // ============================================================
-  //  NON-MODULE GLOBALS (for inline onclick handlers)
-  // ============================================================
-
-  // ===== NAVIGATION =====
-  const PANEL_TITLES = {
-    'overview':      'Dashboard',
-    'home-screen':   'Home Screen',
-    'sermons':       'Sermons',
-    'events':        'Events',
-    'verses':        'Daily Verses',
-    'giving':        'Giving Info',
-    'notifications': 'Push Notifications',
-    'messages':      'Messages',
-    'appearance':    'Appearance',
-    'settings':      'App Settings',
-  };
-
-  function switchPanel(id, btn) {
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-    document.getElementById('panel-' + id).classList.add('active');
-    const activeBtn = btn || document.querySelector(`.sidebar-link[data-panel="${id}"]`);
-    if (activeBtn) activeBtn.classList.add('active');
-    document.getElementById('topbarTitle').textContent = PANEL_TITLES[id] || id;
-    closeSidebar();
-  }
-
-  // ===== MOBILE SIDEBAR =====
-  document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-    document.getElementById('sidebar').classList.add('open');
-    document.getElementById('sidebarOverlay').classList.add('open');
-  });
-
-  function closeSidebar() {
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('sidebarOverlay').classList.remove('open');
-  }
-
-  document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
-
-  // ===== TOAST =====
-  function toast(msg, type = 'info') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = `toast s-${type} show`;
-    setTimeout(() => t.classList.remove('show'), 3200);
-  }
-
-  // ===== IMAGE PREVIEW =====
-  function previewImg(input, previewId) {
-    const file = input.files[0];
-    if (!file) return;
-    const prev = document.getElementById(previewId);
-    prev.src = URL.createObjectURL(file);
-    prev.style.display = 'block';
-  }
-
-  // ===== NOTIFICATION PREVIEW =====
-  function updateNotifPreview() {
-    const t = document.getElementById('notifTitle').value || 'Your notification title here';
-    const b = document.getElementById('notifBody').value  || 'Your message will appear here…';
-    document.getElementById('prevNotifTitle').textContent = t;
-    document.getElementById('prevNotifBody').textContent  = b;
-    document.getElementById('notifTitleCount').textContent = `${document.getElementById('notifTitle').value.length}/60`;
-    document.getElementById('notifBodyCount').textContent  = `${document.getElementById('notifBody').value.length}/140`;
-  }
-
-  // ===== COLOR SWATCHES =====
-  function selectSwatch(el) {
-    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
-    el.classList.add('selected');
-    document.getElementById('customColor').value = el.style.background;
-    toast('Color selected — save Appearance to apply', 'info');
-  }
-
-  // ===== NOTIFICATION PERMISSION =====
-  if ('Notification' in window && Notification.permission === 'default') {
-    setTimeout(() => Notification.requestPermission(), 2000);
-  }
+})().catch(function(e) { console.error('[Admin]', e); });
 </script>
 </body>
 </html>

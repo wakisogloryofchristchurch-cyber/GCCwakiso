@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,9 +11,6 @@
   <meta name="description" content="Glory of Christ Church Wakiso-Kayunga official app">
 
   <title>GCC Church</title>
-
-  <!-- Alarm Sounds -->
-  <script src="alarm-sounds.js"></script>
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
@@ -77,7 +74,7 @@
       -webkit-user-select: text; user-select: text; 
     }
     /* Hide scrollbars everywhere */
-    * { -webkit-scrollbar-width: none; scrollbar-width: none; -ms-overflow-style: none; }
+    * { scrollbar-width: none; -ms-overflow-style: none; }
     *::-webkit-scrollbar { display: none; }
     /* Prevent rubber-band scroll on iOS */
     #app { overflow: hidden; position: fixed; width: 100%; height: 100dvh; }
@@ -119,9 +116,8 @@
       pointer-events: none;
       transform: translateX(30px);
       transition: opacity 0.28s ease, transform 0.28s ease;
-      -webkit-scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      -ms-overflow-style: none;
     }
     .screen::-webkit-scrollbar { display: none; }
 
@@ -135,8 +131,8 @@
     .bottom-nav {
       flex-shrink: 0;
       background: rgba(10,18,35,0.96);
-      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-top: 1px solid rgba(200,146,42,0.12);
       display: flex;
       align-items: flex-start;
@@ -210,7 +206,6 @@
       background: var(--card-bg);
       border: 1px solid var(--card-bdr);
       border-radius: var(--radius);
-      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       overflow: hidden;
     }
@@ -631,9 +626,7 @@
       gap: 0.5rem;
       padding: 0.8rem 1rem;
       overflow-x: auto;
-      -webkit-scrollbar-width: none;
       scrollbar-width: none;
-      -ms-overflow-style: none;
     }
     .sermon-filter::-webkit-scrollbar { display: none; }
 
@@ -709,7 +702,6 @@
       display: flex;
       align-items: center;
       gap: 0.9rem;
-      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       z-index: 90;
       transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
@@ -879,8 +871,6 @@
       transform: translateY(100%);
       transition: transform 0.4s cubic-bezier(0.34,1.2,0.64,1);
       border-top: 1px solid var(--card-bdr);
-      -webkit-backdrop-filter: blur(20px);
-      backdrop-filter: blur(20px);
     }
     .modal-overlay.open .modal-sheet { transform: translateY(0); }
 
@@ -1020,24 +1010,6 @@
 
     /* Scroll padding helpers */
     .pb-4 { padding-bottom: 1rem; }
-
-    /* Time input field */
-    .time-input {
-      background: rgba(255,255,255,0.07);
-      border: 1.5px solid rgba(200,146,42,0.2);
-      border-radius: 8px;
-      color: var(--white);
-      padding: 8px 12px;
-      font-size: 0.9rem;
-      font-family: inherit;
-      outline: none;
-      flex: 1;
-    }
-
-  /* Spinner animation */
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
   </style>
 </head>
 <body>
@@ -1303,8 +1275,8 @@
         <h3 style="font-size:1rem; color:var(--white); margin-bottom:1rem; display:flex; align-items:center; gap:8px;">📖 Daily Bible Verse Notification</h3>
         <p style="font-size:0.8rem; color:var(--muted); margin-bottom:1rem;">Receive today's verse as a notification every morning.</p>
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:1rem;">
-          <label for="verseTime" style="font-size:0.78rem; color:var(--muted);">Time:</label>
-          <input type="time" id="verseTime" value="07:00" title="Select time for daily verse notification" class="time-input">
+          <label style="font-size:0.78rem; color:var(--muted);">Time:</label>
+          <input type="time" id="verseTime" value="07:00" style="background:rgba(255,255,255,0.07); border:1.5px solid rgba(200,146,42,0.2); border-radius:8px; color:var(--white); padding:8px 12px; font-size:0.9rem; font-family:inherit; outline:none; flex:1;">
         </div>
         <button class="btn btn-gold btn-full" onclick="scheduleDailyVerse()">📖 Enable Daily Verse</button>
         <div id="verseScheduleStatus" style="font-size:0.75rem; color:var(--muted); text-align:center; margin-top:0.6rem;"></div>
@@ -1318,12 +1290,12 @@
           <input type="text" id="reminderTitle" placeholder="e.g. Pray for the church…">
         </div>
         <div class="form-field">
-          <label for="reminderDateTime">Date & Time</label>
-          <input type="datetime-local" id="reminderDateTime" name="reminderDateTime" title="Select date and time for the reminder" placeholder="YYYY-MM-DD HH:MM">
+          <label>Date & Time</label>
+          <input type="datetime-local" id="reminderDateTime">
         </div>
         <div class="form-field">
           <label>Type</label>
-          <select id="reminderType" title="Select reminder type">
+          <select id="reminderType">
             <option value="🔔">🔔 General</option>
             <option value="🙏">🙏 Prayer</option>
             <option value="📅">📅 Event</option>
@@ -1393,8 +1365,8 @@
 
       <div class="give-hero">
         <div class="icon">💛</div>
-        <h2>Your Gift Matters</h2>
-        <p>Every contribution helps us worship, serve, and reach more lives with the Gospel of Christ in Wakiso-Kayunga and beyond.</p>
+        <h2 id="giveTitle">Your Gift Matters</h2>
+        <p id="giveDesc">Every contribution helps us worship, serve, and reach more lives with the Gospel of Christ in Wakiso-Kayunga and beyond.</p>
       </div>
 
       <div class="give-options">
@@ -1404,7 +1376,7 @@
           <div class="give-opt-icon goi-bank">🏦</div>
           <div class="give-opt-info">
             <div class="give-opt-name">Bank Transfer</div>
-            <div class="give-opt-sub">Centenary Bank · Wakiso</div>
+            <div class="give-opt-sub" id="giveBankSub">Centenary Bank · Wakiso</div>
           </div>
           <div class="give-opt-arrow">›</div>
         </div>
@@ -1413,7 +1385,7 @@
           <div class="give-opt-icon goi-mtn">📱</div>
           <div class="give-opt-info">
             <div class="give-opt-name">MTN Mobile Money</div>
-            <div class="give-opt-sub">Dial *165# &nbsp;·&nbsp; +256 700 592 303</div>
+            <div class="give-opt-sub" id="giveMtnSub">Dial *165# &nbsp;·&nbsp; +256 700 592 303</div>
           </div>
           <div class="give-opt-arrow">›</div>
         </div>
@@ -1422,7 +1394,7 @@
           <div class="give-opt-icon goi-airtel">📲</div>
           <div class="give-opt-info">
             <div class="give-opt-name">Airtel Money</div>
-            <div class="give-opt-sub">Dial *185# &nbsp;·&nbsp; +256 774 458 786</div>
+            <div class="give-opt-sub" id="giveAirtelSub">Dial *185# &nbsp;·&nbsp; +256 774 458 786</div>
           </div>
           <div class="give-opt-arrow">›</div>
         </div>
@@ -1431,7 +1403,7 @@
           <div class="give-opt-icon goi-centre">💳</div>
           <div class="give-opt-info">
             <div class="give-opt-name">Centenary Mobile</div>
-            <div class="give-opt-sub">Dial *236# &nbsp;·&nbsp; Account 200210030471</div>
+            <div class="give-opt-sub" id="giveCentreSub">Dial *236# &nbsp;·&nbsp; Account 200210030471</div>
           </div>
           <div class="give-opt-arrow">›</div>
         </div>
@@ -1487,7 +1459,7 @@
           <div class="settings-row">
             <div class="settings-row-icon">🌐</div>
             <div class="settings-row-label">Website</div>
-            <div class="settings-row-val">https://wakisogloryofchristchurch-cyber.github.io/GCCwakiso/</div>
+            <div class="settings-row-val">gloryofchristchurch.org</div>
           </div>
         </div>
       </div>
@@ -1584,11 +1556,11 @@
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">🏦 Bank Transfer</div>
-    <div class="info-row"><span class="label">Bank</span><span class="value">Centenary Bank</span></div>
-    <div class="info-row"><span class="label">Account Name</span><span class="value">Glory of Christ Church</span></div>
-    <div class="info-row"><span class="label">Account Number</span><span class="value">200210030471</span></div>
-    <div class="info-row"><span class="label">Branch</span><span class="value">Wakiso</span></div>
-    <div class="info-row"><span class="label">Swift Code</span><span class="value">CERBUGKA</span></div>
+    <div class="info-row"><span class="label">Bank</span><span class="value" id="mBankName">Centenary Bank</span></div>
+    <div class="info-row"><span class="label">Account Name</span><span class="value" id="mBankAccName">Glory of Christ Church</span></div>
+    <div class="info-row"><span class="label">Account Number</span><span class="value" id="mBankAcc">200210030471</span></div>
+    <div class="info-row"><span class="label">Branch</span><span class="value" id="mBankBranch">Wakiso</span></div>
+    <div class="info-row"><span class="label">Swift Code</span><span class="value" id="mBankSwift">CERBUGKA</span></div>
     <button class="btn btn-gold btn-full" style="margin-top:1.2rem;" onclick="closeModal('bankModal')">Done</button>
   </div>
 </div>
@@ -1598,10 +1570,10 @@
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">📱 MTN Mobile Money</div>
-    <div class="info-row"><span class="label">Dial</span><span class="value">*165#</span></div>
-    <div class="info-row"><span class="label">Number</span><span class="value">+256 700 592 303</span></div>
+    <div class="info-row"><span class="label">Dial</span><span class="value" id="mMtnDial">*165#</span></div>
+    <div class="info-row"><span class="label">Number</span><span class="value" id="mMtnNum">+256 700 592 303</span></div>
     <div class="info-row"><span class="label">Name</span><span class="value">Glory of Christ Church</span></div>
-    <a href="tel:*165#"><button class="btn btn-gold btn-full" style="margin-top:1.2rem; border:none; cursor:pointer;">📲 Open MTN Dial</button></a>
+    <a href="tel:*165#" id="mMtnLink"><button class="btn btn-gold btn-full" style="margin-top:1.2rem; border:none; cursor:pointer;">📲 Open MTN Dial</button></a>
   </div>
 </div>
 
@@ -1610,10 +1582,10 @@
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">📲 Airtel Money</div>
-    <div class="info-row"><span class="label">Dial</span><span class="value">*185#</span></div>
-    <div class="info-row"><span class="label">Number</span><span class="value">+256 774 458 786</span></div>
+    <div class="info-row"><span class="label">Dial</span><span class="value" id="mAirtelDial">*185#</span></div>
+    <div class="info-row"><span class="label">Number</span><span class="value" id="mAirtelNum">+256 774 458 786</span></div>
     <div class="info-row"><span class="label">Name</span><span class="value">Glory of Christ Church</span></div>
-    <a href="tel:*185#"><button class="btn btn-gold btn-full" style="margin-top:1.2rem; border:none; cursor:pointer;">📲 Open Airtel Dial</button></a>
+    <a href="tel:*185#" id="mAirtelLink"><button class="btn btn-gold btn-full" style="margin-top:1.2rem; border:none; cursor:pointer;">📲 Open Airtel Dial</button></a>
   </div>
 </div>
 
@@ -1622,10 +1594,10 @@
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">💳 Centenary Mobile</div>
-    <div class="info-row"><span class="label">Dial</span><span class="value">*236#</span></div>
-    <div class="info-row"><span class="label">Account</span><span class="value">200210030471</span></div>
+    <div class="info-row"><span class="label">Dial</span><span class="value" id="mCentreDial">*236#</span></div>
+    <div class="info-row"><span class="label">Account</span><span class="value" id="mCentreAcc">200210030471</span></div>
     <div class="info-row"><span class="label">Name</span><span class="value">Glory of Christ Church</span></div>
-    <a href="tel:*236#"><button class="btn btn-gold btn-full" style="margin-top:1.2rem; border:none; cursor:pointer;">📲 Open Centenary Dial</button></a>
+    <a href="tel:*236#" id="mCentreLink"><button class="btn btn-gold btn-full" style="margin-top:1.2rem; border:none; cursor:pointer;">📲 Open Centenary Dial</button></a>
   </div>
 </div>
 
@@ -1658,10 +1630,152 @@
 
 
 </body>
-</html>
-<script type="module">
-  import { db } from './firebase.js';
-  import { collection, getDocs, orderBy, query, limit, Timestamp, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+</html<script type="module">
+(async function() {
+
+  // ============================================================
+  //  SYNC FUNCTIONS — defined immediately, before Firebase loads
+  //  These power tab navigation and basic interactions
+  // ============================================================
+
+  // NAVIGATION
+  window.goTo = function(screenId) {
+    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+    document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+    var screen = document.getElementById('screen-' + screenId);
+    var navBtn  = document.querySelector('.nav-item[data-screen="' + screenId + '"]');
+    if (screen) screen.classList.add('active');
+    if (navBtn)  navBtn.classList.add('active');
+    // Lazy load content when tab is tapped
+    if (screenId === 'sermons')   { if (typeof loadSermons   === 'function') loadSermons(); }
+    if (screenId === 'events')    { if (typeof loadEvents    === 'function') loadEvents(); }
+    if (screenId === 'reminders') { if (typeof window.renderReminders === 'function') window.renderReminders(); }
+  };
+
+  // MODALS
+  window.openModal  = function(id) { var el=document.getElementById(id); if(el) el.classList.add('open'); };
+  window.closeModal = function(id) { var el=document.getElementById(id); if(el) el.classList.remove('open'); };
+  window.closeModalOutside = function(e,id) { if(e.target.classList.contains('modal-overlay')) window.closeModal(id); };
+
+  // TOAST
+  window.showToast = function(msg, isError) {
+    var t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.style.borderLeft = isError ? '3px solid #e74c3c' : '3px solid var(--gold)';
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2800);
+  };
+
+  // CONTACT
+  window.callPhone = function(num) { window.location.href = 'tel:' + num; };
+  window.sendEmail = function()    { window.location.href = 'mailto:wakisogloryofchristchurch@gmail.com'; };
+
+  // PLAYER CONTROLS
+  window.closePlayer = function() {
+    var audioEl = document.getElementById('globalAudio');
+    if (audioEl) { audioEl.pause(); audioEl.src = ''; }
+    var bar  = document.getElementById('playerBar');
+    var fill = document.getElementById('playerFill');
+    var btn  = document.getElementById('playerBtn');
+    if (bar)  bar.classList.remove('visible');
+    if (fill) fill.style.width = '0%';
+    if (btn)  btn.textContent = '▶';
+  };
+
+  window.togglePlay = function() {
+    var audioEl = document.getElementById('globalAudio');
+    if (!audioEl || !audioEl.src) return;
+    var btn = document.getElementById('playerBtn');
+    if (audioEl.paused) {
+      audioEl.play().then(function() { if(btn) btn.textContent = '⏸'; }).catch(function(){});
+    } else {
+      audioEl.pause();
+      if (btn) btn.textContent = '▶';
+    }
+  };
+
+  // DISMISS INSTALL
+  window.dismissInstall = function() {
+    var b = document.getElementById('installBanner');
+    if (b) b.classList.remove('visible');
+  };
+
+  // DARK MODE TOGGLE
+  window.toggleDarkMode = function() {
+    var darkMode = localStorage.getItem('gcc-dark') !== 'false';
+    darkMode = !darkMode;
+    localStorage.setItem('gcc-dark', String(darkMode));
+    applyTheme(darkMode);
+    window.showToast(darkMode ? '🌙 Dark mode on' : '☀️ Light mode on');
+  };
+
+  function applyTheme(darkMode) {
+    var root = document.documentElement;
+    if (darkMode) {
+      root.style.setProperty('--navy',    '#0b1f3a');
+      root.style.setProperty('--navy2',   '#0f2748');
+      root.style.setProperty('--text',    '#e8e2d6');
+      root.style.setProperty('--card-bg', 'rgba(255,255,255,0.06)');
+      document.body.style.background = '#0b1f3a';
+    } else {
+      root.style.setProperty('--navy',    '#1e3a5f');
+      root.style.setProperty('--navy2',   '#f5f0e8');
+      root.style.setProperty('--text',    '#1a1a1a');
+      root.style.setProperty('--card-bg', 'rgba(255,255,255,0.9)');
+      document.body.style.background = '#f0ebe1';
+    }
+    var dt  = document.getElementById('darkToggle');
+    var dt2 = document.getElementById('darkToggle2');
+    if (dt)  dt.classList[darkMode  ? 'add' : 'remove']('on');
+    if (dt2) dt2.classList[darkMode ? 'add' : 'remove']('on');
+  }
+
+  // Apply theme on load
+  applyTheme(localStorage.getItem('gcc-dark') !== 'false');
+
+
+  // ============================================================
+  //  FIREBASE — async load (navigation already works above)
+  // ============================================================
+  var db = null, collection, getDocs, orderBy, query, limit, Timestamp, where;
+  try {
+    var _fb = await import("./firebase.js");
+    var _fs = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    db = _fb.db; collection = _fs.collection; getDocs = _fs.getDocs;
+    orderBy = _fs.orderBy; query = _fs.query; limit = _fs.limit;
+    Timestamp = _fs.Timestamp; where = _fs.where;
+    console.log("[GCC] Firebase ready");
+  } catch(e) { console.warn("[GCC] Firebase:", e.message); }
+
+
+// ============================================================
+//  GCC CHURCH APP — wrapped in async IIFE for iOS compatibility
+// ============================================================
+(async function() {
+
+  // ===== FIREBASE (optional — app works without it) =====
+  let db = null, collection, getDocs, orderBy, query, limit, Timestamp, where;
+  try {
+    const [fb, fs] = await Promise.all([
+      import('./firebase.js'),
+      import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js')
+    ]);
+    db         = fb.db;
+    collection = fs.collection;
+    getDocs    = fs.getDocs;
+    orderBy    = fs.orderBy;
+    query      = fs.query;
+    limit      = fs.limit;
+    Timestamp  = fs.Timestamp;
+    where      = fs.where;
+    console.log('[GCC] Firebase loaded ✅');
+  } catch(e) {
+    console.warn('[GCC] Firebase failed to load:', e.message);
+  }
+
+
+  // Firebase vars loaded above in async IIFE
 
   // ============================================================
   //  NAVIGATION
@@ -1826,7 +1940,7 @@
     document.getElementById('playerBar').classList.add('visible');
     document.getElementById('playerBtn').textContent = '⏸';
 
-    // iOS requires user gesture — we're inside one here
+    // iOS requires user gesture (must be called in click handler)
     if (audioEl.src !== audioUrl) {
       audioEl.src = audioUrl;
       audioEl.load();
@@ -1947,8 +2061,8 @@
           var safeTitle   = (s.title   || '').replace(/'/g,'').replace(/"/g,'');
           var safeSpeaker = (s.speaker || '').replace(/'/g,'').replace(/"/g,'');
           hHtml += '<div class="card mini-sermon card-press"' +
-            (hasAudio ? ' onclick="window.playSermonAudio(\'' + s.audioUrl + '\',\'' + safeTitle + '\',\'' + safeSpeaker + '\',\'\')"' : '') +
-            '><div class="play-circle" style="' + (!hasAudio ? 'opacity:0.35' : '') + '">▶</div>' +
+            (hasAudio ? ' onclick="window.playSermonAudio(\'' + s.audioUrl + '\',\'' + safeTitle + '\',\'' + safeSpeaker + '\',\'\')"' : '') + '>' +
+            '<div class="play-circle" style="' + (!hasAudio ? 'opacity:0.35' : '') + '">▶</div>' +
             '<div style="flex:1;min-width:0;">' +
               '<div class="mini-sermon-title">' + (s.title||'Untitled') + '</div>' +
               '<div class="mini-sermon-sub">' + (s.speaker||'') + (s.scripture ? ' · '+s.scripture : '') + '</div>' +
@@ -2122,34 +2236,7 @@
     updateReminderCount();
   };
 
-  window.saveCustomReminder = function() {
-    var title    = document.getElementById('reminderTitle').value.trim();
-    var datetime = document.getElementById('reminderDateTime').value;
-    var icon     = document.getElementById('reminderType').value;
-    if (!title) { showToast('Please enter a reminder title.', true); return; }
 
-    var dt = datetime
-      ? new Date(datetime).toLocaleString('en-UG', { weekday:'short', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' })
-      : '';
-
-    reminders.push({ title:title, datetime:dt, icon:icon });
-    localStorage.setItem('gcc-reminders', JSON.stringify(reminders));
-    window.renderReminders();
-
-    if (typeof Notification !== 'undefined' && Notification.permission === 'granted' && datetime) {
-      var delay = new Date(datetime).getTime() - Date.now();
-      if (delay > 0) {
-        setTimeout(function() {
-          new Notification('GCC Reminder 🔔', { body: title, icon: 'icons/icon-192.png' });
-        }, delay);
-      }
-    }
-
-    document.getElementById('reminderTitle').value    = '';
-    document.getElementById('reminderDateTime').value = '';
-    showToast('✅ Reminder set!');
-    window.goTo('reminders');
-  };
 
   window.addReminder = function(title, subtitle, icon) {
     reminders.push({ title:title, datetime:subtitle, icon:icon||'🔔' });
@@ -2159,12 +2246,7 @@
     window.goTo('reminders');
   };
 
-  window.deleteReminder = function(index) {
-    reminders.splice(index, 1);
-    localStorage.setItem('gcc-reminders', JSON.stringify(reminders));
-    window.renderReminders();
-    showToast('Reminder removed.');
-  };
+
 
   // Built-in service reminder toggles
   document.querySelectorAll('.reminder-item .toggle').forEach(function(tog) {
@@ -2368,7 +2450,26 @@
 
     window._verseTimeout = setTimeout(function() {
       // Play sound
-      if (typeof window.playAlarmSound === 'function') window.playAlarmSound('verse');
+    // Play alarm sound inline
+    try {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      function beep(freq, start, dur) {
+        var o = ctx.createOscillator();
+        var g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.frequency.value = freq;
+        o.type = 'sine';
+        g.gain.setValueAtTime(0, ctx.currentTime + start);
+        g.gain.linearRampToValueAtTime(0.4, ctx.currentTime + start + 0.05);
+        g.gain.linearRampToValueAtTime(0, ctx.currentTime + start + dur - 0.05);
+        o.start(ctx.currentTime + start);
+        o.stop(ctx.currentTime + start + dur);
+      }
+      beep(659, 0,    0.3);
+      beep(659, 0.4,  0.3);
+      beep(784, 0.8,  0.4);
+      beep(784, 1.3,  0.5);
+    } catch(e) {}
 
       // Show notification if permission granted
       if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
@@ -2448,7 +2549,26 @@
         // In-browser fallback alarm
         setTimeout(function() {
           // Play alarm sound
-          if (typeof window.playAlarmSound === 'function') window.playAlarmSound('alarm');
+        // Play alarm sound inline
+    try {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      function beep(freq, start, dur) {
+        var o = ctx.createOscillator();
+        var g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.frequency.value = freq;
+        o.type = 'sine';
+        g.gain.setValueAtTime(0, ctx.currentTime + start);
+        g.gain.linearRampToValueAtTime(0.4, ctx.currentTime + start + 0.05);
+        g.gain.linearRampToValueAtTime(0, ctx.currentTime + start + dur - 0.05);
+        o.start(ctx.currentTime + start);
+        o.stop(ctx.currentTime + start + dur);
+      }
+      beep(523, 0,    0.3);
+      beep(523, 0.4,  0.3);
+      beep(659, 0.8,  0.4);
+      beep(784, 1.3,  0.5);
+    } catch(e) {}
 
           // Notification
           if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
@@ -2491,11 +2611,89 @@
   };
 
   // ============================================================
+  //  GIVING INFO — Load from Firestore (synced from Admin)
+  // ============================================================
+  async function loadGivingInfo() {
+    if (!db) return;
+    try {
+      const { doc: fsDoc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+      const snap = await getDoc(fsDoc(db, 'app-config', 'giving'));
+      if (!snap.exists()) return; // keep defaults if admin hasn't saved yet
+
+      const g = snap.data();
+
+      // Update Give screen header
+      if (g.title) { var t = document.getElementById('giveTitle'); if (t) t.textContent = g.title; }
+      if (g.desc)  { var d = document.getElementById('giveDesc');  if (d) d.textContent  = g.desc; }
+
+      // Update option summaries
+      if (g.bank && g.branch) {
+        var bs = document.getElementById('giveBankSub');
+        if (bs) bs.textContent = g.bank + ' · ' + g.branch;
+      }
+      if (g.mtnDial && g.mtn) {
+        var ms = document.getElementById('giveMtnSub');
+        if (ms) ms.innerHTML = 'Dial ' + g.mtnDial + ' &nbsp;·&nbsp; ' + g.mtn;
+      }
+      if (g.airtelDial && g.airtel) {
+        var as_ = document.getElementById('giveAirtelSub');
+        if (as_) as_.innerHTML = 'Dial ' + g.airtelDial + ' &nbsp;·&nbsp; ' + g.airtel;
+      }
+      if (g.centre && g.accNum) {
+        var cs = document.getElementById('giveCentreSub');
+        if (cs) cs.innerHTML = 'Dial ' + g.centre + ' &nbsp;·&nbsp; Account ' + g.accNum;
+      }
+
+      // Update Bank modal
+      if (g.bank)    { var el = document.getElementById('mBankName');    if (el) el.textContent = g.bank; }
+      if (g.accName) { var el = document.getElementById('mBankAccName'); if (el) el.textContent = g.accName; }
+      if (g.accNum)  { var el = document.getElementById('mBankAcc');     if (el) el.textContent = g.accNum; }
+      if (g.branch)  { var el = document.getElementById('mBankBranch');  if (el) el.textContent = g.branch; }
+      if (g.swift)   { var el = document.getElementById('mBankSwift');   if (el) el.textContent = g.swift; }
+
+      // Update MTN modal
+      if (g.mtnDial) {
+        var el = document.getElementById('mMtnDial'); if (el) el.textContent = g.mtnDial;
+        var link = document.getElementById('mMtnLink'); if (link) link.href = 'tel:' + g.mtnDial;
+      }
+      if (g.mtn) { var el = document.getElementById('mMtnNum'); if (el) el.textContent = g.mtn; }
+
+      // Update Airtel modal
+      if (g.airtelDial) {
+        var el = document.getElementById('mAirtelDial'); if (el) el.textContent = g.airtelDial;
+        var link = document.getElementById('mAirtelLink'); if (link) link.href = 'tel:' + g.airtelDial;
+      }
+      if (g.airtel) { var el = document.getElementById('mAirtelNum'); if (el) el.textContent = g.airtel; }
+
+      // Update Centenary modal
+      if (g.centre) {
+        var el = document.getElementById('mCentreDial'); if (el) el.textContent = g.centre;
+        var link = document.getElementById('mCentreLink'); if (link) link.href = 'tel:' + g.centre;
+      }
+      if (g.accNum) { var el = document.getElementById('mCentreAcc'); if (el) el.textContent = g.accNum; }
+
+      console.log('[App] Giving info loaded from admin');
+    } catch(e) {
+      console.warn('[App] Giving info load error:', e);
+    }
+  }
+
+  // ============================================================
   //  INIT — Load all content
   // ============================================================
   loadSermons();
   loadEvents();
+  loadGivingInfo();
 
+
+
+})().catch(function(err) {
+  console.error('[GCC] App init error:', err);
+  // Even if module fails, basic navigation still works
+  // because functions were assigned to window before any async ops
+});
+
+})().catch(function(e) { console.error("[GCC App Error]", e); });
 </script>
 </body>
 </html>

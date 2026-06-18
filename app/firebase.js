@@ -8,7 +8,7 @@ import { getFirestore }  from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getAuth }       from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey:            "AIzaSyBBii2Bs0SBTxJ6Ysmy_5_EUtbGWDQkN68",
+  apiKey:            "AIzaSyBBii2Bs0SBTxJ6Ysmy_5_EUtbGWDQkN68", //should not expose
   authDomain:        "gccwakiso.firebaseapp.com",
   projectId:         "gccwakiso",
   storageBucket:     "gccwakiso.firebasestorage.app",
