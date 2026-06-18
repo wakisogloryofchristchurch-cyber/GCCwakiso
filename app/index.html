@@ -1040,26 +1040,26 @@
 
       <!-- Quick Stats -->
       <div class="quick-stats">
-        <div class="qs-item" onclick="goTo('events')">
+        <div class="qs-item" onclick="window.goTo('events')">
           <div class="qs-icon">📅</div>
           <div class="qs-label">Events</div>
         </div>
-        <div class="qs-item" onclick="goTo('sermons')">
+        <div class="qs-item" onclick="window.goTo('sermons')">
           <div class="qs-icon">🎙️</div>
           <div class="qs-label">Sermons</div>
         </div>
-        <div class="qs-item" onclick="goTo('reminders')">
+        <div class="qs-item" onclick="window.goTo('reminders')">
           <div class="qs-icon">🔔</div>
           <div class="qs-label">Remind</div>
         </div>
-        <div class="qs-item" onclick="goTo('give')">
+        <div class="qs-item" onclick="window.goTo('give')">
           <div class="qs-icon">💛</div>
           <div class="qs-label">Give</div>
         </div>
       </div>
 
       <!-- Next Service -->
-      <div class="next-service card-press" onclick="goTo('events')">
+      <div class="next-service card-press" onclick="window.goTo('events')">
         <div class="next-svc-icon">🙌</div>
         <div>
           <div class="next-svc-label">Next Service</div>
@@ -1073,7 +1073,7 @@
       <div class="home-section">
         <div class="home-sec-header">
           <div class="home-sec-title">Upcoming Events</div>
-          <div class="home-sec-more" onclick="goTo('events')">See all</div>
+          <div class="home-sec-more" onclick="window.goTo('events')">See all</div>
         </div>
         <div id="homeEventsList">
           <div class="card mini-event card-press">
@@ -1099,7 +1099,7 @@
       <div class="home-section" style="margin-bottom: 1.5rem;">
         <div class="home-sec-header">
           <div class="home-sec-title">Latest Sermons</div>
-          <div class="home-sec-more" onclick="goTo('sermons')">See all</div>
+          <div class="home-sec-more" onclick="window.goTo('sermons')">See all</div>
         </div>
         <div id="homeSermonsList">
           <p style="color:var(--muted);font-size:0.82rem;text-align:center;padding:1rem 0;">Loading sermons…</p>
@@ -1250,7 +1250,7 @@
 
       <!-- Filter -->
       <div class="sermon-filter" id="sermonFilter">
-        <div class="filter-pill active" onclick="filterSermons(this, 'all')">All</div>
+        <div class="filter-pill active" onclick="window.filterSermons(this, 'all')">All</div>
       </div>
 
       <div class="sermons-list-wrap" id="sermonsList">
@@ -1278,7 +1278,7 @@
           <label style="font-size:0.78rem; color:var(--muted);">Time:</label>
           <input type="time" id="verseTime" value="07:00" style="background:rgba(255,255,255,0.07); border:1.5px solid rgba(200,146,42,0.2); border-radius:8px; color:var(--white); padding:8px 12px; font-size:0.9rem; font-family:inherit; outline:none; flex:1;">
         </div>
-        <button class="btn btn-gold btn-full" onclick="scheduleDailyVerse()">📖 Enable Daily Verse</button>
+        <button class="btn btn-gold btn-full" onclick="window.scheduleDailyVerse()">📖 Enable Daily Verse</button>
         <div id="verseScheduleStatus" style="font-size:0.75rem; color:var(--muted); text-align:center; margin-top:0.6rem;"></div>
       </div>
 
@@ -1302,7 +1302,7 @@
             <option value="🎙️">🎙️ Sermon</option>
           </select>
         </div>
-        <button class="btn btn-gold btn-full" onclick="saveCustomReminder()">Set Reminder 🔔</button>
+        <button class="btn btn-gold btn-full" onclick="window.saveCustomReminder()">Set Reminder 🔔</button>
       </div>
 
       <!-- Notification Permission -->
@@ -1313,7 +1313,7 @@
             <div style="font-size:0.88rem; font-weight:600; color:var(--white);">Push Notifications</div>
             <div style="font-size:0.75rem; color:var(--muted);">Get alerts for services & events</div>
           </div>
-          <div class="toggle" id="notifToggle" onclick="toggleNotifications()"></div>
+          <div class="toggle" id="notifToggle" onclick="window.toggleNotifications()"></div>
         </div>
       </div>
 
@@ -1372,7 +1372,7 @@
       <div class="give-options">
         <div class="tag" style="margin-bottom:0.8rem;">Choose a Giving Method</div>
 
-        <div class="card give-option card-press" onclick="openModal('bankModal')">
+        <div class="card give-option card-press" onclick="window.openModal('bankModal')">
           <div class="give-opt-icon goi-bank">🏦</div>
           <div class="give-opt-info">
             <div class="give-opt-name">Bank Transfer</div>
@@ -1381,7 +1381,7 @@
           <div class="give-opt-arrow">›</div>
         </div>
 
-        <div class="card give-option card-press" onclick="openModal('mtnModal')">
+        <div class="card give-option card-press" onclick="window.openModal('mtnModal')">
           <div class="give-opt-icon goi-mtn">📱</div>
           <div class="give-opt-info">
             <div class="give-opt-name">MTN Mobile Money</div>
@@ -1390,7 +1390,7 @@
           <div class="give-opt-arrow">›</div>
         </div>
 
-        <div class="card give-option card-press" onclick="openModal('airtelModal')">
+        <div class="card give-option card-press" onclick="window.openModal('airtelModal')">
           <div class="give-opt-icon goi-airtel">📲</div>
           <div class="give-opt-info">
             <div class="give-opt-name">Airtel Money</div>
@@ -1399,7 +1399,7 @@
           <div class="give-opt-arrow">›</div>
         </div>
 
-        <div class="card give-option card-press" onclick="openModal('centreModal')">
+        <div class="card give-option card-press" onclick="window.openModal('centreModal')">
           <div class="give-opt-icon goi-centre">💳</div>
           <div class="give-opt-info">
             <div class="give-opt-name">Centenary Mobile</div>
@@ -1446,12 +1446,12 @@
             <div class="settings-row-label">Location</div>
             <div class="settings-row-val">Wakiso-Kayunga</div>
           </div>
-          <div class="settings-row" onclick="callPhone('+256700592303')">
+          <div class="settings-row" onclick="window.callPhone('+256700592303')">
             <div class="settings-row-icon">📞</div>
             <div class="settings-row-label">Call Us</div>
             <div class="settings-row-val">+256 700 592 303</div>
           </div>
-          <div class="settings-row" onclick="sendEmail()">
+          <div class="settings-row" onclick="window.sendEmail()">
             <div class="settings-row-icon">✉️</div>
             <div class="settings-row-label">Email Us</div>
             <div class="settings-row-val">Gmail</div>
@@ -1468,7 +1468,7 @@
       <div class="settings-section">
         <div class="settings-label">App Settings</div>
         <div class="settings-group">
-          <div class="settings-row" onclick="toggleNotifications()">
+          <div class="settings-row" onclick="window.toggleNotifications()">
             <div class="settings-row-icon">🔔</div>
             <div class="settings-row-label">Push Notifications</div>
             <div class="toggle" id="notifToggle2"></div>
@@ -1513,32 +1513,32 @@
        BOTTOM NAVIGATION
   ============================================================ -->
   <nav class="bottom-nav">
-    <button class="nav-item active" data-screen="home" onclick="goTo('home')">
+    <button class="nav-item active" data-screen="home" onclick="window.goTo('home')">
       <span class="nav-icon">🏠</span>
       <span class="nav-label">Home</span>
       <div class="nav-dot"></div>
     </button>
-    <button class="nav-item" data-screen="events" onclick="goTo('events')">
+    <button class="nav-item" data-screen="events" onclick="window.goTo('events')">
       <span class="nav-icon">📅</span>
       <span class="nav-label">Events</span>
       <div class="nav-dot"></div>
     </button>
-    <button class="nav-item" data-screen="sermons" onclick="goTo('sermons')">
+    <button class="nav-item" data-screen="sermons" onclick="window.goTo('sermons')">
       <span class="nav-icon">🎙️</span>
       <span class="nav-label">Sermons</span>
       <div class="nav-dot"></div>
     </button>
-    <button class="nav-item" data-screen="reminders" onclick="goTo('reminders')">
+    <button class="nav-item" data-screen="reminders" onclick="window.goTo('reminders')">
       <span class="nav-icon">🔔</span>
       <span class="nav-label">Reminders</span>
       <div class="nav-dot"></div>
     </button>
-    <button class="nav-item" data-screen="give" onclick="goTo('give')">
+    <button class="nav-item" data-screen="give" onclick="window.goTo('give')">
       <span class="nav-icon">💛</span>
       <span class="nav-label">Give</span>
       <div class="nav-dot"></div>
     </button>
-    <button class="nav-item" data-screen="profile" onclick="goTo('profile')">
+    <button class="nav-item" data-screen="profile" onclick="window.goTo('profile')">
       <span class="nav-icon">👤</span>
       <span class="nav-label">Profile</span>
       <div class="nav-dot"></div>
@@ -1552,7 +1552,7 @@
 ============================================================ -->
 
 <!-- Bank -->
-<div class="modal-overlay" id="bankModal" onclick="closeModalOutside(event, 'bankModal')">
+<div class="modal-overlay" id="bankModal" onclick="window.closeModalOutside(event, 'bankModal')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">🏦 Bank Transfer</div>
@@ -1561,12 +1561,12 @@
     <div class="info-row"><span class="label">Account Number</span><span class="value" id="mBankAcc">200210030471</span></div>
     <div class="info-row"><span class="label">Branch</span><span class="value" id="mBankBranch">Wakiso</span></div>
     <div class="info-row"><span class="label">Swift Code</span><span class="value" id="mBankSwift">CERBUGKA</span></div>
-    <button class="btn btn-gold btn-full" style="margin-top:1.2rem;" onclick="closeModal('bankModal')">Done</button>
+    <button class="btn btn-gold btn-full" style="margin-top:1.2rem;" onclick="window.closeModal('bankModal')">Done</button>
   </div>
 </div>
 
 <!-- MTN -->
-<div class="modal-overlay" id="mtnModal" onclick="closeModalOutside(event, 'mtnModal')">
+<div class="modal-overlay" id="mtnModal" onclick="window.closeModalOutside(event, 'mtnModal')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">📱 MTN Mobile Money</div>
@@ -1578,7 +1578,7 @@
 </div>
 
 <!-- Airtel -->
-<div class="modal-overlay" id="airtelModal" onclick="closeModalOutside(event, 'airtelModal')">
+<div class="modal-overlay" id="airtelModal" onclick="window.closeModalOutside(event, 'airtelModal')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">📲 Airtel Money</div>
@@ -1590,7 +1590,7 @@
 </div>
 
 <!-- Centenary Mobile -->
-<div class="modal-overlay" id="centreModal" onclick="closeModalOutside(event, 'centreModal')">
+<div class="modal-overlay" id="centreModal" onclick="window.closeModalOutside(event, 'centreModal')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">💳 Centenary Mobile</div>
@@ -1610,8 +1610,8 @@
     <div class="player-speaker" id="playerSpeaker">Speaker</div>
     <div class="player-progress"><div class="player-bar-fill" id="playerFill"></div></div>
   </div>
-  <button class="player-btn" id="playerBtn" onclick="togglePlay()">▶</button>
-  <button class="player-close" onclick="closePlayer()">✕</button>
+  <button class="player-btn" id="playerBtn" onclick="window.togglePlay()">▶</button>
+  <button class="player-close" onclick="window.closePlayer()">✕</button>
 </div>
 
 <!-- ===== INSTALL BANNER ===== -->
@@ -1622,15 +1622,13 @@
     <div class="install-banner-sub">Add to Home Screen for quick access</div>
   </div>
   <button class="install-btn" id="installBtn">Install</button>
-  <button class="install-close" onclick="dismissInstall()">✕</button>
+  <button class="install-close" onclick="window.dismissInstall()">✕</button>
 </div>
 
 <!-- ===== TOAST ===== -->
 <div class="toast" id="toast"></div>
 
-
-</body>
-</html<script type="module">
+<script type="module">
 (async function() {
 
   // ============================================================
@@ -1638,19 +1636,7 @@
   //  These power tab navigation and basic interactions
   // ============================================================
 
-  // NAVIGATION
-  window.goTo = function(screenId) {
-    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
-    document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
-    var screen = document.getElementById('screen-' + screenId);
-    var navBtn  = document.querySelector('.nav-item[data-screen="' + screenId + '"]');
-    if (screen) screen.classList.add('active');
-    if (navBtn)  navBtn.classList.add('active');
-    // Lazy load content when tab is tapped
-    if (screenId === 'sermons')   { if (typeof loadSermons   === 'function') loadSermons(); }
-    if (screenId === 'events')    { if (typeof loadEvents    === 'function') loadEvents(); }
-    if (screenId === 'reminders') { if (typeof window.renderReminders === 'function') window.renderReminders(); }
-  };
+  // NAVIGATION is defined once Firebase-dependent loaders are in scope (see below)
 
   // MODALS
   window.openModal  = function(id) { var el=document.getElementById(id); if(el) el.classList.add('open'); };
@@ -1734,7 +1720,6 @@
   // Apply theme on load
   applyTheme(localStorage.getItem('gcc-dark') !== 'false');
 
-
   // ============================================================
   //  FIREBASE — async load (navigation already works above)
   // ============================================================
@@ -1748,37 +1733,8 @@
     console.log("[GCC] Firebase ready");
   } catch(e) { console.warn("[GCC] Firebase:", e.message); }
 
-
-// ============================================================
-//  GCC CHURCH APP — wrapped in async IIFE for iOS compatibility
-// ============================================================
-(async function() {
-
-  // ===== FIREBASE (optional — app works without it) =====
-  let db = null, collection, getDocs, orderBy, query, limit, Timestamp, where;
-  try {
-    const [fb, fs] = await Promise.all([
-      import('./firebase.js'),
-      import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js')
-    ]);
-    db         = fb.db;
-    collection = fs.collection;
-    getDocs    = fs.getDocs;
-    orderBy    = fs.orderBy;
-    query      = fs.query;
-    limit      = fs.limit;
-    Timestamp  = fs.Timestamp;
-    where      = fs.where;
-    console.log('[GCC] Firebase loaded ✅');
-  } catch(e) {
-    console.warn('[GCC] Firebase failed to load:', e.message);
-  }
-
-
-  // Firebase vars loaded above in async IIFE
-
   // ============================================================
-  //  NAVIGATION
+  //  NAVIGATION (re-declared with live Firebase-dependent loaders)
   // ============================================================
   window.goTo = function(screenId) {
     document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
@@ -1852,40 +1808,7 @@
     if (timeEl) timeEl.textContent = next.time + ' · Main Sanctuary';
   })();
 
-  // ============================================================
-  //  DARK MODE
-  // ============================================================
-  var darkMode = localStorage.getItem('gcc-dark') !== 'false';
-
-  function applyTheme() {
-    var root = document.documentElement;
-    if (darkMode) {
-      root.style.setProperty('--navy',   '#0b1f3a');
-      root.style.setProperty('--navy2',  '#0f2748');
-      root.style.setProperty('--text',   '#e8e2d6');
-      root.style.setProperty('--card-bg','rgba(255,255,255,0.06)');
-      document.body.style.background = '#0b1f3a';
-    } else {
-      root.style.setProperty('--navy',   '#1e3a5f');
-      root.style.setProperty('--navy2',  '#f5f0e8');
-      root.style.setProperty('--text',   '#1a1a1a');
-      root.style.setProperty('--card-bg','rgba(255,255,255,0.9)');
-      document.body.style.background = '#f0ebe1';
-    }
-    var dt  = document.getElementById('darkToggle');
-    var dt2 = document.getElementById('darkToggle2');
-    if (dt)  dt.classList[darkMode  ? 'add' : 'remove']('on');
-    if (dt2) dt2.classList[darkMode ? 'add' : 'remove']('on');
-  }
-
-  window.toggleDarkMode = function() {
-    darkMode = !darkMode;
-    localStorage.setItem('gcc-dark', String(darkMode));
-    applyTheme();
-    showToast(darkMode ? '🌙 Dark mode on' : '☀️ Light mode on');
-  };
-
-  applyTheme();
+  // (Dark mode already initialized above via the sync applyTheme/toggleDarkMode pair)
 
   // ============================================================
   //  PUSH NOTIFICATIONS — iOS + Android
@@ -2685,15 +2608,11 @@
   loadEvents();
   loadGivingInfo();
 
-
-
 })().catch(function(err) {
   console.error('[GCC] App init error:', err);
   // Even if module fails, basic navigation still works
   // because functions were assigned to window before any async ops
 });
-
-})().catch(function(e) { console.error("[GCC App Error]", e); });
 </script>
 </body>
 </html>
