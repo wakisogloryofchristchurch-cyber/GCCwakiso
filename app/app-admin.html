@@ -946,8 +946,8 @@ window.selectVerse = function(i, el) {
       grid.innerHTML = snap.docs.map(function(d) {
         var s = d.data();
         return '<div class="slide-item">' +
-          '<img src="' + s.url + '" alt="' + (s.caption||'Slide') + '" onerror="this.src='elvis.jpg'">' +
-          '<button class="slide-del" onclick="delDoc('app-slides','' + d.id + '',window.loadSlides)">✕</button>' +
+          '<img src="' + s.url + '" alt="' + (s.caption||'Slide') + '" onerror="this.src=&#39;elvis.jpg&#39;">' +
+          '<button class="slide-del" onclick="delDoc(&#39;app-slides&#39;,&#39;' + d.id + '&#39;,window.loadSlides)">✕</button>' +
           (s.caption ? '<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.6);font-size:0.6rem;color:#fff;padding:4px 6px;">' + s.caption + '</div>' : '') +
         '</div>';
       }).join('');
@@ -989,7 +989,7 @@ window.selectVerse = function(i, el) {
               '<div style="font-size:0.88rem;font-weight:600;color:var(--white);">' + s.title + '</div>' +
               '<div style="font-size:0.72rem;color:var(--muted);">' + (s.speaker||'') + (dt ? ' · '+dt : '') + '</div>' +
             '</div>' +
-            '<button class="btn btn-red btn-sm" onclick="delDoc('sermons','' + d.id + '',window.loadSermons)">🗑</button>' +
+            '<button class="btn btn-red btn-sm" onclick="delDoc(&#39;sermons&#39;,&#39;' + d.id + '&#39;,window.loadSermons)">🗑</button>' +
           '</div>' +
           (s.audioUrl ? '<audio controls src="' + s.audioUrl + '" style="width:100%;height:28px;border-radius:5px;"></audio>' : '<span style="font-size:0.72rem;color:var(--muted);">No audio uploaded</span>') +
         '</div>';
@@ -1045,7 +1045,7 @@ window.selectVerse = function(i, el) {
             '<div style="font-size:0.88rem;font-weight:600;color:var(--white);">' + e.title + '</div>' +
             '<div style="font-size:0.72rem;color:var(--muted);">' + dt + (e.time ? ' · '+e.time : '') + (e.location ? ' · '+e.location : '') + '</div>' +
           '</div>' +
-          '<button class="btn btn-red btn-sm" onclick="delDoc('events','' + d.id + '',window.loadEvents)">🗑</button>' +
+          '<button class="btn btn-red btn-sm" onclick="delDoc(&#39;events&#39;,&#39;' + d.id + '&#39;,window.loadEvents)">🗑</button>' +
         '</div>';
       }).join('');
     } catch(e) { el.innerHTML='<div class="empty"><p>'+e.message+'</p></div>'; }
@@ -1100,7 +1100,7 @@ window.selectVerse = function(i, el) {
           '<td>' + (l.image ? '<img src="'+l.image+'" alt="'+l.name+'">' : '–') + '</td>' +
           '<td><strong style="color:var(--white)">' + l.name + '</strong>' + (l.bio ? '<br><span style="font-size:0.72rem;color:var(--muted);">'+l.bio+'</span>' : '') + '</td>' +
           '<td><span class="badge bg-gold">' + l.role + '</span></td>' +
-          '<td><button class="btn btn-red btn-sm" onclick="delDoc('leaders','' + d.id + '',window.loadLeaders)">🗑</button></td>' +
+          '<td><button class="btn btn-red btn-sm" onclick="delDoc(&#39;leaders&#39;,&#39;' + d.id + '&#39;,window.loadLeaders)">🗑</button></td>' +
         '</tr>';
       }).join('');
     } catch(e) { tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);">'+e.message+'</td></tr>'; }
@@ -1189,7 +1189,7 @@ window.selectVerse = function(i, el) {
             '<div style="font-size:0.75rem;color:var(--muted);">' + n.body + '</div>' +
             '<div style="font-size:0.65rem;color:var(--muted);margin-top:2px;">' + dt + '</div>' +
           '</div>' +
-          '<button class="btn btn-red btn-sm" onclick="delDoc('notifications','' + d.id + '',window.loadNotifs)">🗑</button>' +
+          '<button class="btn btn-red btn-sm" onclick="delDoc(&#39;notifications&#39;,&#39;' + d.id + '&#39;,window.loadNotifs)">🗑</button>' +
         '</div>';
       }).join('');
     } catch(e) { el.innerHTML='<div class="empty"><p>'+e.message+'</p></div>'; }
@@ -1281,7 +1281,7 @@ window.selectVerse = function(i, el) {
             '<a href="mailto:' + (m.contact||'') + '?subject=Re: ' + (m.subject||'Your message') + '&body=Dear ' + m.name + ',">' +
               '<button class="btn btn-ghost btn-sm">↩ Reply</button>' +
             '</a>' +
-            '<button class="btn btn-red btn-sm" onclick="delDoc('messages','' + d.id + '',window.loadMessages)">🗑</button>' +
+            '<button class="btn btn-red btn-sm" onclick="delDoc(&#39;messages&#39;,&#39;' + d.id + '&#39;,window.loadMessages)">🗑</button>' +
           '</div>' +
         '</div>';
       }).join('');

@@ -2044,7 +2044,7 @@
             (i === 0 ? '<span class="pill pill-gold">Latest</span>' : '') +
           '</div>' +
           (hasAudio
-            ? '<button class="sermon-play-btn" onclick="window.playSermonAudio(\'' + s.audioUrl + '\',\'' + safeTitle + '\',\'' + safeSpeaker + '\',\'' + safeScripture + '\')">▶</button>'
+            ? '<button class="sermon-play-btn" onclick="window.playSermonAudio(&#39;' + s.audioUrl + '&#39;,&#39;' + safeTitle + '&#39;,&#39;' + safeSpeaker + '&#39;,&#39;' + safeScripture + '&#39;)">▶</button>'
             : '<button class="sermon-play-btn" style="opacity:0.25;cursor:not-allowed;" title="No audio yet">▶</button>'
           ) + '</div>';
       });
@@ -2061,7 +2061,7 @@
           var safeTitle   = (s.title   || '').replace(/'/g,'').replace(/"/g,'');
           var safeSpeaker = (s.speaker || '').replace(/'/g,'').replace(/"/g,'');
           hHtml += '<div class="card mini-sermon card-press"' +
-            (hasAudio ? ' onclick="window.playSermonAudio(\'' + s.audioUrl + '\',\'' + safeTitle + '\',\'' + safeSpeaker + '\',\'\')"' : '') + '>' +
+            (hasAudio ? ' onclick="window.playSermonAudio(&#39;' + s.audioUrl + '&#39;,&#39;' + safeTitle + '&#39;,&#39;' + safeSpeaker + '&#39;,&#39;&#39;)"' : '') + '>' +
             '<div class="play-circle" style="' + (!hasAudio ? 'opacity:0.35' : '') + '">▶</div>' +
             '<div style="flex:1;min-width:0;">' +
               '<div class="mini-sermon-title">' + (s.title||'Untitled') + '</div>' +
@@ -2127,7 +2127,7 @@
               (e.description ? '<div class="event-desc">' + e.description + '</div>' : '') +
             '</div>' +
           '</div>' +
-          '<button class="btn btn-ghost remind-btn" onclick="window.addReminder(\'' + safeTitle + '\',\'' + dt.toLocaleDateString() + (e.time ? ' '+e.time : '') + '\',\'📅\')">🔔 Set Reminder</button>';
+          '<button class="btn btn-ghost remind-btn" onclick="window.addReminder(&#39;' + safeTitle + '&#39;,&#39;' + dt.toLocaleDateString() + (e.time ? ' '+e.time : '') + '&#39;,&#39;📅&#39;)">🔔 Set Reminder</button>';
         container.appendChild(div);
       });
 
@@ -2138,7 +2138,7 @@
         snap.docs.slice(0, 2).forEach(function(d) {
           var e  = d.data();
           var dt = e.date && e.date.toDate ? e.date.toDate() : new Date();
-          hHtml += '<div class="card mini-event card-press" onclick="window.goTo(\'events\')">' +
+          hHtml += '<div class="card mini-event card-press" onclick="window.goTo(&#39;events&#39;)">' +
             '<div class="mini-event-date"><div class="mini-event-day">' + dt.getDate() + '</div><div class="mini-event-month">' + dt.toLocaleString('en',{month:'short'}) + '</div></div>' +
             '<div class="mini-event-info"><div class="mini-event-title">' + (e.title||'Event') + '</div><div class="mini-event-sub">' + (e.time||'') + (e.location ? ' · '+e.location : '') + '</div></div>' +
             '<div style="color:var(--muted);font-size:0.8rem;">›</div></div>';
